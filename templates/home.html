@@ -308,6 +308,34 @@
     }
 </style>
 
+<style>
+    .products .card {
+        height: 100%; /* Ensures cards stretch to the same height */
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .products .card-img-top {
+        height: 200px; /* Set a fixed height for images */
+        object-fit: cover; /* Ensures the image fits without distortion */
+    }
+    
+    .products .card-body {
+        flex: 1; /* Allows the card body to expand */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Align content properly */
+    }
+    
+    .products .card-title,
+    .products .card-text {
+        margin-bottom: 1rem; /* Space between elements */
+    }
+    
+    .products .btn {
+        align-self: center; /* Center the button */
+    }
+</style>    
 
 <div class="products mb-4">
     <h2>Random Product Suggestions</h2>
