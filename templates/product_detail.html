@@ -40,6 +40,12 @@
       </button>
     </div>
 
+    <style>
+      h2,p,h4{
+        color: :black;
+      }
+    </style>
+
     <!-- Product details -->
     <div class="mt-4 text-center">
       <h2>{{ product.name }}</h2>
@@ -61,7 +67,7 @@
       <!-- Add to Cart button in product_detail.html -->
       <div class="text-center mt-3">
         <form method="GET" action="{% url 'checkout' product.id %}">
-            <button type="submit" class="btn btn-primary">Buy Now</button>
+            <button type="submit" class="btn btn-dark">Buy Now</button>
         </form>
     </div>
     
