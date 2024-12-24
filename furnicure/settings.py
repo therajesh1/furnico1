@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': 'fcure',
         'USER': 'root',
         'PASSWORD': '123abcd123',
-        'HOST': '127.0.0.1',  # Or your database server's IP address
+        'HOST': '127.0.0.2',  # Or your database server's IP address
         'PORT': '3306',       # Default MySQL port
     }
 }
