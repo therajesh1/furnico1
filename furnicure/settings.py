@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': 'fcure',
         'USER': 'root',
         'PASSWORD': '123abcd123',
-        'HOST': '127.0.0.2',  # Or your database server's IP address
+        'HOST': '127.0.0.1',  # Or your database server's IP address
         'PORT': '3306',       # Default MySQL port
     }
 }
@@ -96,11 +96,23 @@ DATABASES = {
 #          'ENGINE': 'django.db.backends.postgresql',
 #          'NAME': 'railway',
 #          'USER': 'postgres',
-#          'PASSWORD': 'pHhiELXrxXavkupgdVQeBcNHTSmAeuIO',
+#          'PASSWORD': 'LddtqWSHcfoXMGqayEXmoQDlVmikklpR',
 #          'HOST': 'postgres.railway.internal',
 #          'PORT': '5432'
         
 #      }
+# }
+# import os
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DB_NAME'),
+#         'USER': os.getenv('DB_USER'),
+#         'PASSWORD': os.getenv('DB_PASSWORD'),
+#         'HOST': os.getenv('DB_HOST'),
+#         'PORT': os.getenv('DB_PORT'),
+#     }
 # }
 
 
