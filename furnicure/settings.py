@@ -80,16 +80,40 @@ WSGI_APPLICATION = 'furnicure.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'fcure',
+#         'USER': 'root',
+#         'PASSWORD': '123abcd123',
+#         'HOST': '127.0.0.1',  # Or your database server's IP address
+#         'PORT': '3306',       # Default MySQL port
+#     }
+# }
+# from mongoengine import connect
+
+# connect('furnicure', host='mongodb://localhost/furnicure')
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'fcure',
-        'USER': 'root',
-        'PASSWORD': '123abcd123',
-        'HOST': '127.0.0.1',  # Or your database server's IP address
-        'PORT': '3306',       # Default MySQL port
+        'ENGINE': 'djongo',
+        'NAME': 'furnicure',  # Your MongoDB database name
+        'ENFORCE_SCHEMA': False,        # Disable strict schema enforcement
+        'CLIENT': {
+            'host': 'mongodb://localhost:27017',  # Replace with your MongoDB URL
+            # 'username': 'your_username',         # Optional
+            # 'password': 'your_password',         # Optional
+            'authSource': 'admin',               # Default auth source
+        }
     }
 }
+# import pymongo
+
+# pymongo.MongoClient().close = lambda: None
+
+import sys
+import types
+
+sys.modules['cgi'] = types.ModuleType('cgi')
 
 # DATABASES = {
 #      'default': {
