@@ -80,28 +80,28 @@ WSGI_APPLICATION = 'furnicure.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'fcure',
-#         'USER': 'root',
-#         'PASSWORD': '123abcd123',
-#         'HOST': '127.0.0.2',  # Or your database server's IP address
-#         'PORT': '3306',       # Default MySQL port
-#     }
-# }
-
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.postgresql',
-         'NAME': 'railway',
-         'USER': 'postgres',
-         'PASSWORD': 'DjMsDKYbfMFSaaJRjLxqNAMBSArDSYmP',
-         'HOST': 'monorail.proxy.rlwy.net',
-         'PORT': '16342'
-        
-     }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'fcure',
+        'USER': 'root',
+        'PASSWORD': '123abcd123',
+        'HOST': '127.0.0.2',  # Or your database server's IP address
+        'PORT': '3306',       # Default MySQL port
+    }
 }
+
+# DATABASES = {
+#      'default': {
+#          'ENGINE': 'django.db.backends.postgresql',
+#          'NAME': 'railway',
+#          'USER': 'postgres',
+#          'PASSWORD': 'pHhiELXrxXavkupgdVQeBcNHTSmAeuIO',
+#          'HOST': 'postgres.railway.internal',
+#          'PORT': '5432'
+        
+#      }
+# }
 
 
 # Password validation
