@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'furnicure.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'furnicure',  # Your MongoDB database name
+        'NAME': 'furnico',  # Your MongoDB database name
         'ENFORCE_SCHEMA': False,        # Disable strict schema enforcement
         'CLIENT': {
             'host': 'mongodb://localhost:27017',  # Replace with your MongoDB URL
