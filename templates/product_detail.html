@@ -1,4 +1,3 @@
-<!-- product_detail.html -->
 {% extends 'base.html' %}
 {% block title %}
   Product Details
@@ -29,7 +28,7 @@
         {% endif %}
       </div>
 
-      <!-- Larger and more visible Carousel controls -->
+      <!-- Carousel Controls -->
       <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev" style="width: 5%;">
         <span class="carousel-control-prev-icon" aria-hidden="true" style="font-size: 2em; background-color: rgba(0, 0, 0, 0.5);"></span>
         <span class="visually-hidden">Previous</span>
@@ -40,40 +39,74 @@
       </button>
     </div>
 
-    <style>
-      h2,p,h4{
-        color: :black;
-      }
-    </style>
-
-    <!-- Product details -->
+    <!-- Product Details Section -->
     <div class="mt-4 text-center">
-      <h2>{{ product.name }}</h2>
-
-      <!-- Shop Name with better visibility -->
+      <h2 class="fw-bold text-dark">{{ product.name }}</h2>
       <p class="text-muted">
-        Sold by: <strong>{{ product.shop.name }}</strong>
+        Sold by: <strong>{{ product.shop_name }}</strong>
       </p>
-
-      <p>{{ product.description }}</p>
-      <h4>Price: {{ product.price }}</h4>
+      <p class="text-dark">{{ product.description }}</p>
+      <h4 class="fw-bold text-dark">Price: {{ product.price }}</h4>
     </div>
 
-    <!-- Add to Cart button -->
-      {% comment %} <form method="POST" action="{% url 'add_to_cart' product.id %}">
-        {% csrf_token %}
-        <button type="submit" href="/cart" class="btn btn-success">Add to Cart</button>
-      </form> {% endcomment %}
-      <!-- Add to Cart button in product_detail.html -->
-      <div class="text-center mt-3">
-        <form method="GET" action="{% url 'checkout' product.id %}">
-            <button type="submit" class="btn btn-dark">Buy Now</button>
-        </form>
+    <!-- Buy Now Button with Icon -->
+    <div class="text-center mt-3">
+      <form method="GET" action="{% url 'checkout' product.id %}">
+        <button type="submit" class="btn btn-dark btn-lg d-flex align-items-center justify-content-center gap-2 px-4">
+          <i class="fas fa-shopping-cart"></i>
+          Buy Now
+        </button>
+      </form>
     </div>
-    
   </div>
 
-  <!-- Bootstrap JS for Carousel functionality (optional if already included in your base template) -->
+  <!-- Custom Styles -->
+  <style>
+    /* Global text styles */
+    h2, h4, p {
+      color: black !important;
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    h4 {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    /* Button with Icon */
+    .btn-dark {
+      background-color: #343a40;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .btn-dark i {
+      font-size: 1.2rem;
+    }
+
+    .btn-dark:hover {
+      background-color: #23272b;
+    }
+
+    /* Carousel Controls */
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+    }
+  </style>
+
+  <!-- FontAwesome for Icons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+  <!-- Bootstrap JS for Carousel functionality -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}
