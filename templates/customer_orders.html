@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% comment %} {% extends "base.html" %}
 {% block title %}Your Orders{% endblock title %}
 
 {% block body %}
@@ -6,6 +6,27 @@
     <h2>Your Orders</h2>
     {% for order in orders %}
         <div class="order-item mb-4">
+            <h5>{{ order.product.name }}</h5>
+            <p><strong>Order Date:</strong> {{ order.order_date }}</p>
+            <p><strong>Status:</strong> {% if order.is_paid %}Paid{% else %}Pending{% endif %}</p>
+            {% if not order.is_paid %}
+                <form method="POST" action="{% url 'process_payment' order.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Do Payment</button>
+                </form>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock body %} {% endcomment %}
+{% extends "base.html" %}
+{% block title %}Your Orders{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 style="color: black;">Your Orders</h2>
+    {% for order in orders %}
+        <div class="order-item mb-4" style="color: black;">
             <h5>{{ order.product.name }}</h5>
             <p><strong>Order Date:</strong> {{ order.order_date }}</p>
             <p><strong>Status:</strong> {% if order.is_paid %}Paid{% else %}Pending{% endif %}</p>
