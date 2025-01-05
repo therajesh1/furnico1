@@ -81,7 +81,7 @@ class Product(models.Model):
     # date=models.DateField()
 
     # Primary image
-    image = models.ImageField(upload_to='product_images/')
+    image = models.ImageField(upload_to='media/')
     # Optional additional images
     image2 = models.ImageField(upload_to='product_images/', blank=True, null=True)
     image3 = models.ImageField(upload_to='product_images/', blank=True, null=True)
