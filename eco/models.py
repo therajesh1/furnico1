@@ -13,7 +13,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-
 class Contact(models.Model):
     name=models.CharField(max_length=122)
     email=models.CharField(max_length=122)
@@ -23,7 +22,6 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
-
 # class Category(models.Model):
 #     name = models.CharField(max_length=100)
 
@@ -81,7 +79,7 @@ class Product(models.Model):
     # date=models.DateField()
 
     # Primary image
-    image = models.ImageField(upload_to='media/')
+    image = models.ImageField(upload_to='product_images/')
     # Optional additional images
     image2 = models.ImageField(upload_to='product_images/', blank=True, null=True)
     image3 = models.ImageField(upload_to='product_images/', blank=True, null=True)
