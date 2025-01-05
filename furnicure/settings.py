@@ -93,20 +93,31 @@ WSGI_APPLICATION = 'furnicure.wsgi.application'
 # from mongoengine import connect
 
 # connect('furnicure', host='mongodb://localhost/furnicure')
-DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'furnico',  # Your MongoDB database name
-        'ENFORCE_SCHEMA': False,        # Disable strict schema enforcement
-        'CLIENT': {
-            'host': 'mongodb://localhost:27017',  # Replace with your MongoDB URL
-            # 'username': 'your_username',         # Optional
-            # 'password': 'your_password',         # Optional
-            'authSource': 'admin',               # Default auth source
-        }
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'furnico',  # Your MongoDB database name
+#         'ENFORCE_SCHEMA': False,        # Disable strict schema enforcement
+#         'CLIENT': {
+#             'host': 'mongodb://localhost:27017',  # Replace with your MongoDB URL
+#             # 'username': 'your_username',         # Optional
+#             # 'password': 'your_password',         # Optional
+#             'authSource': 'admin',               # Default auth source
+#         }
+#     }
+# }
 # import pymongo
+DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql',
+         'NAME': 'railway',
+         'USER': 'postgres',
+         'PASSWORD': 'DjMsDKYbfMFSaaJRjLxqNAMBSArDSYmP',
+         'HOST': 'monorail.proxy.rlwy.net',
+         'PORT': '16342'
+        
+     }
+}
 
 # pymongo.MongoClient().close = lambda: None
 

@@ -148,6 +148,10 @@ def signin(request):
     return render(request,'signin.html')
 
 
+def contact(request):
+    return render(request,'contact.html')
+
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Product, Shopkeeper

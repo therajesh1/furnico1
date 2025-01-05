@@ -30,7 +30,8 @@ urlpatterns = [
         # Product Detail and Buy Now
     path('product/<int:product_id>/', views.product_detail, name='product_detail'),
     path('checkout/<int:product_id>/', views.checkout, name='checkout'),
-    
+    path('contact/', views.contact, name='contact'),  # URL for logout
+
     # Order Summary and Payment Processing
     # path('order_summary/<int:order_id>/', views.order_summary, name='order_summary'),
     path('order_summary/<int:order_id>/', views.order_summary, name='order_summary'),

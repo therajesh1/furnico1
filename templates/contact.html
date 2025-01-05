@@ -1,0 +1,202 @@
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap');
+
+        :root {
+            --main-color: #ffffff;
+            --dark-color: #f4f4f4;
+            --light-color: #555555;
+            --medium-light-color: #eaeaea;
+            --orange: #FF7A01;
+            --orange-light: #ff9f5e;
+            --text-color: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        body {
+            background-color: var(--main-color);
+            color: var(--text-color);
+        }
+
+        .montserrat {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .form-container-main {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 0;
+        }
+
+        .form-container {
+            width: 50%;
+            background-color: var(--dark-color);
+            padding: 30px;
+            display: flex;
+            border-left: 5px solid var(--orange);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 1200px) {
+            .form-container {
+                width: 65%;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .form-container {
+                display: block;
+                width: 90%;
+            }
+        }
+
+        .form-image {
+            flex-basis: 50%;
+            text-align: center;
+        }
+
+        .form-image h1 {
+            color: var(--text-color);
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 300px;
+            background-color: transparent;
+        }
+
+        .form {
+            flex-basis: 50%;
+            padding: 10px;
+        }
+
+        .form input,
+        .form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid var(--medium-light-color);
+            background-color: var(--main-color);
+            color: var(--text-color);
+            border-radius: 4px;
+            outline: none;
+            transition: border-left 0.3s ease-in-out;
+        }
+
+        .form input:focus,
+        .form textarea:focus {
+            border-left: 4px solid var(--orange);
+        }
+
+        .form textarea {
+            resize: none;
+            max-height: 150px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .send-button {
+            flex-basis: 70%;
+            background: var(--orange);
+            color: var(--main-color);
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .send-button:hover {
+            background: var(--main-color);
+            border: 1px solid var(--orange);
+            color: var(--orange);
+        }
+
+        .reset-button-container {
+            flex-basis: 30%;
+            filter: drop-shadow(1px 1px 0px var(--orange));
+        }
+
+        .reset-button {
+            text-align: center;
+            padding: 10px;
+            background: var(--medium-light-color);
+            color: var(--orange);
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .reset-button:hover {
+            background: var(--orange);
+            color: var(--main-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container-main">
+        <div class="form-container">
+            <div class="form-image">
+                <h1 class="montserrat">Get in touch</h1>
+                <model-viewer class="model" alt="laptop"
+                    src="https://raw.githubusercontent.com/Smit-Prajapati/prajapatismit/b5f434ae4d45d10fe1664d5606ad28e4d9c739af/images/laptop.glb"
+                    shadow-intensity="1" camera-controls touch-action="pan-y"
+                    environment-image="https://raw.githubusercontent.com/Smit-Prajapati/prajapatismit/b5f434ae4d45d10fe1664d5606ad28e4d9c739af/images/dancing_hall_2k.hdr"
+                    exposure="1.5" disable-zoom autoplay>
+                </model-viewer>
+            </div>
+            <div class="form">
+                <input type="text" id="name" placeholder="Name" autofocus>
+                <input type="email" id="mail" placeholder="Email">
+                <textarea name="message" id="message" cols="30" rows="10" placeholder="Say Hello"></textarea>
+                <div class="button-container">
+                    <div class="send-button" id="send-btn">Send</div>
+                    <div class="reset-button-container">
+                        <div class="reset-button" id="reset-btn">Reset</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Send Button Functionality
+        document.getElementById('send-btn').addEventListener('click', function () {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('mail').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (name === '' || email === '' || message === '') {
+                alert('Please fill out all fields before sending!');
+            } else {
+                alert(`Message Sent!\nName: ${name}\nEmail: ${email}\nMessage: ${message}`);
+                console.log(`Name: ${name}, Email: ${email}, Message: ${message}`);
+            }
+        });
+
+        // Reset Button Functionality
+        document.getElementById('reset-btn').addEventListener('click', function () {
+            document.getElementById('name').value = '';
+            document.getElementById('mail').value = '';
+            document.getElementById('message').value = '';
+        });
+    </script>
+</body>
