@@ -42,9 +42,9 @@
     <!-- Product Details Section -->
     <div class="mt-4 text-center">
       <h2 class="fw-bold text-dark">{{ product.name }}</h2>
-      <p class="text-muted">
+      {% comment %} <p class="text-muted">
         Sold by: <strong>{{ shopkeeper.shop_name }}</strong>
-      </p>
+      </p> {% endcomment %}
       <p class="text-dark">{{ product.description }}</p>
       <h4 class="fw-bold text-dark">Price: {{ product.price }}</h4>
     </div>
