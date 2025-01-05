@@ -215,6 +215,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Add this if you have media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+import os
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')  # Ensure this is correct and points to the right folder
+
 # import os
 
 # # Static files (CSS, JavaScript, Images)
