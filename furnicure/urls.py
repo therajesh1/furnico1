@@ -14,12 +14,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-]
 # furnico/urls.py
 
 from django.contrib import admin
@@ -29,21 +23,12 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('eco.urls')),
+    path('', include('eco.urls')),  # Include the app URLs
 ]
-# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-# # ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-
-# # Serve media files in development (user-uploaded files)
+# Serve media files in development (user-uploaded files)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# # Serve static files (CSS, JS, images) in development
+# Serve static files (CSS, JS, images) in development
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-# if settings.DEBUG:
-#     # Static files (CSS, JS, images)
-#     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    
-#     # Media files (user-uploaded content)
-#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
