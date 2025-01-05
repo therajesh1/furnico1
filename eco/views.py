@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .models import Product, Category
+from .models import Product, Category,Contact
 from django.core.mail import send_mail
 
 # ecommerce/views.py
@@ -147,8 +147,19 @@ from .models import  Product
 def signin(request):
     return render(request,'signin.html')
 
+from datetime import datetime
 
+# @login_required(login_url='loginuser')
 def contact(request):
+    if request.method=="POST":
+        name=request.POST.get('name')
+        email=request.POST.get('email')
+        phone=request.POST.get('phone')
+        msg=request.POST.get('msg')
+        contact=Contact(name=name,email=email,phone=phone,msg=msg,date=datetime.today())
+        contact.save()
+        messages.success(request, "your message has been sent")
+
     return render(request,'contact.html')
 
 

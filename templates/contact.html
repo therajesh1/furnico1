@@ -198,8 +198,12 @@
                 </dotlottie-player>
             </div>
             <div class="form">
-                <input type="text" id="name" placeholder="Name" autofocus>
-                <input type="email" id="mail" placeholder="Email">
+                <form method="post" action="/contact">
+                    {% csrf_token %}
+                <input type="text" id="name" name="name" placeholder="Name" autofocus>
+                <input type="email" id="mail" name="email" placeholder="Email">
+                <input type="phone" id="phone" name="phone" placeholder="Phone">
+
                 <textarea name="message" id="message" cols="30" rows="10" placeholder="Say Hello"></textarea>
                 <div class="button-container">
                     <div class="send-button" id="send-btn">Send</div>
@@ -222,7 +226,7 @@
                 alert('Please fill out all fields before sending!');
             } else {
                 alert(`Message Sent!\nName: ${name}\nEmail: ${email}\nMessage: ${message}`);
-                console.log(`Name: ${name}, Email: ${email}, Message: ${message}`);
+                console.log(`Name: ${name}, Email: ${email}, Message: ${message},Phone:${phone}`);
             }
         });
 
