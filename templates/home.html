@@ -312,7 +312,7 @@
     }
 </style>
 
-<style>
+{% comment %} <style>
     .products .card {
         height: 100%; /* Ensures cards stretch to the same height */
         display: flex;
@@ -339,7 +339,47 @@
     .products .btn {
         align-self: center; /* Center the button */
     }
+</style>     {% endcomment %}
+<style>
+    .products .card {
+        height: 100%; /* Ensures cards stretch to the same height */
+        display: flex;
+        flex-direction: column;
+        border: 2px solid black; /* Dark black outline for the card */
+        border-radius: 8px; /* Optional: Rounded corners for the card */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+    }
+    
+    .products .card-img-top {
+        height: 250px; /* Increased height for images */
+        width: 100%; /* Ensures image stretches to fill the card width */
+        object-fit: cover; /* Ensures the image fits without distortion */
+    }
+    
+    .products .card-body {
+        flex: 1; /* Allows the card body to expand */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Align content properly */
+        padding: 1.25rem; /* Increased padding for better spacing */
+    }
+    
+    .products .card-title {
+        font-weight: bold; /* Makes product name bold */
+        font-size: 1.25rem; /* Increases font size of product name */
+        margin-bottom: 0.5rem; /* Spacing below the product name */
+    }
+    
+    .products .card-text {
+        margin-bottom: 1rem; /* Space between elements */
+    }
+    
+    .products .btn {
+        align-self: center; /* Center the button */
+        margin-top: auto; /* Pushes the button to the bottom */
+    }
 </style>    
+
 
 <div class="products mb-4">
     <h2>Random Product Suggestions</h2>
