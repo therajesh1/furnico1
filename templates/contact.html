@@ -1,4 +1,10 @@
-<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+{% extends 'base.html' %}
+
+{% block title %}
+    Contact
+{% endblock title %}
+    <title>Responsive Form with Image</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap');
 
@@ -45,8 +51,11 @@
             border-left: 5px solid var(--orange);
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-direction: row; /* Default: side-by-side */
+            justify-content: space-between;
         }
 
+        /* Media Queries for Responsiveness */
         @media (max-width: 1200px) {
             .form-container {
                 width: 65%;
@@ -55,8 +64,32 @@
 
         @media (max-width: 800px) {
             .form-container {
-                display: block;
+                flex-direction: column;
                 width: 90%;
+            }
+
+            .form-image {
+                order: 1;
+                margin-bottom: 20px;
+            }
+
+            .form {
+                order: 2;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                width: 100%;
+                padding: 15px;
+            }
+
+            .form-image {
+                height: 250px;
+            }
+
+            .form textarea {
+                max-height: 120px;
             }
         }
 
@@ -156,12 +189,13 @@
         <div class="form-container">
             <div class="form-image">
                 <h1 class="montserrat">Get in touch</h1>
-                <model-viewer class="model" alt="laptop"
-                    src="https://raw.githubusercontent.com/Smit-Prajapati/prajapatismit/b5f434ae4d45d10fe1664d5606ad28e4d9c739af/images/laptop.glb"
-                    shadow-intensity="1" camera-controls touch-action="pan-y"
-                    environment-image="https://raw.githubusercontent.com/Smit-Prajapati/prajapatismit/b5f434ae4d45d10fe1664d5606ad28e4d9c739af/images/dancing_hall_2k.hdr"
-                    exposure="1.5" disable-zoom autoplay>
-                </model-viewer>
+                <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+                <dotlottie-player 
+                    src="https://lottie.host/785b5195-3a1f-446e-8968-fa8f6d160235/FwHMRtnk2J.lottie" 
+                    class="dotlottie-player"
+                    loop 
+                    autoplay>
+                </dotlottie-player>
             </div>
             <div class="form">
                 <input type="text" id="name" placeholder="Name" autofocus>
@@ -200,3 +234,4 @@
         });
     </script>
 </body>
+{% endblock body %}
