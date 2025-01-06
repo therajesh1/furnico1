@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% comment %} {% extends 'base.html' %}
 
 {% block title %}
     Sofas
@@ -25,6 +25,54 @@
             {% endfor %}
         {% else %}
             <p>No sofas available at the moment.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %} {% endcomment %}
+{% extends 'base.html' %}
+
+{% block title %}
+    Sofas
+{% endblock title %}
+
+{% block body %}
+
+<style>
+    .container h2,
+    .card-title,
+    .card-text,
+    .btn {
+        color: black !important;
+    }
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+    }
+    .card img {
+        height: 200px;
+        object-fit: cover;
+    }
+</style>
+
+<div class="container mt-5">
+    <h2>Sofas</h2>
+    <div class="row">
+        {% if products %}
+            {% for product in products %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description|truncatewords:15 }}</p>
+                            <p class="card-text"><strong>Price: ${{ product.price }}</strong></p>
+                            <a href="{% url 'product_detail' product.id %}" class="btn btn-dark">View Product</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p style="color: black;">No sofas available at the moment.</p>
         {% endif %}
     </div>
 </div>
