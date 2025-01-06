@@ -222,6 +222,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')  # Ensure this is correct and points to the right folder
 
+
 # import os
 
 # # Static files (CSS, JavaScript, Images)
