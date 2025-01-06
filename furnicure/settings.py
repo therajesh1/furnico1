@@ -87,6 +87,8 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # Optional: Set media URL if you want to access via a CDN
 MEDIA_URL = 'https://res.cloudinary.com/djvsbqfwv/'
 
+
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -141,6 +143,20 @@ import sys
 import types
 
 sys.modules['cgi'] = types.ModuleType('cgi')
+
+
+from django.http import HttpResponsePermanentRedirect
+
+class RedirectToWwwMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if not request.get_host().startswith('www'):
+            return HttpResponsePermanentRedirect(
+                f"https://www.{request.get_host()}{request.get_full_path()}"
+            )
+        return self.get_response(request)
 
 # DATABASES = {
 #      'default': {
