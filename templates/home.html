@@ -249,16 +249,16 @@
     <h2>Categories</h2>
     <div class="d-flex justify-content-between">
         <div class="category-icon">
-            <a href="{% url 'sofa' %}">
+            <a href="{% url 'chair' %}">
                 <div class="image-container">
-                    <img src="/static/furniimage08.jpeg" alt="Sofa" class="category-image"> <!-- Insert sofa image -->
+                    <img src="/static/furniimage12.jpeg" alt="Chair" class="category-image"> <!-- Insert chair image -->
                 </div>
             </a>
         </div>
         <div class="category-icon">
-            <a href="{% url 'bed' %}">
+            <a href="{% url 'sofa' %}">
                 <div class="image-container">
-                    <img src="/static/furniimage10.jpeg" alt="Bed" class="category-image"> <!-- Insert bed image -->
+                    <img src="/static/furniimage08.jpeg" alt="Sofa" class="category-image"> <!-- Insert sofa image -->
                 </div>
             </a>
         </div>
@@ -270,12 +270,14 @@
             </a>
         </div>
         <div class="category-icon">
-            <a href="{% url 'chair' %}">
+            <a href="{% url 'bed' %}">
                 <div class="image-container">
-                    <img src="/static/furniimage12.jpeg" alt="Chair" class="category-image"> <!-- Insert chair image -->
+                    <img src="/static/furniimage10.jpeg" alt="Bed" class="category-image"> <!-- Insert bed image -->
                 </div>
             </a>
         </div>
+        
+        
         <div class="category-icon">
             <a href="{% url 'cupboard' %}">
                 <div class="image-container">
@@ -381,67 +383,61 @@
     }
 </style>    
 
-
-<div class="products mb-4">
-    <h2>Product Suggestions</h2>
-    <div class="row">
-        {% if products %}
-            {% for product in products %}
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ product.name }}</h5>
-                            <p class="card-text">{{ product.description|truncatewords:15 }}</p>
-                            <p class="card-text"><strong>Price: {{ product.price }}</strong></p>
-                            <a href="{% url 'product_detail' product.id %}" class="btn btn-dark">View Product</a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No products available at the moment.</p>
-        {% endif %}
-    </div>
-</div>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 <style>
+    /* General Section Styling */
     .contact-section {
-        background: #121212;
-        color: #fff;
+        background: #f8f9fa; /* Bright background */
+        color: #212529; /* Dark text for contrast */
         border-radius: 10px;
-        padding: 30px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .contact-heading {
-        font-size: 2rem;
+        font-size: 2.5rem;
         font-weight: bold;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
         text-align: center;
     }
 
+    /* Contact Info Styling */
     .contact-info p {
-        margin: 5px 0;
-        font-size: 1.1rem;
+        margin: 10px 0;
+        font-size: 1.5rem; /* Larger text for Phone and Email */
+        font-weight: 500;
     }
 
     .contact-button {
-        margin-top: 20px;
+        margin-top: 30px;
     }
 
     .contact-button .btn {
-        font-size: 1rem;
+        font-size: 1.2rem;
+        padding: 10px 20px;
         display: flex;
         align-items: center;
         gap: 8px;
     }
 
+    /* Animation Styling */
+    .animation-container {
+        text-align: center;
+    }
+
     @media (max-width: 768px) {
         .animation-container {
-            order: -1;
-            margin-bottom: 20px;
+            order: -1; /* Moves animation on top on small screens */
+            margin-bottom: 30px;
+        }
+
+        .contact-heading {
+            font-size: 2rem;
+        }
+
+        .contact-info p {
+            font-size: 1.2rem;
         }
     }
 </style>
@@ -451,18 +447,18 @@
     <h2 class="contact-heading">For Any Queries, Contact Us</h2>
     <div class="row align-items-center">
         <!-- Animation on the left (Moves to top on small devices) -->
-        <div class="col-md-6 animation-container text-center">
+        <div class="col-md-6 animation-container">
             <dotlottie-player src="https://lottie.host/e40a20b4-bff2-40a2-abd8-e31b33b23e04/cVYWTPmoNe.lottie" 
                               background="transparent" 
                               speed="1" 
-                              style="width: 300px; height: 300px;" 
+                              style="width: 350px; height: 350px;" 
                               loop autoplay>
             </dotlottie-player>
         </div>
         <!-- Contact Info on the right -->
         <div class="col-md-6 contact-info text-center text-md-start">
             <p><strong>📞 Phone:</strong> 8433541311</p>
-            <p><strong>✉️ Email:</strong> therajeshchheda@gmail.com</p>
+            <p><strong>✉️ Email:</strong> <a href="mailto:therajeshchheda@gmail.com" style="text-decoration: none; color: inherit;">therajeshchheda@gmail.com</a></p>
             <div class="contact-button">
                 <a href="mailto:therajeshchheda@gmail.com" class="btn btn-primary">
                     <i class="bi bi-envelope"></i> Contact Us
@@ -477,6 +473,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
+
 <div class="products mb-4">
     <h2>Product Suggestions</h2>
     <div class="row">
@@ -499,4 +496,5 @@
         {% endif %}
     </div>
 </div>
+
 {% endblock body %}
