@@ -22,6 +22,7 @@
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             display: flex;
+            flex-direction: row; /* Default direction */
             height: 70vh; /* Adjusted height for better balance */
         }
         .image-container {
@@ -71,6 +72,22 @@
             font-weight: 500;
             font-size: 1.2rem;
             color: #ffffff;
+        }
+
+        /* Media query for small screens */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column; /* Stack the image and form vertically */
+                height: auto; /* Allow container height to adjust */
+            }
+            .image-container {
+                min-width: 100%; /* Full width for image */
+                height: 40vh; /* Adjust image height for smaller screens */
+            }
+            .form-container {
+                border-radius: 15px 15px 0 0;
+                height: auto;
+            }
         }
     </style>
 </head>

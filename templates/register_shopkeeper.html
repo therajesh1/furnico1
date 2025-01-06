@@ -1,25 +1,3 @@
-{% comment %} <!-- eco/templates/eco/register_shopkeeper.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register Shopkeeper</title>
-</head>
-<body>
-    <h1>Register Shopkeeper</h1>
-    <form method="POST">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="Username" required><br>
-        <input type="password" name="password" placeholder="Password" required><br>
-        <input type="text" name="shop_name" placeholder="Shop Name" required><br>
-        <input type="text" name="address" placeholder="Address" required><br>
-        <input type="text" name="city" placeholder="City" required><br>
-        <input type="text" name="phone_number" placeholder="Phone Number" required><br>
-        <input type="checkbox" name="terms_accepted" required> I accept the terms and conditions<br>
-        <button type="submit">Register</button>
-    </form>
-</body>
-</html> {% endcomment %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,153 +7,106 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Floating Furniture Icons Animation */
         body, html {
-            height: 100%;
             margin: 0;
             font-family: 'Roboto', sans-serif;
-            background: #121212;  /* Dark background */
-            color: #ffffff;  /* White text */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            background: #121212;
+            color: #ffffff;
         }
 
-        .floating-icons {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-        }
-
-        .floating-icons i {
-            font-size: 60px;  /* Increased icon size */
-            color: rgba(255, 255, 255, 0.3);  /* Lighter icon color */
-            position: absolute;
-            animation: floatAnimation 10s ease-in-out infinite;  /* Increased speed */
-        }
-
-        .floating-icons i:nth-child(1) { top: 5%; left: 10%; animation-delay: 0s; }
-        .floating-icons i:nth-child(2) { top: 15%; left: 80%; animation-delay: 1s; }
-        .floating-icons i:nth-child(3) { top: 55%; left: 20%; animation-delay: 2s; }
-        .floating-icons i:nth-child(4) { top: 70%; left: 85%; animation-delay: 3s; }
-        .floating-icons i:nth-child(5) { top: 40%; left: 50%; animation-delay: 4s; }
-
-        @keyframes floatAnimation {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-40px) rotate(20deg); }  /* Increased vertical movement */
-            100% { transform: translateY(0) rotate(0deg); }
-        }
-
-        /* Main Container Styling */
         .main-container {
-            display: flex;
-            align-items: center;
-            background: rgba(30, 30, 30, 0.95);  /* Darker container background */
+            background: rgba(30, 30, 30, 0.95);
             padding: 2rem;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);  /* Darker shadow */
-            z-index: 1;
-        }
-
-        /* Image Container */
-        .image-container {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            text-align: center;
         }
 
         .image-container img {
-            max-width: 100%;
+            width: 100%;
+            max-width: 400px;
             height: auto;
+            margin-bottom: 1.5rem;
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Form Styling */
-        .form-container {
-            flex: 1;
-            margin-left: 2rem;
         }
 
         h1 {
             font-weight: 700;
             margin-bottom: 1.5rem;
-            text-align: center;
-            color: #e0e0e0;  /* Lighter heading color */
+            color: #e0e0e0;
         }
 
         .form-group input,
         .form-group .btn-custom {
-            background: #333;  /* Dark input background */
-            color: #ffffff;  /* White text for input */
-            border: 1px solid #555;  /* Darker border */
+            background: #333;
+            color: #ffffff;
+            border: 1px solid #555;
             border-radius: 5px;
             padding: 0.75rem;
-            width: 100%;
         }
 
         .btn-custom {
-            background-color: #007bff;  /* Button background color */
-            border: none;
+            background-color: #007bff;
             margin-top: 1.5rem;
             font-weight: 500;
             transition: all 0.3s ease;
         }
 
         .btn-custom:hover {
-            background-color: #0056b3;  /* Darker on hover */
+            background-color: #0056b3;
         }
 
-        /* Terms Button and Modal */
         .terms-button {
             font-size: 0.9rem;
-            color: #cccccc;  /* Light text for terms */
+            color: #cccccc;
             text-decoration: underline;
             cursor: pointer;
             background: none;
             border: none;
             padding: 0;
             margin-top: 10px;
-            display: inline-block;
         }
 
         .modal-content {
-            background-color: #1f1f1f;  /* Darker modal background */
-            color: #ffffff;  /* White modal text */
-        }
-
-        .modal-header, .modal-footer {
-            border-color: #444;  /* Darker border for modal */
+            background-color: #1f1f1f;
+            color: #ffffff;
         }
     </style>
-    <!-- Font Awesome for furniture icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script>
+        function validateForm() {
+            const phone = document.querySelector('input[name="phone_number"]');
+            const email = document.querySelector('input[name="email"]');
+
+            const phoneRegex = /^\d{10}$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!phoneRegex.test(phone.value)) {
+                alert('Phone number must be exactly 10 digits.');
+                return false;
+            }
+
+            if (!emailRegex.test(email.value)) {
+                alert('Please enter a valid email address.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </head>
 <body>
 
-<div class="floating-icons">
-    <i class="fas fa-couch"></i>
-    <i class="fas fa-chair"></i>
-    <i class="fas fa-bed"></i>
-    <i class="fas fa-tv"></i>
-    <i class="fas fa-archway"></i>
-</div>
+<div class="container my-5">
+    <div class="main-container mx-auto col-md-8 col-lg-6">
+        <!-- Image Section -->
+        <div class="image-container">
+            <img src="/static/furniimage01.jpeg" alt="Shopkeeper Registration Image">
+        </div>
 
-<div class="main-container">
-    <!-- Image Container -->
-    <div class="image-container">
-        <img src="/static/furniimage01.jpeg" alt="Shopkeeper Registration Image">
-    </div>
-
-    <!-- Form Container -->
-    <div class="form-container">
+        <!-- Form Section -->
         <h1>Register Shopkeeper</h1>
-        <form method="POST">
+        <form method="POST" onsubmit="return validateForm()">
             {% csrf_token %}
             <div class="form-group">
                 <input type="text" name="username" placeholder="Username" class="form-control" required>
@@ -185,6 +116,9 @@
             </div>
             <div class="form-group">
                 <input type="text" name="shop_name" placeholder="Shop Name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Email" class="form-control" required>
             </div>
             <div class="form-group">
                 <input type="text" name="address" placeholder="Address" class="form-control" required>
@@ -197,10 +131,10 @@
             </div>
             <div class="form-group form-check">
                 <button type="button" class="terms-button" data-toggle="modal" data-target="#termsModal">View Terms and Conditions</button>
-                <input type="checkbox" name="terms_accepted" class="form-check-input" required>
+                <input type="checkbox" name="terms_accepted" class="form-check-input ml-2" required>
                 <label class="form-check-label" style="color: #cccccc;">I accept the terms and conditions</label>
             </div>
-            <button type="submit" class="btn btn-custom">Register</button>
+            <button type="submit" class="btn btn-custom btn-block">Register</button>
         </form>
     </div>
 </div>
@@ -228,5 +162,6 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
