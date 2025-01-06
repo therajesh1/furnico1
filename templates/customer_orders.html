@@ -23,6 +23,8 @@
 {% block title %}Your Orders{% endblock title %}
 
 {% block body %}
+{% load cloudinary %}
+
 <div class="container mt-5">
     <h2 style="color: black;">Your Orders</h2>
     {% for order in orders %}

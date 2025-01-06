@@ -2,6 +2,8 @@
 {% block title %}Order Summary{% endblock title %}
 
 {% block body %}
+{% load cloudinary %}
+
 <div class="container mt-5">
     <h2>Order Summary</h2>
     <p><strong>Product:</strong> {{ order.product.name }}</p>
