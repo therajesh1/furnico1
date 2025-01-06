@@ -69,29 +69,63 @@ class Customer(models.Model):
 
 from django.db import models
 
+# class Product(models.Model):
+#     shopkeeper = models.ForeignKey(Shopkeeper, on_delete=models.CASCADE)
+#     name = models.CharField(max_length=255)
+
+#     description = models.TextField()
+#     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+#     price = models.DecimalField(max_digits=10, decimal_places=2)
+#     # date=models.DateField()
+
+#     # Primary image
+#     image = models.ImageField(upload_to='product_images/')
+#     # Optional additional images
+#     image2 = models.ImageField(upload_to='product_images/', blank=True, null=True)
+#     image3 = models.ImageField(upload_to='product_images/', blank=True, null=True)
+#     image4 = models.ImageField(upload_to='product_images/', blank=True, null=True)
+    
+#     # Status fields
+#     is_out_of_stock = models.BooleanField(default=False)
+#     is_sold = models.BooleanField(default=False)  # New field for sold status
+
+#     def __str__(self):
+#         return f"{self.name} ({'Out of Stock' if self.is_out_of_stock else 'In Stock'}, {'Sold' if self.is_sold else 'Available'})"
+
+from cloudinary.models import CloudinaryField
+
 class Product(models.Model):
     shopkeeper = models.ForeignKey(Shopkeeper, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
-
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    # date=models.DateField()
-
-    # Primary image
-    image = models.ImageField(upload_to='product_images/')
+    
+    # Primary image (Required)
+    image = CloudinaryField('product_images')
+    
     # Optional additional images
-    image2 = models.ImageField(upload_to='product_images/', blank=True, null=True)
-    image3 = models.ImageField(upload_to='product_images/', blank=True, null=True)
-    image4 = models.ImageField(upload_to='product_images/', blank=True, null=True)
+    image2 = CloudinaryField('product_images', blank=True, null=True)
+    image3 = CloudinaryField('product_images', blank=True, null=True)
+    image4 = CloudinaryField('product_images', blank=True, null=True)
     
     # Status fields
     is_out_of_stock = models.BooleanField(default=False)
-    is_sold = models.BooleanField(default=False)  # New field for sold status
+    is_sold = models.BooleanField(default=False)  # Field for sold status
 
     def __str__(self):
-        return f"{self.name} ({'Out of Stock' if self.is_out_of_stock else 'In Stock'}, {'Sold' if self.is_sold else 'Available'})"
+        status = []
+        if self.is_out_of_stock:
+            status.append('Out of Stock')
+        else:
+            status.append('In Stock')
 
+        if self.is_sold:
+            status.append('Sold')
+        else:
+            status.append('Available')
+
+        return f"{self.name} ({', '.join(status)})"
 
 
 from django.db import models

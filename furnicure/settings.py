@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +72,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'furnicure.wsgi.application'
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'djvsbqfwv',
+    'API_KEY': '715889147158576',
+    'API_SECRET': 'P5uZ0P-Si_Wp1gbbcD423Cu2lWs'
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Optional: Set media URL if you want to access via a CDN
+MEDIA_URL = 'https://res.cloudinary.com/djvsbqfwv/'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
