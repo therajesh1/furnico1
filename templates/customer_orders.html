@@ -36,20 +36,19 @@
 </div>
 
 <script>
-    // Timer Logic - Starts as soon as the order is placed
+    // Timer Logic - Starts 1 hour from the order's placement time
     function startTimer(orderId, orderDate) {
-        // Parse the order date correctly
+        // Convert orderDate to a timestamp (milliseconds)
         const orderTime = new Date(orderDate).getTime();
-        const timeAdjustment = 5.5 * 60 * 60 * 1000; // 5 hours 30 minutes in milliseconds
-        const adjustedTime = orderTime + timeAdjustment;
+        const oneHourInMilliseconds = 60 * 60 * 1000; // 1 hour in milliseconds
+        const deleteDeadline = orderTime + oneHourInMilliseconds;
 
-        const deleteDeadline = adjustedTime;
         const timerDisplay = document.getElementById('timer' + orderId);
         const deleteForm = document.getElementById('deleteForm' + orderId);
 
         const countdown = setInterval(() => {
-            const currentTime = new Date().getTime();
-            const timeLeft = deleteDeadline - currentTime;
+            const now = new Date().getTime();
+            const timeLeft = deleteDeadline - now;
 
             if (timeLeft <= 0) {
                 clearInterval(countdown);
