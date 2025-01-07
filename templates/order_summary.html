@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load tz %}
+
 {% block title %}Order Summary{% endblock title %}
 
 {% block body %}
@@ -135,8 +136,15 @@
         <p><strong>Address:</strong> {{ order.address }}</p>
         <p><strong>Phone Number:</strong> {{ order.phone_number }}</p>
         <p><strong>Email:</strong> {{ order.email }}</p>
+
+        <!-- Display order date and adjusted delivery time -->
         <p><strong>Order Date:</strong> {{ order.order_date }}</p>
-        <p><strong>Estimated Delivery Time:</strong> {{ order.order_date|add:"5:30" }}</p> <!-- Set the order time 5 hours and 30 minutes ahead -->
+        <p><strong>Expected Delivery:</strong> 
+            {% with order.order_date|add:"5 hours 30 minutes" as adjusted_time %}
+                {{ adjusted_time|date:"F j, Y, g:i a" }} 
+            {% endwith %}
+        </p>
+        <p><strong>Delivery will be done within:</strong> 3 Days</p>
     </div>
     
     <form action="{% url 'delete_order' order.id %}" method="post" id="deleteForm{{ order.id }}">
