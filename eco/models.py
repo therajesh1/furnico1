@@ -157,8 +157,7 @@ class Order(models.Model):
     def __str__(self):
         return f"Order for {self.product.name} by {self.customer.user.username}"
 
-    def get_order_date_local(self):
-        return timezone.localtime(self.order_date)  # Converts to local time
+   
 
 
 

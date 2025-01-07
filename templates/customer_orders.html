@@ -11,7 +11,7 @@
     {% for order in orders %}
         <div class="order-item mb-4 p-4 border rounded-lg shadow-lg" style="background-color: #ffffff; border-left: 6px solid #3498db; transition: all 0.3s ease;">
             <h5 class="text-dark" style="font-family: 'Arial', sans-serif; font-weight: 600; font-size: 1.2rem; margin-bottom: 10px;">{{ order.product.name }}</h5>
-            <p><strong class="text-primary">Order Date:</strong> <span class="text-muted">{{ order.order_date|date:"Y-m-d H:i:s" }}</span></p>
+            <p><strong class="text-primary">Order Date:</strong> <span class="text-muted">{{ orders.order_date|date:"Y-m-d H:i:s" }}</span></p>
             <p><strong class="text-primary">Status:</strong> 
                 {% if order.is_paid %}
                     <span class="badge badge-success">Paid</span>
