@@ -7,13 +7,13 @@ from .views import SofaView, BedView, TableView, ChairView, CupboardView
 
 from django.urls import path
 
-urlpatterns = [
-    path('delete_order/<int:order_id>/', views.delete_order, name='delete_order'),
-]
+
 
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('delete_order/<int:order_id>/', views.delete_order, name='delete_order'),
+
     # path('signup/', views.signup, name='signup'),
     path('login/', views.login_view, name='login'),
     path('product/<int:product_id>/', views.product_detail, name='product_detail'),
