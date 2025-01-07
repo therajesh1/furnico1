@@ -26,9 +26,13 @@
 
             <!-- Buttons Layout with spacing -->
             <div class="d-flex justify-content-between mt-3">
-                <button class="btn btn-danger btn-sm" id="deleteBtn{{ order.id }}" onclick="startTimer({{ order.id }})" style="border-radius: 25px; padding: 10px 20px; background-color: #e74c3c; border: none; font-size: 14px;">
-                    Delete Order
-                </button>
+                <form method="POST" action="{% url 'delete_order' order.id %}" class="mb-3">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 25px; padding: 10px 20px; background-color: #e74c3c; border: none; font-size: 14px;">
+                        Delete Order
+                    </button>
+                </form>
+                
 
                 <p class="timer mt-3 mb-0" id="timer{{ order.id }}" style="font-weight: bold; color: #e74c3c; font-size: 14px;">Time left to delete: 1:00:00</p>
             </div>
@@ -69,7 +73,7 @@
 </script> {% endcomment %}
 <script>
     function startTimer(orderId, orderDate) {
-        // Parse the order date into a Date object
+        // Convert order_date string to timestamp (milliseconds)
         let orderTime = new Date(orderDate).getTime();
         let timerDisplay = document.getElementById('timer' + orderId);
         let deleteBtn = document.getElementById('deleteBtn' + orderId);
@@ -100,6 +104,7 @@
         {% endfor %}
     });
 </script>
+
 
 
 {% endblock body %}

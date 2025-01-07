@@ -398,7 +398,7 @@ def delete_order(request, order_id):
     # You can add additional checks if needed, like confirming the user is the one who made the order.
     order.delete()
 
-    return redirect('your_orders')  # Redirect to the orders page after deletion
+    return redirect('home')  # Redirect to the orders page after deletion
 
 
 
