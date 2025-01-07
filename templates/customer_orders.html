@@ -36,7 +36,7 @@
                     </button>
                 </form>
 
-                <p class="timer mt-3 mb-0" id="timer{{ order.id }}" style="font-weight: bold; color: #e74c3c; font-size: 14px;">Time left to delete: 1:00:00</p>
+                <p class="timer mt-3 mb-0" id="timer{{ order.id }}" style="font-weight: bold; color: #e74c3c; font-size: 14px;">Time left to delete: Loading...</p>
             </div>
         </div>
     {% endfor %}
@@ -45,17 +45,16 @@
 <script>
     // Timer Logic - Starts as soon as the order is placed
     function startTimer(orderId, orderDate) {
-        // Ensure the order date is parsed properly to a Date object
-        const orderTime = new Date(orderDate).getTime();  // Order creation time in milliseconds
-        const oneHourInMillis = 3600 * 1000;  // 1 hour in milliseconds
-        const deleteDeadline = orderTime + oneHourInMillis;  // Calculate the delete deadline time
+        const orderTime = new Date(orderDate).getTime(); // Order creation time in milliseconds
+        const oneHourInMillis = 3600 * 1000; // 1 hour in milliseconds
+        const deleteDeadline = orderTime + oneHourInMillis; // Deadline time
 
         const timerDisplay = document.getElementById('timer' + orderId);
         const deleteForm = document.getElementById('deleteForm' + orderId);
 
         const countdown = setInterval(() => {
-            const currentTime = new Date().getTime();  // Current time in milliseconds
-            let timeLeft = deleteDeadline - currentTime;  // Calculate remaining time
+            const currentTime = new Date().getTime();
+            const timeLeft = deleteDeadline - currentTime;
 
             if (timeLeft <= 0) {
                 clearInterval(countdown);
@@ -64,20 +63,19 @@
                 return;
             }
 
-            // Calculate hours, minutes, and seconds from remaining time
-            let hours = Math.floor(timeLeft / 3600000);  // hours
-            let minutes = Math.floor((timeLeft % 3600000) / 60000);  // minutes
-            let seconds = Math.floor((timeLeft % 60000) / 1000);  // seconds
+            // Calculate hours, minutes, and seconds
+            const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-            // Update the timer display
-            timerDisplay.textContent = `Time left to delete: ${hours}:${minutes}:${seconds}`;
+            timerDisplay.textContent = `Time left to delete: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }, 1000);
     }
 
-    // Initialize the timer when the page loads for each order
+    // Initialize the timer for each order
     document.addEventListener('DOMContentLoaded', function() {
         {% for order in orders %}
-            startTimer({{ order.id }}, "{{ order.order_date|date:"Y-m-d H:i:s" }}");
+            startTimer({{ order.id }}, "{{ order.order_date|date:'Y-m-d H:i:s' }}");
         {% endfor %}
     });
 </script>
