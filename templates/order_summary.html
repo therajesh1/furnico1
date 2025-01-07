@@ -159,7 +159,11 @@
         <p><strong>Order Date:</strong> {{ order.order_date }}</p>
     </div>
     
-    <button class="btn-delete" id="deleteBtn" onclick="deleteOrder('{{ order.id }}')">Delete Order</button>
+    <form action="{% url 'delete_order' product.id %}" method="post" style="display: inline;" id="deleteForm">
+        {% csrf_token %}
+        <button type="submit" class="btn-delete" id="deleteBtn" style="display: block;">Delete</button>
+    </form>
+    
     <p class="timer" id="timer">Time left to delete: 1:00:00</p>
 </div>
 
@@ -177,6 +181,7 @@
     let timer = 3600; // 1 hour in seconds
     const timerDisplay = document.getElementById('timer');
     const deleteBtn = document.getElementById('deleteBtn');
+    const deleteForm = document.getElementById('deleteForm');
 
     function startTimer() {
         const countdown = setInterval(() => {
@@ -189,7 +194,7 @@
 
             if (timer < 0) {
                 clearInterval(countdown);
-                deleteBtn.style.display = 'none';
+                deleteBtn.style.display = 'none'; // Hide delete button after time expires
                 timerDisplay.textContent = 'Delete option has expired.';
             }
         }, 1000);
@@ -218,4 +223,5 @@
         });
     }
 </script>
+
 {% endblock body %}

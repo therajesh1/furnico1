@@ -1,7 +1,3 @@
-{% extends "base.html" %}
-{% block title %}Your Orders{% endblock title %}
-
-{% block body %}
 <div class="container mt-5">
     <h2 class="text-center text-info mb-5" style="font-family: 'Poppins', sans-serif; font-weight: bold;">Your Orders</h2>
 
@@ -26,13 +22,12 @@
 
             <!-- Buttons Layout with spacing -->
             <div class="d-flex justify-content-between mt-3">
-                <form method="POST" action="{% url 'delete_order' order.id %}" class="mb-3">
+                <form action="{% url 'delete_order' order.id %}" method="post" style="display: inline;" id="deleteForm{{ order.id }}">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 25px; padding: 10px 20px; background-color: #e74c3c; border: none; font-size: 14px;">
+                    <button type="submit" class="btn-delete btn btn-danger btn-sm" id="deleteBtn{{ order.id }}" style="display: block; border-radius: 25px; padding: 10px 20px; background-color: #e74c3c; border: none; font-size: 14px;">
                         Delete Order
                     </button>
                 </form>
-                
 
                 <p class="timer mt-3 mb-0" id="timer{{ order.id }}" style="font-weight: bold; color: #e74c3c; font-size: 14px;">Time left to delete: 1:00:00</p>
             </div>
@@ -40,25 +35,25 @@
     {% endfor %}
 </div>
 
-{% comment %} <script>
+<script>
     // Timer Logic - Starts as soon as the order is placed
     function startTimer(orderId) {
         let timer = 3600; // 1 hour in seconds
         const timerDisplay = document.getElementById('timer' + orderId);
-        const deleteBtn = document.getElementById('deleteBtn' + orderId);
+        const deleteForm = document.getElementById('deleteForm' + orderId);
 
         const countdown = setInterval(() => {
             let hours = Math.floor(timer / 3600);
             let minutes = Math.floor((timer % 3600) / 60);
             let seconds = timer % 60;
 
-            // Update the timer display
+            // Correct way to insert variables into the string
             timerDisplay.textContent = `Time left to delete: ${hours}:${minutes}:${seconds}`;
             timer--;
 
             if (timer < 0) {
                 clearInterval(countdown);
-                deleteBtn.style.display = 'none';
+                deleteForm.style.display = 'none';
                 timerDisplay.textContent = 'Delete option has expired.';
             }
         }, 1000);
@@ -70,41 +65,4 @@
             startTimer({{ order.id }});
         {% endfor %}
     });
-</script> {% endcomment %}
-<script>
-    function startTimer(orderId, orderDate) {
-        // Convert order_date string to timestamp (milliseconds)
-        let orderTime = new Date(orderDate).getTime();
-        let timerDisplay = document.getElementById('timer' + orderId);
-        let deleteBtn = document.getElementById('deleteBtn' + orderId);
-
-        const countdown = setInterval(() => {
-            let currentTime = new Date().getTime();
-            let timeLeft = orderTime + 3600 * 1000 - currentTime; // 1 hour in milliseconds
-
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-                deleteBtn.style.display = 'none';
-                timerDisplay.textContent = 'Delete option has expired.';
-                return;
-            }
-
-            let hours = Math.floor(timeLeft / (1000 * 60 * 60));
-            let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-            // Update the timer display
-            timerDisplay.textContent = `Time left to delete: ${hours}:${minutes}:${seconds}`;
-        }, 1000);
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        {% for order in orders %}
-            startTimer({{ order.id }}, "{{ order.order_date }}");
-        {% endfor %}
-    });
 </script>
-
-
-
-{% endblock body %}
