@@ -420,8 +420,12 @@ def process_payment(request, order_id):
     messages.success(request, 'Payment successful!')
     return redirect('order_summary', order_id=order.id)
 
+from django.utils import timezone
+
 def customer_orders(request):
     orders = Order.objects.filter(customer=request.user.customer)
+    orders.order_date = timezone.localtime(orders.order_date)
+
     return render(request, 'customer_orders.html', {'orders': orders})
 
 def shopkeeper_orders(request):
