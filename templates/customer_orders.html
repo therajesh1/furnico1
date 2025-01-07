@@ -20,13 +20,6 @@
                 {% endif %}
             </p>
 
-            {% if not order.is_paid %}
-                <form method="POST" action="{% url 'process_payment' order.id %}" class="mb-3">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-success btn-sm" style="border-radius: 25px; padding: 10px 20px; background-color: #28a745; border: none; font-size: 14px;">Make Payment</button>
-                </form>
-            {% endif %}
-
             <!-- Buttons Layout with spacing -->
             <div class="d-flex justify-content-between mt-3">
                 <form action="{% url 'delete_order' order.id %}" method="post" style="display: inline;" id="deleteForm{{ order.id }}">
@@ -45,9 +38,10 @@
 <script>
     // Timer Logic - Starts as soon as the order is placed
     function startTimer(orderId, orderDate) {
-        const orderTime = new Date(orderDate).getTime(); // Order creation time in milliseconds
+        // Parse the order date in UTC format
+        const orderTime = new Date(orderDate + ' UTC').getTime(); 
         const oneHourInMillis = 3600 * 1000; // 1 hour in milliseconds
-        const deleteDeadline = orderTime + oneHourInMillis; // Deadline time
+        const deleteDeadline = orderTime + oneHourInMillis;
 
         const timerDisplay = document.getElementById('timer' + orderId);
         const deleteForm = document.getElementById('deleteForm' + orderId);
