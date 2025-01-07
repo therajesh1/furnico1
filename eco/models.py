@@ -131,6 +131,20 @@ class Product(models.Model):
 from django.db import models
 from django.contrib.auth.models import User
 
+# class Order(models.Model):
+#     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     address = models.CharField(max_length=255)
+#     phone_number = models.CharField(max_length=15)
+#     email = models.EmailField()
+#     order_date = models.DateTimeField(auto_now_add=True)
+#     is_paid = models.BooleanField(default=False)
+
+#     def __str__(self):
+#         return f"Order for {self.product.name} by {self.customer.user.username}"
+
+from django.utils import timezone
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -143,6 +157,8 @@ class Order(models.Model):
     def __str__(self):
         return f"Order for {self.product.name} by {self.customer.user.username}"
 
+    def get_order_date_local(self):
+        return timezone.localtime(self.order_date)  # Converts to local time
 
 
 
