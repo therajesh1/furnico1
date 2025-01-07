@@ -138,12 +138,10 @@
         <p><strong>Email:</strong> {{ order.email }}</p>
 
         <!-- Display order date and adjusted delivery time -->
-        <p><strong>Order Date:</strong> {{ order.order_date }}</p>
-        <p><strong>Expected Delivery:</strong> 
-            {% with order.order_date|add:"5 hours 30 minutes" as adjusted_time %}
-                {{ adjusted_time|date:"F j, Y, g:i a" }} 
-            {% endwith %}
-        </p>
+        <p><strong>Order Date:</strong> {% with order.order_date|add:"5 hours 30 minutes" as adjusted_time %}
+            {{ adjusted_time|date:"F j, Y, g:i a" }} 
+        {% endwith %}</p>
+       
         <p><strong>Delivery will be done within:</strong> 3 Days</p>
     </div>
     

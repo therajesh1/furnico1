@@ -3,28 +3,33 @@
 
 {% block body %}
 <style>
-    .container {
+    /* Scoped Container Styling */
+    .checkout-container {
         max-width: 600px;
         background-color: #f8f9fa;
         border-radius: 10px;
         padding: 30px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 80px;  /* Added margin to prevent navbar overlap */
     }
 
-    h2 {
+    /* Scoped Heading */
+    .checkout-container h2 {
         color: #333;
         font-size: 1.8rem;
         margin-bottom: 20px;
         font-family: 'Arial', sans-serif;
     }
 
-    .form-label {
+    /* Scoped Form Label Styling */
+    .checkout-container .form-label {
         font-size: 1.1rem;
         font-weight: 500;
         color: #555;
     }
 
-    .form-control {
+    /* Scoped Form Control Styling */
+    .checkout-container .form-control {
         border-radius: 8px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         border: 1px solid #ddd;
@@ -33,12 +38,14 @@
         margin-bottom: 15px;
     }
 
-    .form-control:focus {
+    /* Focus state for form controls */
+    .checkout-container .form-control:focus {
         border-color: #66afe9;
         box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
     }
 
-    .btn-success {
+    /* Scoped Button Styling */
+    .checkout-container .btn-success {
         background-color: #28a745;
         border: none;
         border-radius: 8px;
@@ -49,13 +56,14 @@
         transition: background-color 0.3s ease;
     }
 
-    .btn-success:hover {
+    /* Button hover effect */
+    .checkout-container .btn-success:hover {
         background-color: #218838;
         cursor: pointer;
     }
 </style>
 
-<div class="container mt-5" style="color: black;">
+<div class="checkout-container mt-5" style="color: black;">
     <h2>Checkout for {{ product.name }}</h2>
     <form method="POST">
         {% csrf_token %}
