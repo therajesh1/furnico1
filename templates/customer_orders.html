@@ -69,7 +69,7 @@
     // Initialize the timer for each order
     document.addEventListener('DOMContentLoaded', function() {
         {% for order in orders %}
-            startTimer({{ order.id }}, "{{ order.order_date|localtime|date:'Y-m-d H:i:s' }}");
+            startTimer({{ order.id }}, "{{ order.order_date }}");
         {% endfor %}
     });
 </script>
