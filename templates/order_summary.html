@@ -68,15 +68,6 @@
         transform: scale(1.05);
     }
 
-    /* Timer Display */
-    .timer {
-        text-align: center;
-        font-size: 1.1rem;
-        margin-top: 12px;
-        color: #f39c12;
-        font-weight: bold;
-    }
-
     /* Popup Styling */
     .popup {
         display: none;
@@ -145,6 +136,7 @@
         <p><strong>Phone Number:</strong> {{ order.phone_number }}</p>
         <p><strong>Email:</strong> {{ order.email }}</p>
         <p><strong>Order Date:</strong> {{ order.order_date }}</p>
+        <p><strong>Estimated Delivery Time:</strong> {{ order.order_date|add:"5:30" }}</p> <!-- Set the order time 5 hours and 30 minutes ahead -->
     </div>
     
     <form action="{% url 'delete_order' order.id %}" method="post" id="deleteForm{{ order.id }}">
@@ -154,7 +146,6 @@
         </button>
     </form>
     
-    <p class="timer" id="timer">Time left to delete: 1:00:00</p>
 </div>
 
 <!-- JavaScript Section -->
@@ -168,52 +159,5 @@
         document.getElementById('orderPopup').style.display = 'none';
     }
 
-    // Timer Logic
-    let timer = 3600; // 1 hour in seconds
-    const timerDisplay = document.getElementById('timer');
-    const deleteBtn = document.getElementById('deleteBtn{{ order.id }}');
-
-    function startTimer() {
-        const countdown = setInterval(() => {
-            let hours = Math.floor(timer / 3600);
-            let minutes = Math.floor((timer % 3600) / 60);
-            let seconds = timer % 60;
-
-            timerDisplay.textContent = `Time left to delete: ${hours}:${minutes}:${seconds}`;
-            timer--;
-
-            if (timer < 0) {
-                clearInterval(countdown);
-                deleteBtn.style.display = 'none'; // Hide delete button after time expires
-                timerDisplay.textContent = 'Delete option has expired.';
-            }
-        }, 1000);
-    }
-
-    // Start the timer as soon as the order is placed
-    startTimer();
-
-    // AJAX Delete Order Logic
-    document.getElementById('deleteForm{{ order.id }}').addEventListener('submit', function (e) {
-        e.preventDefault();
-        fetch(this.action, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}'
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Order deleted successfully!');
-                window.location.href = '/orders/';
-            } else {
-                alert('Failed to delete the order. Please try again.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while deleting the order.');
-        });
-    });
 </script>
 {% endblock body %}
