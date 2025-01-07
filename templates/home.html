@@ -243,6 +243,91 @@
         color: #d4af37; /* Change color on hover */
     }
 </style> {% endcomment %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+<style>
+  /* Feature Section Styling */
+  .feature-section {
+    background-color: #f9fafc; /* Light Background */
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .feature-section img {
+    border-radius: 12px;
+    max-width: 100%;
+    height: auto;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .feature-section img:hover {
+    transform: scale(1.05);
+  }
+
+  /* Heading Styling */
+  .feature-section h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  /* Icon Styling */
+  .feature-icon {
+    font-size: 28px;
+    margin-right: 15px;
+    color: #444;
+  }
+
+  /* List Styling */
+  .feature-section ul {
+    padding-left: 0;
+    margin-top: 20px;
+  }
+
+  .feature-section li {
+    margin-bottom: 18px;
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    color: #555;
+  }
+
+  /* Hover Effect */
+  .feature-section li:hover {
+    color: #222;
+    transform: translateX(5px);
+    transition: all 0.3s ease-in-out;
+  }
+</style>
+</head>
+<body>
+<div class="container mt-5">
+  <div class="row feature-section align-items-center">
+    <!-- Image Section -->
+    <div class="col-md-6 text-center order-1 order-md-1">
+      <img src="/static/furnicuremarket1.png" alt="Feature Image" class="img-fluid rounded">
+    </div>
+    <!-- Text Section -->
+    <div class="col-md-6 mt-4 mt-md-0 order-2 order-md-2">
+      <h2 class="mb-4 text-dark text-center text-md-start">
+        Key Features
+      </h2>
+      <ul class="list-unstyled">
+        <li><i class="fa-solid fa-camera-retro feature-icon text-primary"></i> <strong>Realistic Photos</strong></li>
+        <li><i class="fa-solid fa-dollar-sign feature-icon text-success"></i> <strong>Reasonable Cost</strong></li>
+        <li><i class="fa-solid fa-truck feature-icon text-info"></i> <strong>Cash On Delivery</strong></li>
+        <li><i class="fa-solid fa-shield-halved feature-icon text-danger"></i> <strong>No Frauds</strong></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+
   <!-- Include Font Awesome from CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMQQnKzJ+n9Ka2svQF0eF+0nCdD64+gkpTP0Ue" crossorigin="anonymous">
   <div class="categories mb-4">
