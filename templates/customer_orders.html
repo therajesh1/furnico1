@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    orders
+    Orders
 {% endblock title %}
 
 {% block body %}
@@ -45,6 +45,7 @@
 <script>
     // Timer Logic - Starts as soon as the order is placed
     function startTimer(orderId, orderDate) {
+        // Ensure the order date is parsed properly to a Date object
         const orderTime = new Date(orderDate).getTime();  // Order creation time in milliseconds
         const oneHourInMillis = 3600 * 1000;  // 1 hour in milliseconds
         const deleteDeadline = orderTime + oneHourInMillis;  // Calculate the delete deadline time
@@ -76,7 +77,7 @@
     // Initialize the timer when the page loads for each order
     document.addEventListener('DOMContentLoaded', function() {
         {% for order in orders %}
-            startTimer({{ order.id }}, "{{ order.order_date }}");
+            startTimer({{ order.id }}, "{{ order.order_date|date:"Y-m-d H:i:s" }}");
         {% endfor %}
     });
 </script>
