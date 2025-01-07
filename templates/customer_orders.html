@@ -36,7 +36,7 @@
     {% endfor %}
 </div>
 
-<script>
+{% comment %} <script>
     // Timer Logic - Starts as soon as the order is placed
     function startTimer(orderId) {
         let timer = 3600; // 1 hour in seconds
@@ -66,6 +66,40 @@
             startTimer({{ order.id }});
         {% endfor %}
     });
+</script> {% endcomment %}
+<script>
+    function startTimer(orderId, orderDate) {
+        // Parse the order date into a Date object
+        let orderTime = new Date(orderDate).getTime();
+        let timerDisplay = document.getElementById('timer' + orderId);
+        let deleteBtn = document.getElementById('deleteBtn' + orderId);
+
+        const countdown = setInterval(() => {
+            let currentTime = new Date().getTime();
+            let timeLeft = orderTime + 3600 * 1000 - currentTime; // 1 hour in milliseconds
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                deleteBtn.style.display = 'none';
+                timerDisplay.textContent = 'Delete option has expired.';
+                return;
+            }
+
+            let hours = Math.floor(timeLeft / (1000 * 60 * 60));
+            let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            // Update the timer display
+            timerDisplay.textContent = `Time left to delete: ${hours}:${minutes}:${seconds}`;
+        }, 1000);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        {% for order in orders %}
+            startTimer({{ order.id }}, "{{ order.order_date }}");
+        {% endfor %}
+    });
 </script>
+
 
 {% endblock body %}

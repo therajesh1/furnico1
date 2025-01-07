@@ -389,12 +389,17 @@ from django.shortcuts import get_object_or_404, redirect
 from django.http import JsonResponse
 from .models import Order
 
+from django.shortcuts import get_object_or_404, redirect
+from .models import Order
+
 def delete_order(request, order_id):
-    if request.method == 'POST':
-        order = get_object_or_404(Order, id=order_id)
-        order.delete()
-        return JsonResponse({'message': 'Order deleted successfully'}, status=200)
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+    order = get_object_or_404(Order, id=order_id)
+
+    # You can add additional checks if needed, like confirming the user is the one who made the order.
+    order.delete()
+
+    return redirect('your_orders')  # Redirect to the orders page after deletion
+
 
 
 def process_payment(request, order_id):
