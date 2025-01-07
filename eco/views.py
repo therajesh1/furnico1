@@ -381,9 +381,20 @@ def checkout(request, product_id):
 
     return render(request, 'checkout.html', {'product': product})
 
+# def order_summary(request, order_id):
+#     order = Order.objects.get(id=order_id)
+#     return render(request, 'order_summary.html', {'order': order})
+from django.utils.timezone import now, localtime
+
 def order_summary(request, order_id):
     order = Order.objects.get(id=order_id)
-    return render(request, 'order_summary.html', {'order': order})
+    order_local_time = localtime(order.order_date)  # Ensure local time is passed
+    context = {
+        'order': order,
+        'current_time': localtime(now()),  # Pass current local time to JavaScript
+    }
+    return render(request, 'order_summary.html', context)
+
 
 from django.shortcuts import get_object_or_404, redirect
 from django.http import JsonResponse

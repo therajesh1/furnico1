@@ -158,6 +158,12 @@ class RedirectToWwwMiddleware:
             )
         return self.get_response(request)
 
+
+
+# settings.py
+USE_TZ = True  # Ensures timezone-aware datetimes
+TIME_ZONE = 'Asia/Kolkata'  # Replace with your preferred timezone
+
 # DATABASES = {
 #      'default': {
 #          'ENGINE': 'django.db.backends.postgresql',
