@@ -144,7 +144,7 @@
         <p><strong>Address:</strong> {{ order.address }}</p>
         <p><strong>Phone Number:</strong> {{ order.phone_number }}</p>
         <p><strong>Email:</strong> {{ order.email }}</p>
-        <p><strong>Order Date:</strong> {{ order.order_date|timezone:"Asia/Kolkata"|localtime }}</p>
+        <p><strong>Order Date:</strong> {{ order.order_date }}</p>
     </div>
     
     <form action="{% url 'delete_order' order.id %}" method="post" id="deleteForm{{ order.id }}">

@@ -392,7 +392,7 @@ def order_summary(request, order_id):
     context = {
         'order': order,
         'current_time': localtime(now()),  # Pass current local time to JavaScript
-    }
+    } 
     return render(request, 'order_summary.html', context)
 
 
