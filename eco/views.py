@@ -149,7 +149,7 @@ def signin(request):
 
 from datetime import datetime
 
-# @login_required(login_url='loginuser')
+# @login_required(login_url='login')
 def contact(request):
     if request.method=="POST":
         name=request.POST.get('name')
@@ -360,6 +360,7 @@ from django.shortcuts import render, redirect
 from eco.models import Product, Order
 from django.contrib import messages
 
+@login_required(login_url='login')
 def checkout(request, product_id):
     product = Product.objects.get(id=product_id)
 
@@ -386,6 +387,7 @@ def checkout(request, product_id):
 #     return render(request, 'order_summary.html', {'order': order})
 from django.utils.timezone import now, localtime
 
+@login_required(login_url='login')
 def order_summary(request, order_id):
     order = Order.objects.get(id=order_id)
     order_local_time = localtime(order.order_date)  # Ensure local time is passed
@@ -403,6 +405,7 @@ from .models import Order
 from django.shortcuts import get_object_or_404, redirect
 from .models import Order
 
+@login_required(login_url='login')
 def delete_order(request, order_id):
     order = get_object_or_404(Order, id=order_id)
 
