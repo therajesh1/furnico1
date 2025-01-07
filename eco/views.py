@@ -385,6 +385,18 @@ def order_summary(request, order_id):
     order = Order.objects.get(id=order_id)
     return render(request, 'order_summary.html', {'order': order})
 
+from django.shortcuts import get_object_or_404, redirect
+from django.http import JsonResponse
+from .models import Order
+
+def delete_order(request, order_id):
+    if request.method == 'POST':
+        order = get_object_or_404(Order, id=order_id)
+        order.delete()
+        return JsonResponse({'message': 'Order deleted successfully'}, status=200)
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
 def process_payment(request, order_id):
     order = Order.objects.get(id=order_id)
     order.is_paid = True  # Update status to paid

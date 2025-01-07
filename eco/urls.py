@@ -5,6 +5,11 @@ from eco import views
 from .views import register_shopkeeper, register_customer
 from .views import SofaView, BedView, TableView, ChairView, CupboardView
 
+from django.urls import path
+
+urlpatterns = [
+    path('delete_order/<int:order_id>/', views.delete_order, name='delete_order'),
+]
 
 
 urlpatterns = [
