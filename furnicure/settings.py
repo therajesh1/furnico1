@@ -159,10 +159,10 @@ class RedirectToWwwMiddleware:
         return self.get_response(request)
 
 
+TIME_ZONE = 'Asia/Kolkata'  # Replace with your preferred timezone
 
 # settings.py
 USE_TZ = True  # Ensures timezone-aware datetimes
-TIME_ZONE = 'Asia/Kolkata'  # Replace with your preferred timezone
 
 # DATABASES = {
 #      'default': {
