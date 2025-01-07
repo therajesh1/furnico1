@@ -11,7 +11,7 @@
     {% for order in orders %}
         <div class="order-item mb-4 p-4 border rounded-lg shadow-lg" style="background-color: #ffffff; border-left: 6px solid #3498db; transition: all 0.3s ease;">
             <h5 class="text-dark" style="font-family: 'Arial', sans-serif; font-weight: 600; font-size: 1.2rem; margin-bottom: 10px;">{{ order.product.name }}</h5>
-            <p><strong class="text-primary">Order Date:</strong> <span class="text-muted">{{ order.order_date|localtime|date:"Y-m-d H:i:s" }}</span></p>
+            <p><strong class="text-primary">Order Date:</strong> <span class="text-muted">{{ order.order_date|date:"Y-m-d H:i:s" }}</span></p>
             <p><strong class="text-primary">Status:</strong> 
                 {% if order.is_paid %}
                     <span class="badge badge-success">Paid</span>
@@ -40,9 +40,10 @@
     function startTimer(orderId, orderDate) {
         // Parse the order date correctly
         const orderTime = new Date(orderDate).getTime();
-        const oneHourInMillis = 3600 * 1000; // 1 hour in milliseconds
-        const deleteDeadline = orderTime + oneHourInMillis;
+        const timeAdjustment = 5.5 * 60 * 60 * 1000; // 5 hours 30 minutes in milliseconds
+        const adjustedTime = orderTime + timeAdjustment;
 
+        const deleteDeadline = adjustedTime;
         const timerDisplay = document.getElementById('timer' + orderId);
         const deleteForm = document.getElementById('deleteForm' + orderId);
 
@@ -69,7 +70,7 @@
     // Initialize the timer for each order
     document.addEventListener('DOMContentLoaded', function() {
         {% for order in orders %}
-            startTimer({{ order.id }}, "{{ order.order_date|localtime|date:'Y-m-d H:i:s' }}");
+            startTimer({{ order.id }}, "{{ order.order_date|date:'Y-m-d H:i:s' }}");
         {% endfor %}
     });
 </script>

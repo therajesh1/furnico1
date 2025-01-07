@@ -208,41 +208,41 @@ footer {
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" href="/">Home</a>
+          <a class="nav-link" href="/"><strong>Home</strong></a>
         </li>
 
         <!-- Dropdown menu with single custom icon and black underline animation -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Catagory <i class="bi bi-caret-down-fill"></i></a>
+          <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Catagory </strong><i class="bi bi-caret-down-fill"></i></a>
           <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-            <li><a class="dropdown-item" href="/chair">Chair</a></li>
-            <li><a class="dropdown-item" href="/sofa">Sofa</a></li>
+            <li><a class="dropdown-item" href="/chair"><strong>Chair</strong></a></li>
+            <li><a class="dropdown-item" href="/sofa"><strong>Sofa</strong></a></li>
             <li><a class="dropdown-item" href="/table">Table</a></li>
           </ul>
         </li>
         {% if request.user.is_authenticated and request.user.shopkeeper %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'manage_products' %}">Manage Products</a>
+          <a class="nav-link" href="{% url 'manage_products' %}"><strong>Manage Products</strong></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'add_product' %}">Add Products</a>
+          <a class="nav-link" href="{% url 'add_product' %}"><strong>Add Products</strong></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'shopkeeper_orders' %}">Orders</a>
+          <a class="nav-link" href="{% url 'shopkeeper_orders' %}"><strong>Orders</strong></a>
         </li>
         {% endif %}
         {% if request.user.is_authenticated and request.user.customer %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'customer_orders' %}">My Orders</a>
+          <a class="nav-link" href="{% url 'customer_orders' %}"><strong>My Orders</strong></a>
         </li>
         {% endif %}
 
         <li class="nav-item">
-          <a class="nav-link" href="/contact">Contact</a>
+          <a class="nav-link" href="/contact"><strong>Contact</strong></a>
         </li>
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          <a class="nav-link" href="{% url 'logout' %}"><strong>Logout</strong></a>
         </li>
         {% else %}
         <li class="nav-item">
