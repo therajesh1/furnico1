@@ -39,12 +39,7 @@
     // Timer Logic - Starts as soon as the order is placed
     function startTimer(orderId, orderDate) {
         // Parse the order date correctly
-        let orderTime = new Date(orderDate).getTime();
-        
-        // Add 5 hours and 30 minutes (in milliseconds)
-        const timezoneOffset = (5 * 60 + 30) * 60 * 1000; // 5 hours 30 minutes in milliseconds
-        orderTime += timezoneOffset; 
-
+        const orderTime = new Date(orderDate).getTime();
         const oneHourInMillis = 3600 * 1000; // 1 hour in milliseconds
         const deleteDeadline = orderTime + oneHourInMillis;
 
