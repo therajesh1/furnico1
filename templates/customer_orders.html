@@ -11,7 +11,7 @@
     {% for order in orders %}
         <div class="order-item mb-4 p-4 border rounded-lg shadow-lg" style="background-color: #ffffff; border-left: 6px solid #3498db; transition: all 0.3s ease;">
             <h5 class="text-dark" style="font-family: 'Arial', sans-serif; font-weight: 600; font-size: 1.2rem; margin-bottom: 10px;">{{ order.product.name }}</h5>
-            <p><strong class="text-primary">Order Date:</strong> <span class="text-muted">{{ orders.order_date|date:"Y-m-d H:i:s" }}</span></p>
+            <p><strong class="text-primary">Order Date:</strong> <span class="text-muted">{{ order.order_date|localtime|date:"Y-m-d H:i:s" }}</span></p>
             <p><strong class="text-primary">Status:</strong> 
                 {% if order.is_paid %}
                     <span class="badge badge-success">Paid</span>
@@ -39,7 +39,12 @@
     // Timer Logic - Starts as soon as the order is placed
     function startTimer(orderId, orderDate) {
         // Parse the order date correctly
-        const orderTime = new Date(orderDate).getTime();
+        let orderTime = new Date(orderDate).getTime();
+        
+        // Add 5 hours and 30 minutes (in milliseconds)
+        const timezoneOffset = (5 * 60 + 30) * 60 * 1000; // 5 hours 30 minutes in milliseconds
+        orderTime += timezoneOffset; 
+
         const oneHourInMillis = 3600 * 1000; // 1 hour in milliseconds
         const deleteDeadline = orderTime + oneHourInMillis;
 
@@ -69,9 +74,7 @@
     // Initialize the timer for each order
     document.addEventListener('DOMContentLoaded', function() {
         {% for order in orders %}
-            // Convert the order_date to an ISO string (which JavaScript can parse)
-            const orderDate = "{{ orders.order_date|date:'Y-m-d H:i:s' }}";
-            startTimer({{ order.id }}, orderDate);
+            startTimer({{ order.id }}, "{{ order.order_date|localtime|date:'Y-m-d H:i:s' }}");
         {% endfor %}
     });
 </script>

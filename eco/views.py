@@ -421,11 +421,13 @@ def process_payment(request, order_id):
     return redirect('order_summary', order_id=order.id)
 
 from django.utils import timezone
+from datetime import timedelta  # Add this import
 
 def customer_orders(request):
     orders = Order.objects.filter(customer=request.user.customer)
-    orders.order_date = timezone.localtime(orders.order_date)
-
+    # Adjust order_date by adding 5 hours 30 minutes (if necessary)
+    for order in orders:
+        order.order_date = order.order_date + timedelta(hours=5, minutes=30)
     return render(request, 'customer_orders.html', {'orders': orders})
 
 def shopkeeper_orders(request):
