@@ -159,9 +159,11 @@
         <p><strong>Order Date:</strong> {{ order.order_date }}</p>
     </div>
     
-    <form action="{% url 'delete_order' product.id %}" method="post" style="display: inline;" id="deleteForm">
+    <form action="{% url 'delete_order' order.id %}" method="post" style="display: inline;" id="deleteForm{{ order.id }}">
         {% csrf_token %}
-        <button type="submit" class="btn-delete" id="deleteBtn" style="display: block;">Delete</button>
+        <button type="submit" class="btn-delete btn btn-danger btn-sm" id="deleteBtn{{ order.id }}" style="display: block; border-radius: 25px; padding: 10px 20px; background-color: #e74c3c; border: none; font-size: 14px;">
+            Delete Order
+        </button>
     </form>
     
     <p class="timer" id="timer">Time left to delete: 1:00:00</p>

@@ -1,3 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    orders
+{% endblock title %}
+
+{% block body %}
 <div class="container mt-5">
     <h2 class="text-center text-info mb-5" style="font-family: 'Poppins', sans-serif; font-weight: bold;">Your Orders</h2>
 
@@ -37,32 +44,40 @@
 
 <script>
     // Timer Logic - Starts as soon as the order is placed
-    function startTimer(orderId) {
-        let timer = 3600; // 1 hour in seconds
+    function startTimer(orderId, orderDate) {
+        const orderTime = new Date(orderDate).getTime();  // Order creation time in milliseconds
+        const oneHourInMillis = 3600 * 1000;  // 1 hour in milliseconds
+        const deleteDeadline = orderTime + oneHourInMillis;  // Calculate the delete deadline time
+
         const timerDisplay = document.getElementById('timer' + orderId);
         const deleteForm = document.getElementById('deleteForm' + orderId);
 
         const countdown = setInterval(() => {
-            let hours = Math.floor(timer / 3600);
-            let minutes = Math.floor((timer % 3600) / 60);
-            let seconds = timer % 60;
+            const currentTime = new Date().getTime();  // Current time in milliseconds
+            let timeLeft = deleteDeadline - currentTime;  // Calculate remaining time
 
-            // Correct way to insert variables into the string
-            timerDisplay.textContent = `Time left to delete: ${hours}:${minutes}:${seconds}`;
-            timer--;
-
-            if (timer < 0) {
+            if (timeLeft <= 0) {
                 clearInterval(countdown);
                 deleteForm.style.display = 'none';
                 timerDisplay.textContent = 'Delete option has expired.';
+                return;
             }
+
+            // Calculate hours, minutes, and seconds from remaining time
+            let hours = Math.floor(timeLeft / 3600000);  // hours
+            let minutes = Math.floor((timeLeft % 3600000) / 60000);  // minutes
+            let seconds = Math.floor((timeLeft % 60000) / 1000);  // seconds
+
+            // Update the timer display
+            timerDisplay.textContent = `Time left to delete: ${hours}:${minutes}:${seconds}`;
         }, 1000);
     }
 
     // Initialize the timer when the page loads for each order
     document.addEventListener('DOMContentLoaded', function() {
         {% for order in orders %}
-            startTimer({{ order.id }});
+            startTimer({{ order.id }}, "{{ order.order_date }}");
         {% endfor %}
     });
 </script>
+{% endblock body %}
