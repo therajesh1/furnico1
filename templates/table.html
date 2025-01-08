@@ -5,6 +5,30 @@
 {% endblock title %}
 
 {% block body %}
+<style>
+    /* Ensure all text in this block has black font color */
+    .container h2,
+    .card-title,
+    .card-text,
+    .btn {
+        color: black !important;
+    }
+
+    .card {
+        border: 1px solid #ddd; /* Optional: Adds subtle border to the cards */
+    }
+
+    .btn-primary {
+        background-color: black;
+        border-color: black;
+    }
+
+    .btn-primary:hover {
+        background-color: #333;
+        border-color: #333;
+    }
+</style>
+
 <div class="container mt-5">
     <h2>Tables</h2>
     <div class="row">
