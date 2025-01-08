@@ -46,6 +46,9 @@
       {% comment %} <p class="text-muted">
         Sold by: <strong>{{ shopkeeper.shop_name }}</strong>
       </p> {% endcomment %}
+      <p class="text-muted">
+        Sold by(Shop Name): <strong>{{ product.shopkeeper.shop_name }}</strong>
+      </p>
       <p class="text-dark">{{ product.description }}</p>
       <h4 class="fw-bold text-dark">Price: {{ product.price }}</h4>
     </div>
