@@ -12,6 +12,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet" />
    <style>
     /* Custom styles */
+/* Custom styles */
 body {
   display: flex;
   flex-direction: column;
@@ -20,13 +21,13 @@ body {
 }
 
 .navbar {
-  background: rgba(0, 0, 0, 0.1); /* Slightly reduced transparency */
+  background: black !important; /* Solid black background */
 }
 
 .navbar-brand {
   font-weight: bold;
   font-size: 1.5rem; /* Increased font size */
-  color: #333; /* Navbar brand color */
+  color: white !important; /* Navbar brand text color */
   display: flex;
   align-items: center; /* Center items vertically */
 }
@@ -39,7 +40,7 @@ body {
 
 .nav-link {
   position: relative;
-  color: #333;
+  color: white !important; /* Navbar links text color */
   display: flex;
   align-items: center;
 }
@@ -52,13 +53,27 @@ body {
   right: 0;
   bottom: -5px;
   height: 2px;
-  background: black;
+  background: white; /* White underline */
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
 
 .nav-link:hover::after {
   transform: scaleX(1);
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  background: black; /* Dropdown background color */
+  border: none;
+}
+
+.dropdown-item {
+  color: white !important; /* Dropdown items text color */
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.1); /* Slight hover effect */
 }
 
 /* Remove default Bootstrap arrow */
@@ -70,7 +85,7 @@ body {
 .dropdown-toggle .bi-caret-down-fill {
   font-size: 0.8em;
   margin-left: 5px;
-  color: #333;
+  color: white;
   vertical-align: middle;
 }
 
@@ -85,113 +100,9 @@ footer {
   padding: 40px 0;
   text-align: center;
 }
+
 </style>
-  {% comment %} </head>
-  <body>
-    <nav class="navbar navbar-expand-lg fixed-top">
-      <!-- Added fixed-top class -->
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <img src="/static/FURNICURE final logo without bg.png" alt="Logo" /> <!-- Placeholder logo -->
-          FurniCure
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/">Home</a>
-            </li>
-
-            <!-- Dropdown menu with single custom icon and black underline animation -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Services <i class="bi bi-caret-down-fill"></i></a>
-              <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-                <li>
-                  <a class="dropdown-item" href="#">Service 1</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">Service 2</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">Service 3</a>
-                </li>
-              </ul>
-            </li>
-            <!-- In your base.html or navbar section -->
-            {% if request.user.is_authenticated and request.user.shopkeeper %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'manage_products' %}">Manage Products</a>
-              </li>
-            {% endif %}
-
-            <li class="nav-item">
-              <a class="nav-link" href="/contact">Contact</a>
-            </li>
-            {% if user.is_authenticated %}
-              <!-- If the user is logged in, show Logout option -->
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-              </li>
-            {% else %}
-              <!-- Show both Login and Sign Up options for unauthenticated users -->
-              <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
-              </li>
-            {% endif %}
-          </ul>
-        </div>
-      </div>
-    </nav> {% endcomment %}
-    <!-- Add Bootstrap JS and Popper.js for the dropdown and hamburger toggle functionality -->
-{% comment %} <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-
-<nav class="navbar navbar-expand-lg fixed-top">
-  <!-- Added fixed-top class -->
-  <div class="container">
-    <a class="navbar-brand" href="#">
-      <img src="/static/FURNICURE final logo without bg.png" alt="Logo" /> <!-- Placeholder logo -->
-      FurniCure
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="/">Home</a>
-        </li>
-
-        <!-- Dropdown menu with single custom icon and black underline animation -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Services <i class="bi bi-caret-down-fill"></i></a>
-          <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-            <li><a class="dropdown-item" href="#">Service 1</a></li>
-            <li><a class="dropdown-item" href="#">Service 2</a></li>
-            <li><a class="dropdown-item" href="#">Service 3</a></li>
-          </ul>
-        </li>
-        {% if request.user.is_authenticated and request.user.shopkeeper %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'manage_products' %}">Manage Products</a>
-        </li>
-        {% endif %}
-        <li class="nav-item">
-          <a class="nav-link" href="/contact">Contact</a>
-        </li>
-        {% if user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="/login">Login</a>
-        </li>
-        {% endif %}
-      </ul>
-    </div>
-  </div>
-</nav> {% endcomment %}
+ 
 <!-- Add Bootstrap JS and Popper.js for the dropdown and hamburger toggle functionality -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
