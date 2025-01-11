@@ -195,7 +195,7 @@ def add_product(request):
         product = Product(
             shopkeeper=Shopkeeper.objects.get(user=request.user),
             name=name,
-            # description=description,
+            description=description,
             # description=description_html,  # Save the HTML version of the description
 
             category_id=category_id,
