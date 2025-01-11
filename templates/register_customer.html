@@ -1,4 +1,3 @@
-<!-- eco/templates/eco/register_customer.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +19,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            padding: 1rem; /* Added padding for smaller screens */
         }
 
         /* Floating Icons Animation */
@@ -59,7 +59,7 @@
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
             max-width: 900px;
-            width: 90%;
+            width: 100%;
             overflow: hidden;
         }
 
@@ -124,12 +124,28 @@
         @media (max-width: 768px) {
             .main-container {
                 flex-direction: column;
-                text-align: center;
+                padding: 1.5rem; /* Reduced padding for smaller screens */
             }
 
             .image-container {
                 margin-bottom: 1.5rem;
                 margin-right: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .image-container img {
+                max-height: 300px;
+            }
+
+            form input {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            button {
+                padding: 0.5rem;
+                font-size: 0.9rem;
             }
         }
     </style>
