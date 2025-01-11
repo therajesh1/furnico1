@@ -49,11 +49,8 @@
       <p class="text-muted">
         Sold by(Shop Name): <strong>{{ product.shopkeeper.shop_name }}</strong>
       </p>
-      {% comment %} <p class="text-dark">{{ product.description }}</p> {% endcomment %}
-      <div class="product-description">
-        <p class="text-dark">{% autoescape off %}{{ product.description|safe }}{% endautoescape %}</p>
-    </div>
-    
+      <p class="text-dark">{{ product.description }}</p>
+      
       <h4 class="fw-bold text-dark">Price: {{ product.price }}</h4>
     </div>
 
