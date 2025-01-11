@@ -25,7 +25,7 @@
                     <tr>
                         <td>{{ product.name }}</td>
                         <td>{{ product.description|truncatewords:10 }}</td>
-                        <td>${{ product.price }}</td>
+                        <td>{{ product.price }}</td>
                         <td>
                             <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100px; height: auto;">
                         </td>

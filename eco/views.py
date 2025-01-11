@@ -170,6 +170,11 @@ from .models import Product, Shopkeeper
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Product, Shopkeeper, Category
+import markdown
+
+def process_description(description_text):
+    return markdown.markdown(description_text)
+
 
 @login_required
 def add_product(request):
@@ -178,7 +183,8 @@ def add_product(request):
         description = request.POST.get('description')
         category_id = request.POST.get('category')  # Assuming you pass category ID from the template
         price = request.POST.get('price')
-        
+        description_html = markdown.markdown(description)
+
         # Handle multiple file uploads
         image = request.FILES.get('image')  # For image1
         image2 = request.FILES.get('image2')  # For image2
@@ -189,7 +195,9 @@ def add_product(request):
         product = Product(
             shopkeeper=Shopkeeper.objects.get(user=request.user),
             name=name,
-            description=description,
+            # description=description,
+            description=description_html,  # Save the HTML version of the description
+
             category_id=category_id,
             price=price,
             image=image,
