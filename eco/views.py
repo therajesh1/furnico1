@@ -338,11 +338,16 @@ class SofaView(View):
         products = Product.objects.filter(category__name='Sofa')  # Filter products by category
         return render(request, 'sofa.html', {'products': products})
 
-class BedView(View):
-    def get(self, request):
-        products = Product.objects.filter(category__name='Bed')  # Filter products by category
-        return render(request, 'bed.html', {'products': products})
+# class BedView(View):
+#     def get(self, request):
+#         products = Product.objects.filter(category__name='Bed')  # Filter products by category
+#         return render(request, 'bed.html', {'products': products})
 
+
+class MandirView(View):
+    def get(self, request):
+        products = Product.objects.filter(category__name='Mandir')  # Filter products by category
+        return render(request, 'mandir.html', {'products': products})
 # class TableView(View):
 #     def get(self, request):
 #         products = Product.objects.filter(category='Table')  # Filter products by category
