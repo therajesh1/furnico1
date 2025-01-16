@@ -3,7 +3,7 @@
 from django.urls import path
 from eco import views
 from .views import register_shopkeeper, register_customer
-from .views import SofaView, BedView, TableView, ChairView, CupboardView
+from .views import SofaView, MandirView, TableView, ChairView, CupboardView
 
 from django.urls import path
 
