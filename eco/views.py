@@ -431,7 +431,7 @@ def shop_products(request, shop_name, city):
     # Use shop_name and city to filter the Shopkeeper
     shop = get_object_or_404(Shopkeeper, shop_name=shop_name, city=city)
     # Fetch products related to the shop
-    products = shop.products.all()
+    products = shop.product_set.all()  # product_set is the default related name for a ForeignKey
 
     # Pass the shop and products to the context
     context = {
