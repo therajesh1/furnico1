@@ -52,8 +52,8 @@ class Shopkeeper(models.Model):
     def __str__(self):
         return self.shop_name
     
-    def custom_slug(self):
-        return f"{self.shop_name}-{self.city}".lower().replace(" ", "-")
+    # def custom_slug(self):
+    #     return f"{self.shop_name}-{self.city}".lower().replace(" ", "-")
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
