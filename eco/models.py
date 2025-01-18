@@ -49,11 +49,11 @@ class Shopkeeper(models.Model):
     email = models.EmailField()  # Temporarily remove unique=True
 
 
-    def __str__(self):
-        return self.shop_name
+    class Meta:
+        unique_together = ('shop_name', 'city')  # This ensures that shop_name and city together are unique.
     
-    # def custom_slug(self):
-    #     return f"{self.shop_name}-{self.city}".lower().replace(" ", "-")
+    def custom_slug(self):
+        return f"{self.shop_name}-{self.city}".lower().replace(" ", "-")
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
