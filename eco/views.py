@@ -417,7 +417,7 @@ from .models import Order
 
 # views.py
 def shop_products(request, slug):
-    shop = get_object_or_404(Shopkeeper, slug=slug)
+    shop = get_object_or_404(Shopkeeper)
     products = shop.products.all()
     context = {
         "shop": shop,
