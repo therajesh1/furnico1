@@ -35,6 +35,7 @@ from django.contrib.auth.models import User
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -42,6 +43,7 @@ from django.contrib.auth.models import User
 class Shopkeeper(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     shop_name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True, blank=True)
     address = models.CharField(max_length=255)  # Address field
     city = models.CharField(max_length=100)  # City field
     phone_number = models.CharField(max_length=15)
@@ -50,6 +52,11 @@ class Shopkeeper(models.Model):
 
     def __str__(self):
         return self.shop_name
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.shop_name)
+        super().save(*args, **kwargs)
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

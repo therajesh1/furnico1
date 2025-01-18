@@ -415,6 +415,17 @@ from django.shortcuts import get_object_or_404, redirect
 from django.http import JsonResponse
 from .models import Order
 
+# views.py
+def shop_products(request, slug):
+    shop = get_object_or_404(Shopkeeper, slug=slug)
+    products = shop.products.all()
+    context = {
+        "shop": shop,
+        "products": products,
+    }
+    return render(request, "shop_products.html", context)
+
+
 from django.shortcuts import get_object_or_404, redirect
 from .models import Order
 

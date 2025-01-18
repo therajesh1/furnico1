@@ -32,6 +32,9 @@ urlpatterns = [
     path('table/', TableView.as_view(), name='table'),
     path('chair/', ChairView.as_view(), name='chair'),
     path('cupboard/', CupboardView.as_view(), name='cupboard'),
+    # urls.py
+    path("<str:slug>/", views.shop_products, name="shop_products"),
+
         # Product Detail and Buy Now
     path('product/<int:product_id>/', views.product_detail, name='product_detail'),
     path('checkout/<int:product_id>/', views.checkout, name='checkout'),
