@@ -1,27 +1,122 @@
 {% extends "base.html" %}
-{% block title %}Manage Orders{% endblock title %}
+{% block title %}Manage Orders{% endblock %}
 {% block body %}
-<div class="products mb-4">
-    <h2>Product Suggestions</h2>
+<div class="container mb-4">
+    <!-- Shop Info Section -->
     <div class="row">
-        {% if products %}
-            {% for product in products %}
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ product.name }}</h5>
-                            <p class="card-text">{{ product.description|truncatewords:15 }}</p>
-                            <p class="card-text"><strong>Price: {{ product.price }}</strong></p>
-                            <a href="{% url 'product_detail' product.id %}" class="btn btn-dark">View Product</a>
+        <div class="col-md-8 order-md-1 mb-3">
+            <h2 style="font-family: 'Abril Fatface', cursive;">{{ shop.shop_name }}</h2>
+            <p class="lead">{{ shop.address }}</p>
+        </div>
+        <div class="col-md-4 order-md-2 mb-3">
+            <img src="{{ shop.shop_image.url }}" alt="{{ shop.shop_name }}" class="img-fluid">
+        </div>
+    </div>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+
+    <div class="categories mb-4">
+        <h2 class="categories-heading">Categories</h2> <!-- Add a class for styling -->
+        <div class="d-flex justify-content-between">
+            <div class="category-icon">
+                <a href="{% url 'chair' %}">
+                    <div class="image-container">
+                        <img src="/static/furniimage12.jpeg" alt="Chair" class="category-image">
+                    </div>
+                </a>
+            </div>
+            <div class="category-icon">
+                <a href="{% url 'sofa' %}">
+                    <div class="image-container">
+                        <img src="/static/furniimage08.jpeg" alt="Sofa" class="category-image">
+                    </div>
+                </a>
+            </div>
+            <div class="category-icon">
+                <a href="{% url 'table' %}">
+                    <div class="image-container">
+                        <img src="/static/furniimage09.jpeg" alt="Table" class="category-image">
+                    </div>
+                </a>
+            </div>
+            <div class="category-icon">
+                <a href="{% url 'mandir' %}">
+                    <div class="image-container">
+                        <img src="/static/mandir.webp" alt="Mandir" class="category-image">
+                    </div>
+                </a>
+            </div>
+            <div class="category-icon">
+                <a href="{% url 'cupboard' %}">
+                    <div class="image-container">
+                        <img src="/static/furniimage11.jpeg" alt="Cupboard" class="category-image">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        /* Styling for the Categories Heading */
+        .categories-heading {
+            font-family: 'Abril Fatface', cursive; /* Apply Abril Fatface font */
+            font-size: 3rem; /* Increase font size */
+            text-align: center; /* Center-align the heading */
+            margin-bottom: 2rem; /* Add spacing below the heading */
+            color: #4B2E2F; /* Dark brown text for elegance */
+        }
+    
+        .category-icon {
+            flex: 1; /* Allow each category icon to take equal space */
+            margin: 0 10px; /* Add margin for spacing */
+            text-align: center; /* Center the content */
+            max-width: 150px; /* Optional: Set max width to control size */
+        }
+    
+        .image-container {
+            width: 100%; /* Full width of the container */
+            padding-top: 100%; /* Creates a square aspect ratio */
+            position: relative; /* Position relative for absolute child */
+            overflow: hidden; /* Hide overflow */
+            border: 1px solid #ddd; /* Optional: add a border */
+            border-radius: 8px; /* Optional: rounded corners */
+        }
+    
+        .category-image {
+            position: absolute; /* Position absolute to fill container */
+            top: 0; /* Align to top */
+            left: 0; /* Align to left */
+            width: 100%; /* Fill width */
+            height: 100%; /* Fill height */
+            object-fit: cover; /* Cover the container while preserving aspect ratio */
+        }
+    </style>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <!-- Product Suggestions Section -->
+    <div class="products mb-4">
+        <h3>Product Suggestions</h3>
+        <div class="row">
+            {% if products %}
+                {% for product in products %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">{{ product.description|truncatewords:15 }}</p>
+                                <p class="card-text"><strong>Price: {{ product.price }}</strong></p>
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-dark">View Product</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No products available at the moment.</p>
-        {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>No products available at the moment.</p>
+            {% endif %}
+        </div>
     </div>
 </div>
-{% endblock body %}
+{% endblock %}
+
 
