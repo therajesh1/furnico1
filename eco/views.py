@@ -444,6 +444,28 @@ def shop_products(request, shop_name, city):
 
     return render(request, "shop_products.html", context)
 
+# from django.shortcuts import render, get_object_or_404
+# from .models import Shopkeeper, Product, Category
+
+# def shop_products(request, shop_name, city):
+#     # Get the shopkeeper based on the shop name and city
+#     shop = get_object_or_404(Shopkeeper, shop_name=shop_name, city=city)
+    
+#     # Fetch all products related to this shop
+#     products = Product.objects.filter(shopkeeper=shop)
+    
+#     # If a category is provided (for filtering)
+#     category_slug = request.GET.get('category')  # Get category from query params (if provided)
+#     if category_slug:
+#         category = get_object_or_404(Category, slug=category_slug)
+#         products = products.filter(category=category)  # Filter products by category
+    
+#     context = {
+#         "shop": shop,
+#         "products": products,
+#     }
+    
+#     return render(request, "shop_products.html", context)
 
 
 from django.shortcuts import get_object_or_404, redirect
