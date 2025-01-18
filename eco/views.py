@@ -82,7 +82,6 @@ def register_shopkeeper(request):
         username = request.POST['username']
         password = request.POST['password']
         shop_name = request.POST['shop_name']
-        slug=request.POST['slug']
         address = request.POST['address']
         city = request.POST['city']
         phone_number = request.POST['phone_number']
@@ -96,7 +95,7 @@ def register_shopkeeper(request):
                 # Create user
                 user = User.objects.create_user(username=username, password=password)
                 # Create shopkeeper instance
-                shopkeeper = Shopkeeper(user=user, shop_name=shop_name,slug=slug, address=address, city=city, phone_number=phone_number)
+                shopkeeper = Shopkeeper(user=user, shop_name=shop_name, address=address, city=city, phone_number=phone_number)
                 shopkeeper.save()
                 messages.success(request, 'Registration successful! You can now log in.')
                 return redirect('/login')  # Redirect after registration
