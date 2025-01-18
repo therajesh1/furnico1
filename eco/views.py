@@ -416,14 +416,31 @@ from django.http import JsonResponse
 from .models import Order
 
 # views.py
-def shop_products(request, slug):
-    shop = get_object_or_404(Shopkeeper)
+# def shop_products(request, slug):
+#     shop = get_object_or_404(Shopkeeper)
+#     products = shop.products.all()
+#     context = {
+#         "shop": shop,
+#         "products": products,
+#     }
+#     return render(request, "shop_products.html", context)
+from django.shortcuts import render, get_object_or_404
+from .models import Shopkeeper
+
+def shop_products(request, shop_name, city):
+    # Use shop_name and city to filter the Shopkeeper
+    shop = get_object_or_404(Shopkeeper, shop_name=shop_name, city=city)
+    # Fetch products related to the shop
     products = shop.products.all()
+
+    # Pass the shop and products to the context
     context = {
         "shop": shop,
         "products": products,
     }
+
     return render(request, "shop_products.html", context)
+
 
 
 from django.shortcuts import get_object_or_404, redirect
