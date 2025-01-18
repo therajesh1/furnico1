@@ -432,7 +432,10 @@ def shop_products(request, shop_name, city):
     shop = get_object_or_404(Shopkeeper, shop_name=shop_name, city=city)
     # Fetch products related to the shop
     products = shop.product_set.all()  # product_set is the default related name for a ForeignKey
-
+    category_slug = request.GET.get('category')  # Get category from query params (if provided)
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        products = products.filter(category=category)  # Filter products by category
     # Pass the shop and products to the context
     context = {
         "shop": shop,
