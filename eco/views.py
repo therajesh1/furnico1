@@ -338,6 +338,11 @@ class SofaView(View):
         products = Product.objects.filter(category__name='Sofa')  # Filter products by category
         return render(request, 'sofa.html', {'products': products})
 
+
+class ShoeView(View):
+    def get(self, request):
+        products = Product.objects.filter(category__name='shoerack')  # Filter products by category
+        return render(request, 'shoerack.html', {'products': products})
 # class BedView(View):
 #     def get(self, request):
 #         products = Product.objects.filter(category__name='Bed')  # Filter products by category

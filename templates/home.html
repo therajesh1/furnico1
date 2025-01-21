@@ -145,7 +145,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const words = ["Sofa", "Chair", "Mandir", "Bed", "Cupboard", "Table"];
+    const words = ["Sofa", "Chair", "Mandir", "Bed", "Cupboard", "Table","shoerack"];
     let i = 0;
     let j = 0;
     let currentWord = "";
@@ -182,6 +182,128 @@
     document.addEventListener("DOMContentLoaded", () => type());
 </script>
 
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+<style>
+    /* Custom CSS for About Us */
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #fefefe;
+        margin: 0;
+        padding: 0;
+    }
+
+    .about-section {
+        background: linear-gradient(120deg, #fdfdfd, #f6f6f6);
+        padding: 3rem 1rem;
+    }
+
+    .about-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.8rem;
+        font-weight: 600;
+        color: #333;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .about-content {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        text-align: justify;
+    }
+
+    .highlight {
+        color: #D97706;
+        font-weight: bold;
+    }
+
+    .about-image {
+        border-radius: 12px;
+        box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        height: auto;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .about-image:hover {
+        transform: scale(1.05);
+    }
+
+    .about-card {
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .about-card h5 {
+        font-weight: 600;
+        color: #4B2E2F;
+        margin-top: 1rem;
+    }
+
+    .about-card p {
+        color: #777;
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+        .about-title {
+            font-size: 2rem;
+        }
+
+        .about-content {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .about-title {
+            font-size: 1.8rem;
+        }
+
+        .about-content {
+            font-size: 0.85rem;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="container-fluid about-section">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="about-title">About Us</h1>
+            <p class="about-content">
+                Welcome to <span class="highlight">FurniCure</span>, your ultimate destination for premium furniture. We specialize in offering high-quality furniture that blends functionality with elegance. Our mission is simple: to make stylish furniture accessible to everyone while supporting local businesses and enhancing your home’s beauty.  
+            </p>
+            <p class="about-content">
+                By combining cutting-edge technology with a vast network of trusted local shops, <span class="highlight">FurniCure</span> ensures you experience a seamless and personalized shopping journey. Let us help you create spaces you’ll love!
+            </p>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-4 col-sm-6 about-card">
+            <img src="/static/highqua.jpg" alt="Quality Furniture" class="about-image">
+            <h5>High-Quality Products</h5>
+            <p>We meticulously select furniture that meets strict quality standards, ensuring every piece adds value to your home.</p>
+        </div>
+        <div class="col-md-4 col-sm-6 about-card">
+            <img src="/static/shophelp.jpg" alt="Local Shops" class="about-image">
+            <h5>Supporting Local Shops</h5>
+            <p>Partnering with trusted local furniture shops helps us bring unique and reliable options closer to you.</p>
+        </div>
+        <div class="col-md-4 col-sm-6 about-card">
+            <img src="/static/happyc.jpg" alt="Customer Satisfaction" class="about-image">
+            <h5>Exceptional Service</h5>
+            <p>From browsing to delivery, we strive to make your shopping experience smooth, enjoyable, and rewarding.</p>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 {% comment %} <div class="categories mb-4">
     <h2>Categories</h2>
     <div class="row">
@@ -376,7 +498,16 @@
                 <div class="d-flex justify-content-center">
                     <a href="{% url 'cupboard' %}">
                         <div class="image-container">
-                            <img src="/static/furniimage11.jpeg" alt="Cupboard" class="category-image shadow-image">
+                            <img src="/static/cupb.jpg" alt="Cupboard" class="category-image shadow-image">
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="d-flex justify-content-center">
+                    <a href="{% url 'shoe' %}">
+                        <div class="image-container">
+                            <img src="/static/shoerack.jpg" alt="Cupboard" class="category-image shadow-image">
                         </div>
                     </a>
                 </div>
@@ -443,6 +574,9 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 <style>
     /* General Section Styling */
     .contact-section {
