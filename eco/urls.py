@@ -3,7 +3,7 @@
 from django.urls import path
 from eco import views
 from .views import register_shopkeeper, register_customer
-from .views import SofaView, MandirView, TableView, ChairView, CupboardView
+from .views import SofaView, MandirView, TableView, ChairView, CupboardView, ShoeView
 
 from django.urls import path
 
@@ -32,6 +32,8 @@ urlpatterns = [
     path('table/', TableView.as_view(), name='table'),
     path('chair/', ChairView.as_view(), name='chair'),
     path('cupboard/', CupboardView.as_view(), name='cupboard'),
+    path('shoerack/', ShoeView.as_view(), name='shoerack'),
+
     # urls.py
     path("<str:shop_name>-<str:city>/", views.shop_products, name="shop_products"),
 
