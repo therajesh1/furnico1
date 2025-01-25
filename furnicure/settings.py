@@ -79,7 +79,9 @@ import cloudinary.api
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'djvsbqfwv',
     'API_KEY': '715889147158576',
-    'API_SECRET': 'P5uZ0P-Si_Wp1gbbcD423Cu2lWs'
+    'API_SECRET': 'P5uZ0P-Si_Wp1gbbcD423Cu2lWs',
+    'SECURE_URL': True,  # Ensures HTTPS
+
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
