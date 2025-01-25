@@ -83,6 +83,20 @@ CLOUDINARY_STORAGE = {
     'SECURE_URL': True,  # Ensures HTTPS
 
 }
+INSTALLED_APPS = [
+    # Other apps...
+    'corsheaders',
+]
+
+MIDDLEWARE = [
+    # Other middleware...
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+# Allow CORS for Cloudinary
+CORS_ALLOWED_ORIGINS = [
+    "https://res.cloudinary.com",
+]
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
