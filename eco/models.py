@@ -117,7 +117,7 @@ class Product(models.Model):
     image4 = CloudinaryField('product_images', blank=True, null=True)
     
     # model_3d = CloudinaryField('product_images', blank=True, null=True)  # For 3D model uploads
-    model3d = CloudinaryField('3d_models', blank=True, null=True)  # For 3D model uploads
+    # model3d = CloudinaryField('3d_models', blank=True, null=True)  # For 3D model uploads
 
     # Status fields
     is_out_of_stock = models.BooleanField(default=False)
