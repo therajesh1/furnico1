@@ -190,7 +190,7 @@ def add_product(request):
         image2 = request.FILES.get('image2')  # For image2
         image3 = request.FILES.get('image3')  # For image3
         image4 = request.FILES.get('image4')  # For image4
-        # model_3d = request.FILES.get('model_3d')  # For the 3D model
+        model_3d = request.FILES.get('model_3d')  # For the 3D model
 
         # Create the product instance
         product = Product(
@@ -205,7 +205,7 @@ def add_product(request):
             image2=image2,
             image3=image3,
             image4=image4,
-            # model_3d=model_3d,  # Save the 3D model file
+            model_3d=model_3d,  # Save the 3D model file
 
             is_out_of_stock=False  # Default value
         )
