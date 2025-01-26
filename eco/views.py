@@ -283,7 +283,7 @@ from django.http import JsonResponse
 from django.db.models import Q
 from .models import Product
 
-def product_search_api(request):
+def product_search(request):
     query = request.GET.get("query", "")
     keywords = query.split()
     

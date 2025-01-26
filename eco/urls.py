@@ -3,7 +3,7 @@
 from django.urls import path
 from eco import views
 from .views import register_shopkeeper, register_customer
-from .views import SofaView, MandirView, TableView, ChairView, CupboardView, ShoeView, product_search_api
+from .views import SofaView, MandirView, TableView, ChairView, CupboardView, ShoeView
 
 from django.urls import path
 
@@ -13,7 +13,7 @@ from django.urls import path
 urlpatterns = [
     path('', views.home, name='home'),
     path('delete_order/<int:order_id>/', views.delete_order, name='delete_order'),
-    path('api/product-search/', product_search_api, name='product_search_api'),
+    path('product-search/', views.product_search, name='product-search'),
 
     # path('signup/', views.signup, name='signup'),
     path('login/', views.login_view, name='login'),
