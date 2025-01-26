@@ -121,19 +121,32 @@
             </button>
         </div>
     
-        <!-- Price Range Filter -->
+        <!-- Filters Section -->
         <div class="collapse" id="filterSection">
             <div class="filter-section mb-4">
-                <h3 class="filter-title">Filter by Price</h3>
-                <div class="d-flex align-items-center gap-3">
-                    <div class="flex-grow-1">
-                        <label for="priceRange" class="form-label">Select Max Price:</label>
-                        <input type="range" id="priceRange" min="0" max="1000" step="10" value="1000" class="form-range">
-                        <p>Max Price: <span id="priceValue">1000</span></p>
+                <h3 class="filter-title">Filters</h3>
+                <!-- Price Range Filter -->
+                <div class="mb-4">
+                    <h5>Filter by Price</h5>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="flex-grow-1">
+                            <label for="priceRange" class="form-label">Select Max Price:</label>
+                            <input type="range" id="priceRange" min="0" max="20000" step="10" value="1000" class="form-range">
+                            <p>Max Price: <span id="priceValue">20000</span></p>
+                        </div>
+                        <div>
+                            <label for="priceInput" class="form-label">Enter Price:</label>
+                            <input type="number" id="priceInput" min="0" max="1000" class="form-control" placeholder="Enter price">
+                        </div>
                     </div>
-                    <div>
-                        <label for="priceInput" class="form-label">Enter Price:</label>
-                        <input type="number" id="priceInput" min="0" max="1000" class="form-control" placeholder="Enter price">
+                </div>
+    
+                <!-- Sorting Filter -->
+                <div>
+                    <h5>Sort by Price</h5>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-dark sort-btn" id="sortHighToLow">High to Low</button>
+                        <button class="btn btn-dark sort-btn" id="sortLowToHigh">Low to High</button>
                     </div>
                 </div>
             </div>
@@ -198,6 +211,9 @@
         const priceValue = document.getElementById('priceValue');
         const productItems = document.querySelectorAll('.product-item');
     
+        const sortHighToLow = document.getElementById('sortHighToLow');
+        const sortLowToHigh = document.getElementById('sortLowToHigh');
+    
         // Update price value and filter on range input
         priceRange.addEventListener('input', () => {
             const maxPrice = priceRange.value;
@@ -221,6 +237,22 @@
                 item.style.display = productPrice <= maxPrice ? 'block' : 'none';
             });
         }
+    
+        // Sorting functionality
+        function sortProducts(order) {
+            const sortedItems = Array.from(productItems).sort((a, b) => {
+                const priceA = parseFloat(a.getAttribute('data-price'));
+                const priceB = parseFloat(b.getAttribute('data-price'));
+                return order === 'highToLow' ? priceB - priceA : priceA - priceB;
+            });
+    
+            const container = document.getElementById('productContainer');
+            container.innerHTML = '';
+            sortedItems.forEach(item => container.appendChild(item));
+        }
+    
+        sortHighToLow.addEventListener('click', () => sortProducts('highToLow'));
+        sortLowToHigh.addEventListener('click', () => sortProducts('lowToHigh'));
     
         // Initial filter
         filterProductsByPrice(priceRange.value);
@@ -285,7 +317,7 @@
         .card-image-container {
             position: relative;
             width: 100%;
-            padding-top: 75%; /* Maintain aspect ratio */
+            padding-top: 100%; /* Ensure square aspect ratio */
             overflow: hidden;
             background: #f8f8f8;
         }
@@ -297,7 +329,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensure image fits */
+            object-fit: cover; /* Ensure the entire image is visible */
         }
     
         .card-body {
