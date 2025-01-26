@@ -6,81 +6,230 @@
 
 {% block body %}
 
-<div class="products mb-4">
-    <h2>Chairs</h2>
-    <div class="row">
-        {% if products %}
-            {% for product in products %}
-                <div class="col-md-4 mb-3">
-                    <div class="card h-100">
-                        <div class="card-image-container">
-                            {% if product.image4 %}
-                                {% if product.is_glb %}
-                                    <!-- Display 3D GLB model -->
-                                    <model-viewer src="{{ product.image4 }}" alt="{{ product.name }}" ar auto-rotate camera-controls>
-                                    </model-viewer>
-                                {% else %}
-                                    <!-- Fallback to regular image -->
-                                    <img src="{{ product.image4 }}" class="card-img-top" alt="{{ product.name }}">
-                                {% endif %}
-                            {% else %}
-                                <!-- Fallback if image4 is not available -->
-                                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                            {% endif %}
-                        </div>
-                        
-                        <div class="card-body">
-                            <h5 class="card-title">{{ product.name }}</h5>
-                            <p class="card-text">{{ product.description|truncatewords:15 }}</p>
-                            <p class="card-text"><strong>Price: {{ product.price }}</strong></p>
-                            <a href="{% url 'product_detail' product.id %}" class="btn btn-dark">View Product</a>
-                        </div>
+<div class="container">
+    <!-- Filter Button -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 style="color: black;">Products</h2>
+        <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#filterSection" aria-expanded="false" aria-controls="filterSection">
+            <i class="fas fa-filter"></i> Filter
+        </button>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="collapse" id="filterSection">
+        <div class="filter-section mb-4">
+            <h3 class="filter-title">Filters</h3>
+            <!-- Price Range Filter -->
+            <div class="mb-4">
+                <h5>Filter by Price</h5>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="flex-grow-1">
+                        <label for="priceRange" class="form-label">Select Max Price:</label>
+                        <input type="range" id="priceRange" min="0" max="20000" step="10" value="1000" class="form-range">
+                        <p>Max Price: <span id="priceValue">20000</span></p>
+                    </div>
+                    <div>
+                        <label for="priceInput" class="form-label">Enter Price:</label>
+                        <input type="number" id="priceInput" min="0" max="20000" class="form-control" placeholder="Enter price">
                     </div>
                 </div>
-            {% endfor %}
-        {% else %}
-            <p>No products available at the moment.</p>
-        {% endif %}
+            </div>
+
+            <!-- Sorting Filter -->
+            <div>
+                <h5>Sort by Price</h5>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-dark sort-btn" id="sortHighToLow">High to Low</button>
+                    <button class="btn btn-dark sort-btn" id="sortLowToHigh">Low to High</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="products mb-4">
+        <h2 style="color: black;">Mandir</h2>
+        <div class="row" id="productContainer">
+            {% if products %}
+                {% for product in products %}
+                    <div class="col-md-4 mb-3 product-item" data-price="{{ product.price }}">
+                        <div class="card h-100">
+                            <div class="card-image-container">
+                                {% if product.image4 %}
+                                    {% if product.is_glb %}
+                                        <!-- Display 3D GLB model -->
+                                        <model-viewer 
+                                            src="{{ product.image4 }}" 
+                                            alt="{{ product.name }}" 
+                                            ar 
+                                            auto-rotate 
+                                            camera-controls>
+                                        </model-viewer>
+                                    {% else %}
+                                        <!-- Fallback to regular image -->
+                                        <img 
+                                            src="{{ product.image4 }}" 
+                                            class="card-img-top img-fluid" 
+                                            alt="{{ product.name }}">
+                                    {% endif %}
+                                {% else %}
+                                    <!-- Fallback if image4 is not available -->
+                                    <img 
+                                        src="{{ product.image.url }}" 
+                                        class="card-img-top img-fluid" 
+                                        alt="{{ product.name }}">
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title" style="color: black;">{{ product.name }}</h5>
+                                <p class="card-text" style="color: black;">{{ product.description|truncatewords:15 }}</p>
+                                <p class="card-text" style="color: black;">
+                                    <strong>Price: {{ product.price }}</strong>
+                                </p>
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-dark">
+                                    View Product
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p style="color: black;">No products available at the moment.</p>
+            {% endif %}
+        </div>
     </div>
 </div>
 
-<!-- Ensure you add this script for the <model-viewer> -->
-<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<script>
+    const priceRange = document.getElementById('priceRange');
+    const priceInput = document.getElementById('priceInput');
+    const priceValue = document.getElementById('priceValue');
+    const productItems = document.querySelectorAll('.product-item');
+
+    const sortHighToLow = document.getElementById('sortHighToLow');
+    const sortLowToHigh = document.getElementById('sortLowToHigh');
+
+    // Update price value and filter on range input
+    priceRange.addEventListener('input', () => {
+        const maxPrice = priceRange.value;
+        priceValue.textContent = maxPrice;
+        filterProductsByPrice(maxPrice);
+    });
+
+    // Update range and filter on manual price input
+    priceInput.addEventListener('input', () => {
+        const enteredPrice = priceInput.value;
+        if (enteredPrice) {
+            priceRange.value = enteredPrice;
+            priceValue.textContent = enteredPrice;
+            filterProductsByPrice(enteredPrice);
+        }
+    });
+
+    function filterProductsByPrice(maxPrice) {
+        productItems.forEach(item => {
+            const productPrice = parseFloat(item.getAttribute('data-price'));
+            item.style.display = productPrice <= maxPrice ? 'block' : 'none';
+        });
+    }
+
+    // Sorting functionality
+    function sortProducts(order) {
+        const sortedItems = Array.from(productItems).sort((a, b) => {
+            const priceA = parseFloat(a.getAttribute('data-price'));
+            const priceB = parseFloat(b.getAttribute('data-price'));
+            return order === 'highToLow' ? priceB - priceA : priceA - priceB;
+        });
+
+        const container = document.getElementById('productContainer');
+        container.innerHTML = '';
+        sortedItems.forEach(item => container.appendChild(item));
+    }
+
+    sortHighToLow.addEventListener('click', () => sortProducts('highToLow'));
+    sortLowToHigh.addEventListener('click', () => sortProducts('lowToHigh'));
+
+    // Initial filter
+    filterProductsByPrice(priceRange.value);
+</script>
 
 <style>
+    .filter-section {
+        padding: 1.5rem;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        color: black;
+    }
+
+    .filter-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .form-label {
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .form-range {
+        appearance: none;
+        width: 100%;
+        background: linear-gradient(to right, #007bff, #00d4ff);
+        height: 5px;
+        border-radius: 5px;
+    }
+
+    .form-range::-webkit-slider-thumb {
+        appearance: none;
+        width: 15px;
+        height: 15px;
+        background: #007bff;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ccc;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        border-color: #007bff;
+    }
+
     .card {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        overflow: hidden;
+        text-align: center;
+        color: black;
     }
 
     .card-image-container {
         position: relative;
         width: 100%;
-        height: 0;
-        padding-bottom: 75%; /* Maintain aspect ratio */
+        padding-top: 100%; /* Ensure square aspect ratio */
         overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        background: #f8f8f8;
     }
 
-    model-viewer,
-    .card-img-top {
+    .card-image-container img,
+    .card-image-container model-viewer {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: contain; /* Ensure the entire image/model is visible */
-        background-color: #fff; /* Optional: white background for contrast */
+        object-fit: cover; /* Ensure the entire image is visible */
     }
 
     .card-body {
-        text-align: center;
         padding: 1rem;
     }
 </style>
+
 
 {% endblock body %}
