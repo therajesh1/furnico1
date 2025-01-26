@@ -273,8 +273,27 @@ footer {
 
 <!-- Close the navbar on clicking outside (optional fix for specific issues) -->
 <script>
-
   const searchInput = document.getElementById("searchInput");
+  const liveSearchResults = document.getElementById("liveSearchResults");
+  
+  // Function to trigger a page redirect with the search query
+  function redirectToSearchPage(query) {
+      // Redirect to the product-search page with the query as a URL parameter
+      window.location.href = `/product-search/?query=${encodeURIComponent(query)}`;
+  }
+  
+  // Event listener for search input
+  searchInput.addEventListener("input", () => {
+      const query = searchInput.value;
+      if (query.trim() === "") {
+          liveSearchResults.classList.add("d-none");
+      } else {
+          // Automatically redirect to the new page when typing starts
+          redirectToSearchPage(query);
+      }
+  });
+  
+  {% comment %} const searchInput = document.getElementById("searchInput");
 const resultsContainer = document.getElementById("resultsContainer");
 const liveSearchResults = document.getElementById("liveSearchResults");
 
@@ -331,7 +350,7 @@ searchInput.addEventListener("input", () => {
     } else {
         fetchProducts(query);
     }
-});
+}); {% endcomment %}
 
   {% comment %} const searchInput = document.getElementById("searchInput");
   const resultsContainer = document.getElementById("resultsContainer");
