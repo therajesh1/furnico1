@@ -223,19 +223,49 @@ from django.contrib.auth import authenticate, login
 from .models import Customer, Shopkeeper
 
 
+# from django.http import JsonResponse
+# from .models import Product
+
+# def product_search_api(request):
+#     query = request.GET.get("query", "")
+#     keywords = query.split()
+#     products = Product.objects.all()
+
+#     for keyword in keywords:
+#         products = products.filter(
+#             name__icontains=keyword
+#         ) | products.filter(description__icontains=keyword)
+
+#     results = [
+#         {
+#             "id": product.id,
+#             "name": product.name,
+#             "description": product.description,
+#             "image_url": product.image.url if product.image else "",
+#         }
+#         for product in products
+#     ]
+#     return JsonResponse(results, safe=False)
 from django.http import JsonResponse
+from django.db.models import Q
 from .models import Product
 
 def product_search_api(request):
     query = request.GET.get("query", "")
     keywords = query.split()
+    
+    # Start with all products
     products = Product.objects.all()
 
+    # Use Q objects to combine filters logically (OR) for name and description
+    query_filter = Q()
     for keyword in keywords:
-        products = products.filter(
-            name__icontains=keyword
-        ) | products.filter(description__icontains=keyword)
+        query_filter |= Q(name__icontains=keyword) | Q(description__icontains=keyword)
 
+    # Apply the filter to the products
+    products = products.filter(query_filter)
+
+    # Prepare the results
     results = [
         {
             "id": product.id,
@@ -245,6 +275,7 @@ def product_search_api(request):
         }
         for product in products
     ]
+
     return JsonResponse(results, safe=False)
 
 

@@ -212,6 +212,63 @@ footer {
 <script>
 
   const searchInput = document.getElementById("searchInput");
+const resultsContainer = document.getElementById("resultsContainer");
+const liveSearchResults = document.getElementById("liveSearchResults");
+
+// Function to fetch and update results
+async function fetchProducts(query) {
+    try {
+        const response = await fetch(`/api/product-search/?query=${encodeURIComponent(query)}`); // Adjust the API URL
+        const products = await response.json();
+        updateResults(products, query);
+    } catch (error) {
+        console.error("Error fetching products:", error);
+    }
+}
+
+// Function to update results dynamically
+function updateResults(products, query) {
+    resultsContainer.innerHTML = ""; // Clear previous results
+    if (products.length > 0) {
+        products.forEach((product) => {
+            const cardHTML = `
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="${product.image_url}" class="card-img-top" alt="${product.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${highlightText(product.name, query)}</h5>
+                            <p class="card-text">${highlightText(product.description, query)}</p>
+                            <a href="/product/${product.id}" class="btn btn-dark">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            resultsContainer.innerHTML += cardHTML;
+        });
+        liveSearchResults.classList.remove("d-none");
+    } else {
+        resultsContainer.innerHTML = "<p>No products found.</p>";
+        liveSearchResults.classList.remove("d-none");
+    }
+}
+
+// Function to highlight search keywords in product names and descriptions
+function highlightText(text, query) {
+    const regex = new RegExp(`(${query})`, 'gi'); // Create a case-insensitive regex for query
+    return text.replace(regex, '<mark>$1</mark>'); // Wrap matching words in <mark> tags
+}
+
+// Event listener for search input
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value;
+    if (query.trim() === "") {
+        liveSearchResults.classList.add("d-none");
+    } else {
+        fetchProducts(query);
+    }
+});
+
+  {% comment %} const searchInput = document.getElementById("searchInput");
   const resultsContainer = document.getElementById("resultsContainer");
   const liveSearchResults = document.getElementById("liveSearchResults");
   
@@ -274,7 +331,7 @@ footer {
       } else {
           fetchProducts(query);
       }
-  });
+  }); {% endcomment %}
   
 
 
