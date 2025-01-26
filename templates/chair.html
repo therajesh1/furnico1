@@ -115,7 +115,7 @@
      <div class="container">
         <!-- Filter Button -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Products</h2>
+            <h2 style="color: black;">Products</h2>
             <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#filterSection" aria-expanded="false" aria-controls="filterSection">
                 <i class="fas fa-filter"></i> Filter
             </button>
@@ -140,7 +140,7 @@
         </div>
     
         <div class="products mb-4">
-            <h2>Chairs</h2>
+            <h2 style="color: black;">Chairs</h2>
             <div class="row" id="productContainer">
                 {% if products %}
                     {% for product in products %}
@@ -161,22 +161,21 @@
                                             <!-- Fallback to regular image -->
                                             <img 
                                                 src="{{ product.image4 }}" 
-                                                class="card-img-top" 
+                                                class="card-img-top img-fluid" 
                                                 alt="{{ product.name }}">
                                         {% endif %}
                                     {% else %}
                                         <!-- Fallback if image4 is not available -->
                                         <img 
                                             src="{{ product.image.url }}" 
-                                            class="card-img-top" 
+                                            class="card-img-top img-fluid" 
                                             alt="{{ product.name }}">
                                     {% endif %}
                                 </div>
-                                
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ product.name }}</h5>
-                                    <p class="card-text">{{ product.description|truncatewords:15 }}</p>
-                                    <p class="card-text">
+                                    <h5 class="card-title" style="color: black;">{{ product.name }}</h5>
+                                    <p class="card-text" style="color: black;">{{ product.description|truncatewords:15 }}</p>
+                                    <p class="card-text" style="color: black;">
                                         <strong>Price: {{ product.price }}</strong>
                                     </p>
                                     <a href="{% url 'product_detail' product.id %}" class="btn btn-dark">
@@ -187,7 +186,7 @@
                         </div>
                     {% endfor %}
                 {% else %}
-                    <p>No products available at the moment.</p>
+                    <p style="color: black;">No products available at the moment.</p>
                 {% endif %}
             </div>
         </div>
@@ -274,9 +273,37 @@
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
             border-color: #007bff;
         }
+    
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            color: black;
+        }
+    
+        .card-image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 75%; /* Maintain aspect ratio */
+            overflow: hidden;
+            background: #f8f8f8;
+        }
+    
+        .card-image-container img,
+        .card-image-container model-viewer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure image fits */
+        }
+    
+        .card-body {
+            padding: 1rem;
+        }
     </style>
-    
-    
     
 
 {% endblock body %}
