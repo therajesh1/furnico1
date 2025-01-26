@@ -185,69 +185,75 @@ footer {
 
 
 <style>
-  #liveSearchResults {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-    padding: 20px;
-    max-height: 500px;  /* Increased height */
-    overflow-y: auto;
+  /* Styling for the search results container */
+#liveSearchResults {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
 }
 
-#resultsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;  /* Space between cards */
-}
-
+/* Card container and card styling */
 .card {
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
-    flex: 1 1 calc(33.33% - 15px); /* 3 cards per row */
-    max-width: calc(33.33% - 15px); /* Prevent cards from exceeding their container */
-    min-width: 250px; /* Set minimum card width */
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px; /* Space below the card */
+}
+
+/* Ensure card text and buttons look good */
+.card-body {
+  padding: 1rem;
 }
 
 .card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #333;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
 .card-text {
-    font-size: 1rem;
-    color: #666;
-    height: 50px;  /* Limit description text height */
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
 }
 
-.card img {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
+.card-price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #28a745;
+  margin-bottom: 1rem;
 }
 
 .btn-dark {
-    background-color: #333;
-    color: white;
+  background-color: #333;
+  color: white;
 }
 
-.card-body {
-    padding: 15px;
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .col-md-4 {
+      flex: 0 0 33.33%;
+      max-width: 33.33%;
+  }
 }
 
-.card-body a {
-    text-decoration: none;
+@media (max-width: 992px) {
+  .col-md-4 {
+      flex: 0 0 50%;
+      max-width: 50%;
+  }
 }
 
-.card-body a:hover {
-    background-color: #444;
+@media (max-width: 768px) {
+  .col-md-4 {
+      flex: 0 0 100%;
+      max-width: 100%;
+  }
 }
+
 
 </style>
 
@@ -283,6 +289,8 @@ function updateResults(products, query) {
                         <div class="card-body">
                             <h5 class="card-title">${highlightText(product.name, query)}</h5>
                             <p class="card-text">${highlightText(product.description, query)}</p>
+                            <p class="card-price">${product.price}</p> <!-- Add the price -->
+
                             <a href="/product/${product.id}" class="btn btn-dark">View Details</a>
                         </div>
                     </div>
