@@ -678,14 +678,20 @@
                     <div class="card h-100">
                         <div class="card-image-container">
                             {% if product.image4 %}
-                                <!-- Display 3D GLB model if available -->
-                                <model-viewer src="{{ product.image4 }}" alt="{{ product.name }}" ar auto-rotate camera-controls>
-                                </model-viewer>
+                                {% if product.is_glb %}
+                                    <!-- Display 3D GLB model -->
+                                    <model-viewer src="{{ product.image4 }}" alt="{{ product.name }}" ar auto-rotate camera-controls>
+                                    </model-viewer>
+                                {% else %}
+                                    <!-- Fallback to regular image -->
+                                    <img src="{{ product.image4 }}" class="card-img-top" alt="{{ product.name }}">
+                                {% endif %}
                             {% else %}
-                                <!-- Fallback to regular image -->
+                                <!-- Fallback if image4 is not available -->
                                 <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
                             {% endif %}
                         </div>
+                        
                         <div class="card-body">
                             <h5 class="card-title">{{ product.name }}</h5>
                             <p class="card-text">{{ product.description|truncatewords:15 }}</p>

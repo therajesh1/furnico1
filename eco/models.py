@@ -124,6 +124,9 @@ class Product(models.Model):
     is_out_of_stock = models.BooleanField(default=False)
     is_sold = models.BooleanField(default=False)  # Field for sold status
 
+    def is_glb(self):
+        return str(self.image4).lower().endswith('.glb')
+
     def __str__(self):
         status = []
         if self.is_out_of_stock:
