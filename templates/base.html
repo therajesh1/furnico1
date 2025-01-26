@@ -187,34 +187,35 @@ footer {
 
 <br>
 <style>
- /* Card container and card styling */
+/* Card container and card styling */
 .card {
   border: none;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin-bottom: 30px; /* Space below the card */
-  overflow: hidden; /* Prevents image from overflowing */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Prevents content from overflowing */
+  height: 100%; /* Makes sure the card stretches to fill available height */
 }
 
-/* Ensure card body has proper padding */
+/* Ensure the card body takes all the available height and arranges content properly */
 .card-body {
-  padding: 1rem; /* Add some padding for spacing */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between; /* Distribute space evenly */
+  padding: 1rem;
   height: 100%;
 }
 
-/* Styling for the title */
+/* Styling for the card title */
 .card-title {
   font-size: 1.1rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-/* Styling for the description */
+/* Styling for the card description */
 .card-text {
   font-size: 0.9rem;
+  color: #555;
   margin-bottom: 1rem;
 }
 
@@ -235,7 +236,12 @@ footer {
 /* Adjust image to fit better */
 .card-img-top {
   object-fit: cover;
-  height: 200px; /* Ensure a fixed height for images */
+  height: 200px; /* Fix image height to prevent overflow */
+}
+
+/* Flexbox on card-body to ensure 'Buy Now' button stays at the bottom */
+.card-body .btn {
+  margin-top: auto; /* Pushes the button to the bottom */
 }
 
 /* Responsive adjustments */
@@ -259,9 +265,6 @@ footer {
       max-width: 100%;
   }
 }
-
-
-
 
 </style>
 
@@ -290,21 +293,21 @@ function updateResults(products, query) {
     resultsContainer.innerHTML = ""; // Clear previous results
     if (products.length > 0) {
         products.forEach((product) => {
-            const cardHTML = `
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <img src="${product.image_url}" class="card-img-top" alt="${product.name}">
-                        <div class="card-body">
-                            <h5 class="card-title">${highlightText(product.name, query)}</h5>
-                            <p class="card-text">${highlightText(product.description, query)}</p>
-                            <p class="card-price">${product.price}</p> <!-- Add the price -->
-
-                            <a href="/product/${product.id}" class="btn btn-dark">View Details</a>
-                        </div>
-                    </div>
-                </div>
-            `;
-            resultsContainer.innerHTML += cardHTML;
+          const cardHTML = `
+          <div class="col-md-4 col-sm-6 col-12">
+              <div class="card mb-4 h-100">
+                  <img src="${product.image_url}" class="card-img-top" alt="${product.name}">
+                  <div class="card-body d-flex flex-column">
+                      <h5 class="card-title">${product.name}</h5>
+                      <p class="card-text">${product.description}</p>
+                      <p class="card-price">Price: $${product.price}</p> <!-- Display price -->
+                      <a href="/product/${product.id}" class="btn btn-dark mt-auto">Buy Now</a> <!-- Button aligned at the bottom -->
+                  </div>
+              </div>
+          </div>
+      `;
+      resultsContainer.innerHTML += cardHTML;
+      
         });
         liveSearchResults.classList.remove("d-none");
     } else {

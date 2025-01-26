@@ -246,6 +246,39 @@ from .models import Customer, Shopkeeper
 #         for product in products
 #     ]
 #     return JsonResponse(results, safe=False)
+
+
+#2nd best
+# from django.db.models import Q
+
+# def product_search_api(request):
+#     query = request.GET.get("query", "")
+#     keywords = query.split()  # Split query into individual keywords
+#     products = Product.objects.all()
+
+#     # Initialize the query filter to be an empty Q object
+#     query_filter = Q()
+
+#     # Loop through keywords and combine them with AND logic (all conditions must match)
+#     for keyword in keywords:
+#         query_filter &= (Q(name__icontains=keyword) | Q(description__icontains=keyword))
+
+#     # Apply the combined filter to the queryset
+#     products = products.filter(query_filter)
+
+#     results = [
+#         {
+#             "id": product.id,
+#             "name": product.name,
+#             "description": product.description,
+#             "image_url": product.image.url if product.image else "",
+#         }
+#         for product in products
+#     ]
+#     return JsonResponse(results, safe=False)
+
+
+
 from django.http import JsonResponse
 from django.db.models import Q
 from .models import Product
@@ -260,7 +293,8 @@ def product_search_api(request):
     # Use Q objects to combine filters logically (OR) for name and description
     query_filter = Q()
     for keyword in keywords:
-        query_filter |= Q(name__icontains=keyword) | Q(description__icontains=keyword)
+        query_filter &= (Q(name__icontains=keyword) | Q(description__icontains=keyword))
+
 
     # Apply the filter to the products
     products = products.filter(query_filter)
