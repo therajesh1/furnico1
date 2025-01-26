@@ -115,9 +115,18 @@
      <div class="container">
         <!-- Price Range Filter -->
         <div class="filter-section mb-4">
-            <h3>Filter by Price</h3>
-            <input type="range" id="priceRange" min="0" max="1000" step="10" value="1000" class="form-range">
-            <p>Max Price: <span id="priceValue">1000</span></p>
+            <h3 class="filter-title">Filter by Price</h3>
+            <div class="d-flex align-items-center gap-3">
+                <div class="flex-grow-1">
+                    <label for="priceRange" class="form-label">Select Max Price:</label>
+                    <input type="range" id="priceRange" min="0" max="1000" step="10" value="1000" class="form-range">
+                    <p>Max Price: <span id="priceValue">1000</span></p>
+                </div>
+                <div>
+                    <label for="priceInput" class="form-label">Enter Price:</label>
+                    <input type="number" id="priceInput" min="0" max="1000" class="form-control" placeholder="Enter price">
+                </div>
+            </div>
         </div>
     
         <div class="products mb-4">
@@ -174,31 +183,33 @@
         </div>
     </div>
     
-    <!-- Include model-viewer script -->
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    
     <script>
-        // Get references to the filter and product container
         const priceRange = document.getElementById('priceRange');
+        const priceInput = document.getElementById('priceInput');
         const priceValue = document.getElementById('priceValue');
-        const productContainer = document.getElementById('productContainer');
         const productItems = document.querySelectorAll('.product-item');
     
-        // Update price value text and filter products when range changes
-        priceRange.addEventListener('input', function() {
-            priceValue.textContent = priceRange.value;
-            filterProductsByPrice(priceRange.value);
+        // Update price value and filter on range input
+        priceRange.addEventListener('input', () => {
+            const maxPrice = priceRange.value;
+            priceValue.textContent = maxPrice;
+            filterProductsByPrice(maxPrice);
         });
     
-        // Function to filter products based on the selected price
+        // Update range and filter on manual price input
+        priceInput.addEventListener('input', () => {
+            const enteredPrice = priceInput.value;
+            if (enteredPrice) {
+                priceRange.value = enteredPrice;
+                priceValue.textContent = enteredPrice;
+                filterProductsByPrice(enteredPrice);
+            }
+        });
+    
         function filterProductsByPrice(maxPrice) {
             productItems.forEach(item => {
                 const productPrice = parseFloat(item.getAttribute('data-price'));
-                if (productPrice <= maxPrice) {
-                    item.style.display = 'block'; // Show product
-                } else {
-                    item.style.display = 'none'; // Hide product
-                }
+                item.style.display = productPrice <= maxPrice ? 'block' : 'none';
             });
         }
     
@@ -208,95 +219,44 @@
     
     <style>
         .filter-section {
-            padding: 1rem;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-    
-        .form-range {
-            width: 100%;
-        }
-    
-        .products {
-            margin-top: 2rem;
-        }
-    
-        .product-item {
-            display: block; /* Ensure all products are visible by default */
-        }
-    
-        .card {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-    
-        .card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-        }
-    
-        .card-image-container {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 75%; /* Maintain aspect ratio */
-            overflow: hidden;
-            background-color: #f9f9f9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    
-        model-viewer,
-        .card-img-top {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            padding: 1.5rem;
             background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: black; /* Set font color to black */
         }
     
-        .card-body {
-            padding: 1rem;
-            text-align: center;
-            background-color: #fff;
-            color: #333;
-        }
-    
-        .card-title {
-            font-size: 1.25rem;
+        .filter-title {
+            font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-    
-        .card-text {
-            font-size: 1rem;
             margin-bottom: 1rem;
         }
     
-        .btn-dark {
-            background-color: #333;
-            color: #fff;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background-color 0.2s;
+        .form-label {
+            font-size: 0.9rem;
+            font-weight: 500;
         }
     
-        .btn-dark:hover {
-            background-color: #555;
+        .form-range {
+            appearance: none;
+            width: 100%;
+            background: #ccc;
+            height: 5px;
+            border-radius: 5px;
+        }
+    
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+    
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            border-color: #007bff;
         }
     </style>
+    
     
     
 
