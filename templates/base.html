@@ -115,15 +115,19 @@ footer {
       <img src="/static/FURNICURE final logo without bg.png" alt="Logo" /> <!-- Placeholder logo -->
       FurniCure
     </a>
-    <form class="d-flex ms-3 w-50" id="live-search-form">
+    <div class="input-group my-3">
       <input
-        class="form-control me-2"
-        type="search"
-        placeholder="Search products"
-        aria-label="Search"
-        id="search-input"
+          type="text"
+          id="searchInput"
+          class="form-control"
+          placeholder="Search for products..."
+          aria-label="Search"
       />
-    </form>
+  </div>
+  <div id="liveSearchResults" class="container mt-4 d-none">
+      <div class="row" id="resultsContainer"></div>
+  </div>
+  
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -175,10 +179,7 @@ footer {
     </div>
   </div>
 </nav>
-<!-- Live Search Results -->
-<div id="live-search-results" class="container mt-3 d-none">
-  <div class="row" id="search-results-container"></div>
-</div>
+
 
 <style>
   #live-search-results {
@@ -204,74 +205,79 @@ footer {
     font-weight: bold;
   }
 </style>
-<script>
-  const searchInput = document.getElementById("search-input");
-  const resultsContainer = document.getElementById("search-results-container");
-  const liveSearchResults = document.getElementById("live-search-results");
-
-  searchInput.addEventListener("input", function () {
-    const query = this.value.trim();
-
-    if (query) {
-      fetch(`/search/?q=${query}`, {
-        headers: {
-          "X-Requested-With": "XMLHttpRequest",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          const products = data.products;
-          const query = data.query;
-          updateResults(products, query);
-        });
-    } else {
-      clearResults();
-    }
-  });
-
-  function updateResults(products, query) {
-    resultsContainer.innerHTML = "";
-    if (products.length > 0) {
-      products.forEach((product) => {
-        const highlightedTitle = highlightText(product.title, query);
-        const highlightedDescription = highlightText(product.description, query);
-
-        const cardHTML = `
-          <div class="col-md-4">
-            <div class="card mb-4">
-              <img src="${product.image_url}" class="card-img-top" alt="${product.title}">
-              <div class="card-body">
-                <h5 class="card-title">${highlightedTitle}</h5>
-                <p class="card-text">${highlightedDescription}</p>
-                <a href="/product/${product.id}" class="btn btn-dark">View Details</a>
-              </div>
-            </div>
-          </div>
-        `;
-        resultsContainer.innerHTML += cardHTML;
-      });
-      liveSearchResults.classList.remove("d-none");
-    } else {
-      resultsContainer.innerHTML = "<p>No products found.</p>";
-      liveSearchResults.classList.remove("d-none");
-    }
-  }
-
-  function highlightText(text, query) {
-    const regex = new RegExp(`(${query})`, "gi");
-    return text.replace(regex, "<mark>$1</mark>");
-  }
-
-  function clearResults() {
-    resultsContainer.innerHTML = "";
-    liveSearchResults.classList.add("d-none");
-  }
-</script>
 
 <br>
 
 <!-- Close the navbar on clicking outside (optional fix for specific issues) -->
 <script>
+
+  const searchInput = document.getElementById("searchInput");
+  const resultsContainer = document.getElementById("resultsContainer");
+  const liveSearchResults = document.getElementById("liveSearchResults");
+  
+  // Function to filter products based on keywords
+  function filterProducts(products, query) {
+      const keywords = query.toLowerCase().trim().split(/\s+/); // Split query into keywords
+      return products.filter((product) => {
+          const name = product.name.toLowerCase();
+          const description = product.description.toLowerCase();
+          // Ensure all keywords are found in either name or description
+          return keywords.every(
+              (keyword) => name.includes(keyword) || description.includes(keyword)
+          );
+      });
+  }
+  
+  // Function to fetch and update results
+  async function fetchProducts(query) {
+      try {
+          const response = await fetch("/api/products/"); // Adjust the API URL as needed
+          const products = await response.json();
+          const filteredProducts = filterProducts(products, query);
+          updateResults(filteredProducts, query);
+      } catch (error) {
+          console.error("Error fetching products:", error);
+      }
+  }
+  
+  // Function to update results dynamically
+  function updateResults(products, query) {
+      resultsContainer.innerHTML = "";
+      if (products.length > 0) {
+          products.forEach((product) => {
+              const cardHTML = `
+                  <div class="col-md-4">
+                      <div class="card mb-4">
+                          <img src="${product.image_url}" class="card-img-top" alt="${product.name}">
+                          <div class="card-body">
+                              <h5 class="card-title">${product.name}</h5>
+                              <p class="card-text">${product.description}</p>
+                              <a href="/product/${product.id}" class="btn btn-dark">View Details</a>
+                          </div>
+                      </div>
+                  </div>
+              `;
+              resultsContainer.innerHTML += cardHTML;
+          });
+          liveSearchResults.classList.remove("d-none");
+      } else {
+          resultsContainer.innerHTML = "<p>No products found.</p>";
+          liveSearchResults.classList.remove("d-none");
+      }
+  }
+  
+  // Event listener for search input
+  searchInput.addEventListener("input", () => {
+      const query = searchInput.value;
+      if (query.trim() === "") {
+          liveSearchResults.classList.add("d-none");
+      } else {
+          fetchProducts(query);
+      }
+  });
+  
+
+
   // Close the navbar when clicking anywhere outside of it
   document.addEventListener('click', function (event) {
     const navbar = document.getElementById('navbarNav');

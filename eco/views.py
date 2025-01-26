@@ -223,30 +223,29 @@ from django.contrib.auth import authenticate, login
 from .models import Customer, Shopkeeper
 
 
-# views.py
 from django.http import JsonResponse
-from django.db.models import Q
 from .models import Product
 
-def search_products(request):
-    query = request.GET.get('q', '')
-    products = Product.objects.filter(
-        Q(title__icontains=query) | Q(description__icontains=query)
-    ).order_by('title')
+def product_search_api(request):
+    query = request.GET.get("query", "")
+    keywords = query.split()
+    products = Product.objects.all()
 
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        results = [
-            {
-                'id': product.id,
-                'title': product.title,
-                'description': product.description,
-                'image_url': product.image.url if product.image else '',
-            }
-            for product in products
-        ]
-        return JsonResponse({'products': results, 'query': query})
+    for keyword in keywords:
+        products = products.filter(
+            name__icontains=keyword
+        ) | products.filter(description__icontains=keyword)
 
-    return render(request, 'products/search_results.html', {'products': products, 'query': query})
+    results = [
+        {
+            "id": product.id,
+            "name": product.name,
+            "description": product.description,
+            "image_url": product.image.url if product.image else "",
+        }
+        for product in products
+    ]
+    return JsonResponse(results, safe=False)
 
 
 from django.contrib.auth import authenticate, login
