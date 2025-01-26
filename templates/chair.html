@@ -113,18 +113,28 @@
     </style>
      {% endcomment %}
      <div class="container">
+        <!-- Filter Button -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Products</h2>
+            <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#filterSection" aria-expanded="false" aria-controls="filterSection">
+                <i class="fas fa-filter"></i> Filter
+            </button>
+        </div>
+    
         <!-- Price Range Filter -->
-        <div class="filter-section mb-4">
-            <h3 class="filter-title">Filter by Price</h3>
-            <div class="d-flex align-items-center gap-3">
-                <div class="flex-grow-1">
-                    <label for="priceRange" class="form-label">Select Max Price:</label>
-                    <input type="range" id="priceRange" min="0" max="1000" step="10" value="1000" class="form-range">
-                    <p>Max Price: <span id="priceValue">1000</span></p>
-                </div>
-                <div>
-                    <label for="priceInput" class="form-label">Enter Price:</label>
-                    <input type="number" id="priceInput" min="0" max="1000" class="form-control" placeholder="Enter price">
+        <div class="collapse" id="filterSection">
+            <div class="filter-section mb-4">
+                <h3 class="filter-title">Filter by Price</h3>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="flex-grow-1">
+                        <label for="priceRange" class="form-label">Select Max Price:</label>
+                        <input type="range" id="priceRange" min="0" max="1000" step="10" value="1000" class="form-range">
+                        <p>Max Price: <span id="priceValue">1000</span></p>
+                    </div>
+                    <div>
+                        <label for="priceInput" class="form-label">Enter Price:</label>
+                        <input type="number" id="priceInput" min="0" max="1000" class="form-control" placeholder="Enter price">
+                    </div>
                 </div>
             </div>
         </div>
@@ -224,7 +234,7 @@
             border: 1px solid #ccc;
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            color: black; /* Set font color to black */
+            color: black;
         }
     
         .filter-title {
@@ -241,9 +251,18 @@
         .form-range {
             appearance: none;
             width: 100%;
-            background: #ccc;
+            background: linear-gradient(to right, #007bff, #00d4ff);
             height: 5px;
             border-radius: 5px;
+        }
+    
+        .form-range::-webkit-slider-thumb {
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: #007bff;
+            border-radius: 50%;
+            cursor: pointer;
         }
     
         .form-control {
