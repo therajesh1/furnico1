@@ -191,10 +191,15 @@ footer {
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
-    z-index: 1000;
     padding: 20px;
-    max-height: 400px;
+    max-height: 500px;  /* Increased height */
     overflow-y: auto;
+}
+
+#resultsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;  /* Space between cards */
 }
 
 .card {
@@ -202,6 +207,9 @@ footer {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
+    flex: 1 1 calc(33.33% - 15px); /* 3 cards per row */
+    max-width: calc(33.33% - 15px); /* Prevent cards from exceeding their container */
+    min-width: 250px; /* Set minimum card width */
 }
 
 .card-title {
@@ -213,13 +221,13 @@ footer {
 .card-text {
     font-size: 1rem;
     color: #666;
-    height: 50px; /* Limit description text height */
+    height: 50px;  /* Limit description text height */
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .card img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
     border-radius: 5px;
 }
