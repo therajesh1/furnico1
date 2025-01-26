@@ -176,50 +176,49 @@ footer {
       />
     </div>
     
+    
   </div>
 </nav>
+
 
 <div id="liveSearchResults" class="container mt-4 d-none" style="max-height: 400px; overflow-y: auto;">
   <div class="row" id="resultsContainer"></div>
 </div>
 
-
+<br>
 <style>
-  /* Styling for the search results container */
-#liveSearchResults {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  width: 100%;
-  z-index: 1000;
-}
-
-/* Card container and card styling */
+ /* Card container and card styling */
 .card {
   border: none;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-bottom: 30px; /* Space below the card */
+  overflow: hidden; /* Prevents image from overflowing */
 }
 
-/* Ensure card text and buttons look good */
+/* Ensure card body has proper padding */
 .card-body {
-  padding: 1rem;
+  padding: 1rem; /* Add some padding for spacing */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
+/* Styling for the title */
 .card-title {
   font-size: 1.1rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
 
+/* Styling for the description */
 .card-text {
   font-size: 0.9rem;
   margin-bottom: 1rem;
 }
 
+/* Styling for the price */
 .card-price {
   font-size: 1rem;
   font-weight: bold;
@@ -227,9 +226,16 @@ footer {
   margin-bottom: 1rem;
 }
 
+/* Button styling */
 .btn-dark {
   background-color: #333;
   color: white;
+}
+
+/* Adjust image to fit better */
+.card-img-top {
+  object-fit: cover;
+  height: 200px; /* Ensure a fixed height for images */
 }
 
 /* Responsive adjustments */
@@ -253,6 +259,8 @@ footer {
       max-width: 100%;
   }
 }
+
+
 
 
 </style>
