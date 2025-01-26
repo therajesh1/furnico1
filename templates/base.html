@@ -115,18 +115,7 @@ footer {
       <img src="/static/FURNICURE final logo without bg.png" alt="Logo" /> <!-- Placeholder logo -->
       FurniCure
     </a>
-    <div class="input-group my-3">
-      <input
-          type="text"
-          id="searchInput"
-          class="form-control"
-          placeholder="Search for products..."
-          aria-label="Search"
-      />
-  </div>
-  <div id="liveSearchResults" class="container mt-4 d-none">
-      <div class="row" id="resultsContainer"></div>
-  </div>
+    
   
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -179,31 +168,78 @@ footer {
     </div>
   </div>
 </nav>
+<div class="input-group my-3">
+  <input
+      type="text"
+      id="searchInput"
+      class="form-control"
+      placeholder="Search for products..."
+      aria-label="Search"
+  />
+</div>
+
+<div id="liveSearchResults" class="container mt-4 d-none" style="max-height: 400px; overflow-y: auto;">
+  <div class="row" id="resultsContainer"></div>
+</div>
 
 
 <style>
-  #live-search-results {
+  #liveSearchResults {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    width: 100%;
+    position: relative;
     z-index: 1000;
-  }
+    padding: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
 
-  .card {
+.card {
     border: none;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+    margin-bottom: 20px;
+}
 
-  .card-title mark,
-  .card-text mark {
-    background-color: yellow;
-    color: black;
+.card-title {
+    font-size: 1.2rem;
     font-weight: bold;
-  }
+    color: #333;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #666;
+    height: 50px; /* Limit description text height */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.btn-dark {
+    background-color: #333;
+    color: white;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-body a {
+    text-decoration: none;
+}
+
+.card-body a:hover {
+    background-color: #444;
+}
+
 </style>
 
 <br>
