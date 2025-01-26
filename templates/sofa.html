@@ -7,7 +7,7 @@
 {% block body %}
 
 <div class="products mb-4">
-    <h2>Chairs</h2>
+    <h2>Sofa</h2>
     <div class="row">
         {% if products %}
             {% for product in products %}
@@ -80,7 +80,17 @@
     .card-body {
         text-align: center;
         padding: 1rem;
+        color: black; /* Set text color to black */
+    }
+
+    .card-title {
+        color: black; /* Ensure the title is black */
+    }
+
+    .card-text {
+        color: black; /* Ensure the text is black */
     }
 </style>
+
 
 {% endblock body %}
