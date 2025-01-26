@@ -223,6 +223,32 @@ from django.contrib.auth import authenticate, login
 from .models import Customer, Shopkeeper
 
 
+# views.py
+from django.http import JsonResponse
+from django.db.models import Q
+from .models import Product
+
+def search_products(request):
+    query = request.GET.get('q', '')
+    products = Product.objects.filter(
+        Q(title__icontains=query) | Q(description__icontains=query)
+    ).order_by('title')
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        results = [
+            {
+                'id': product.id,
+                'title': product.title,
+                'description': product.description,
+                'image_url': product.image.url if product.image else '',
+            }
+            for product in products
+        ]
+        return JsonResponse({'products': results, 'query': query})
+
+    return render(request, 'products/search_results.html', {'products': products, 'query': query})
+
+
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .models import Shopkeeper, Customer
