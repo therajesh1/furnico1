@@ -300,17 +300,19 @@ def product_search_api(request):
     products = products.filter(query_filter)
 
     # Prepare the results
-    results = [
-        {
-            "id": product.id,
-            "name": product.name,
-            "description": product.description,
-            "image_url": product.image.url if product.image else "",
-        }
-        for product in products
-    ]
+    # results = [
+    #     {
+    #         "id": product.id,
+    #         "name": product.name,
+    #         "description": product.description,
+    #         "image_url": product.image.url if product.image else "",
+    #     }
+    #     for product in products
+    # ]
 
-    return JsonResponse(results, safe=False)
+    # return JsonResponse(results, safe=False)
+    return render(request, 'search_results.html', {'products': products, 'query': query})
+
 
 
 from django.contrib.auth import authenticate, login
