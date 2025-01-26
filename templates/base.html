@@ -166,17 +166,18 @@ footer {
         {% endif %}
       </ul>
     </div>
+    <div class="input-group my-3">
+      <input
+          type="text"
+          id="searchInput"
+          class="form-control"
+          placeholder="Search for products..."
+          aria-label="Search"
+      />
+    </div>
+    
   </div>
 </nav>
-<div class="input-group my-3">
-  <input
-      type="text"
-      id="searchInput"
-      class="form-control"
-      placeholder="Search for products..."
-      aria-label="Search"
-  />
-</div>
 
 <div id="liveSearchResults" class="container mt-4 d-none" style="max-height: 400px; overflow-y: auto;">
   <div class="row" id="resultsContainer"></div>
