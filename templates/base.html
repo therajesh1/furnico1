@@ -274,6 +274,35 @@ footer {
 <!-- Close the navbar on clicking outside (optional fix for specific issues) -->
 <script>
   const searchInput = document.getElementById("searchInput");
+
+// Function to get query parameter from URL
+function getQueryParameter(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param) || ""; // Return empty string if parameter is not found
+}
+
+// Function to trigger a page redirect with the search query
+function redirectToSearchPage(query) {
+    // Redirect to the product-search page with the query as a URL parameter
+    window.location.href = `/product-search/?query=${encodeURIComponent(query)}`;
+}
+
+// On page load, populate the search field with the query from URL (if present)
+document.addEventListener("DOMContentLoaded", () => {
+    const query = getQueryParameter("query");
+    searchInput.value = query; // Populate the search field with the existing query
+});
+
+// Event listener for search input
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value;
+    if (query.trim() !== "") {
+        // Redirect to the product-search page with the query
+        redirectToSearchPage(query);
+    }
+});
+
+  {% comment %} const searchInput = document.getElementById("searchInput");
   const liveSearchResults = document.getElementById("liveSearchResults");
   
   // Function to trigger a page redirect with the search query
@@ -291,7 +320,7 @@ footer {
           // Automatically redirect to the new page when typing starts
           redirectToSearchPage(query);
       }
-  });
+  }); {% endcomment %}
   
   {% comment %} const searchInput = document.getElementById("searchInput");
 const resultsContainer = document.getElementById("resultsContainer");
