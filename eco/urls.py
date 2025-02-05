@@ -8,12 +8,17 @@ from .views import SofaView, MandirView, TableView, ChairView, CupboardView, Sho
 from django.urls import path
 
 
+from django.urls import path
+from .views import internship_registration
+
+
 
 
 urlpatterns = [
     path('', views.home, name='home'),
     path('delete_order/<int:order_id>/', views.delete_order, name='delete_order'),
     path('product-search/', views.product_search, name='product-search'),
+    path('register-internship/', internship_registration, name='internship_registration'),
 
     # path('signup/', views.signup, name='signup'),
     path('login/', views.login_view, name='login'),

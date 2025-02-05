@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Internship Registration
+{% endblock title %}
+
+{% block body %}
+    <title>Responsive Internship Registration Form</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap');
+
+    :root {
+        --main-color: #ffffff;
+        --dark-color: #f4f4f4;
+        --light-color: #555555;
+        --medium-light-color: #eaeaea;
+        --orange: #FF7A01;
+        --orange-light: #ff9f5e;
+        --text-color: #333333;
+    }
+    
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Nunito', sans-serif;
+    }
+    
+    body {
+        background-color: var(--main-color);
+        color: var(--text-color);
+    }
+    
+    .montserrat {
+        font-family: 'Montserrat', sans-serif;
+    }
+    
+    .form-container-main {
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 0;
+    }
+    
+    .form-container {
+        width: 50%;
+        background-color: var(--dark-color);
+        padding: 30px;
+        display: flex;
+        border-left: 5px solid var(--orange);
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    @media (max-width: 800px) {
+        .form-container {
+            flex-direction: column-reverse;  /* Puts animation above the form */
+            width: 90%;
+            text-align: center;
+        }
+    
+        .form-image {
+            order: -1;  /* Moves animation to the top */
+            margin-bottom: 20px;
+        }
+    
+        .form-image dotlottie-player {
+            max-width: 100%; /* Ensures the animation scales well */
+        }
+    
+        .form {
+            order: 2;
+        }
+    }
+    
+    .form-image {
+        flex-basis: 50%;
+        text-align: center;
+    }
+    
+    .form-image h1 {
+        color: var(--text-color);
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+    
+    .form {
+        flex-basis: 50%;
+        padding: 10px;
+    }
+    
+    .form input, .form select, .form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid var(--medium-light-color);
+        background-color: var(--main-color);
+        color: var(--text-color);
+        border-radius: 4px;
+        outline: none;
+        transition: border-left 0.3s ease-in-out;
+    }
+    
+    .form input:focus, .form select:focus, .form textarea:focus {
+        border-left: 4px solid var(--orange);
+    }
+    
+    .form textarea {
+        resize: none;
+        max-height: 150px;
+    }
+    
+    .button-container {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .send-button {
+        flex-basis: 70%;
+        background: var(--orange);
+        color: var(--main-color);
+        text-align: center;
+        font-weight: bold;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .send-button:hover {
+        background: var(--main-color);
+        border: 1px solid var(--orange);
+        color: var(--orange);
+    }
+    
+    .reset-button {
+        flex-basis: 30%;
+        background: var(--medium-light-color);
+        color: var(--orange);
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .reset-button:hover {
+        background: var(--orange);
+        color: var(--main-color);
+    }
+</style>    
+
+    <div class="form-container-main">
+        <div class="form-container">
+            <div class="form-image">
+                <h1 class="montserrat">Internship Registration</h1>
+                <dotlottie-player 
+                    src="https://lottie.host/785b5195-3a1f-446e-8968-fa8f6d160235/FwHMRtnk2J.lottie" 
+                    loop autoplay>
+                </dotlottie-player>
+            </div>
+            <div class="form">
+                <form method="post" action="{% url 'internship_registration' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="text" name="name" placeholder="Full Name" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="text" name="college" placeholder="College/University" required>
+                    <select name="year" required>
+                        <option value="">Select Study Year</option>
+                        <option value="1st Year">1st Year</option>
+                        <option value="2nd Year">2nd Year</option>
+                        <option value="3rd Year">3rd Year</option>
+                    </select>
+                    <select name="role" required>
+                        <option value="">Select Role</option>
+                        <option value="Developer">Front End Developer</option>
+                        <option value="Designer">Designer</option>
+                        <option value="Marketing">Digital Marketing</option>
+                    </select>
+                    <input type="file" name="resume" accept=".pdf,.doc,.docx" required>
+                    <div class="button-container">
+                        <div class="send-button" id="send-btn">Submit</div>
+                        <div class="reset-button" id="reset-btn">Reset</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('reset-btn').addEventListener('click', function () {
+            document.querySelector('form').reset();
+        });
+    </script>
+{% endblock body %}

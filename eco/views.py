@@ -283,6 +283,43 @@ from django.http import JsonResponse
 from django.db.models import Q
 from .models import Product
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import InternshipApplication
+
+def internship_registration(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        college = request.POST.get('college')
+        year = request.POST.get('year')
+        role = request.POST.get('role')
+        resume = request.FILES.get('resume')
+
+        if not (name and email and college and year and role and resume):
+            messages.error(request, "All fields are required.")
+            return redirect('internship_registration')
+
+        if InternshipApplication.objects.filter(email=email).exists():
+            messages.error(request, "You have already applied.")
+            return redirect('internship_registration')
+
+        InternshipApplication.objects.create(
+            name=name,
+            email=email,
+            college=college,
+            year=year,
+            role=role,
+            resume=resume
+        )
+        
+        messages.success(request, "Your application has been submitted successfully!")
+        return redirect('internship_registration')
+
+    return render(request, 'internship_registration.html')
+
+
+
 def product_search(request):
     query = request.GET.get("query", "")
     keywords = query.split()
