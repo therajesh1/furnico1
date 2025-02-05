@@ -9,10 +9,9 @@ admin.site.register(Shopkeeper)
 admin.site.register(Contact)
 
 class InternshipApplicationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'college', 'year', 'role', 'applied_at')  # Fixed field name
+    list_display = ('name', 'email', 'college', 'year', 'role')  # Fixed field name
     search_fields = ('name', 'email', 'college', 'role')
     list_filter = ('year', 'role')
-    readonly_fields = ('applied_at',)  # Fixed field name
 
 admin.site.register(InternshipApplication, InternshipApplicationAdmin)
 
