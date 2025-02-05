@@ -198,6 +198,8 @@ USE_TZ = True  # Ensures timezone-aware datetimes
 #     }
 # }
 
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables from .env file
 
 
 # Add Google Drive settings
