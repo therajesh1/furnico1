@@ -67,6 +67,7 @@ class Customer(models.Model):
     def __str__(self):
         return self.user.username
 
+from .storages import GoogleDriveStorage
 
 
 # models.py
@@ -91,7 +92,7 @@ class InternshipApplication(models.Model):
     college = models.CharField(max_length=255)
     year = models.CharField(max_length=20, choices=YEAR_CHOICES)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-    resume = models.FileField(upload_to='resumes/')
+    resume = models.FileField(upload_to='resumes/', storage=GoogleDriveStorage())
     # applied_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

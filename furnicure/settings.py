@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cloudinary',
     'cloudinary_storage',
+    'storages',
+
 ]
 
 MIDDLEWARE = [
@@ -196,6 +198,14 @@ USE_TZ = True  # Ensures timezone-aware datetimes
 #     }
 # }
 
+
+
+# Add Google Drive settings
+GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = 'google_credentials/your_credentials_file.json'  # Replace with your file's actual path
+# GOOGLE_DRIVE_STORAGE_FOLDER_ID = 'your-google-drive-folder-id'  # (Optional) If you want to store the files in a specific folder
+
+# Set up default file storage to Google Drive
+GOOGLE_DRIVE_STORAGE = 'eco.storages.GoogleDriveStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
