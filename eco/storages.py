@@ -7,7 +7,7 @@ import os
 class GoogleDriveStorage(Storage):
     def __init__(self, *args, **kwargs):
         self.credentials = Credentials.from_service_account_file(
-            'google_credentials/cre.json',
+            'hi/cre.json',
             scopes=["https://www.googleapis.com/auth/drive.file"]
         )
         self.service = build('drive', 'v3', credentials=self.credentials)
