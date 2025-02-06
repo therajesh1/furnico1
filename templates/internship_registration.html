@@ -205,8 +205,21 @@
             </div>
         </div>
     </div>
-
     <script>
+        document.getElementById('internship-form').addEventListener('submit', function() {
+            // Show success message
+            document.getElementById('success-message').style.display = 'block';
+    
+            // Optionally reset the form and hide success message after 3 seconds
+            setTimeout(function() {
+                document.getElementById('internship-form').reset();
+                document.getElementById('success-message').style.display = 'none';
+            }, 3000);
+        });
+    </script>
+    
+
+    {% comment %} <script>
         document.getElementById('internship-form').addEventListener('submit', function(e) {
             e.preventDefault(); // Prevents actual submission for now
 
@@ -219,6 +232,6 @@
                 document.getElementById('success-message').style.display = 'none';
             }, 3000);
         });
-    </script>
+    </script> {% endcomment %}
 
 {% endblock body %}
