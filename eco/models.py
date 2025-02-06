@@ -75,9 +75,9 @@ from django.db import models
 
 class InternshipApplication(models.Model):
     YEAR_CHOICES = [
-        ('1st Year', '1st Year'),
-        ('2nd Year', '2nd Year'),
-        ('3rd Year', '3rd Year'),
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
     ]
     
     ROLE_CHOICES = [
