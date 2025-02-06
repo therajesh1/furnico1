@@ -85,15 +85,20 @@ class InternshipApplication(models.Model):
         ('Designer', 'Designer'),
         ('Marketing', 'Marketing'),
     ]
-    
-    name = models.CharField(max_length=255)
+    name = models.TextField()  # No max length constraint
     email = models.EmailField(unique=True)
-    college = models.CharField(max_length=255)
-    year = models.IntegerField(choices=YEAR_CHOICES)  # Use IntegerField with choices
-
-    # year = models.CharField(max_length=20, choices=YEAR_CHOICES)
+    college = models.TextField()  # No max length constraint
+    year = models.IntegerField(choices=YEAR_CHOICES)  # No length limit
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
     resume = models.FileField(upload_to='resumes/')
+    # name = models.CharField(max_length=255)
+    # email = models.EmailField(unique=True)
+    # college = models.CharField(max_length=255)
+    # year = models.IntegerField(choices=YEAR_CHOICES)  # Use IntegerField with choices
+
+    # # year = models.CharField(max_length=20, choices=YEAR_CHOICES)
+    # role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    # resume = models.FileField(upload_to='resumes/')
     # applied_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
