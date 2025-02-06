@@ -306,7 +306,7 @@ def internship_registration(request):
             messages.error(request, "You have already applied.")
             return redirect('internship_registration')
 
-        InternshipApplications.objects.create(
+        intern=InternshipApplications.objects.create(
             name=name,
             email=email,
             college=college,
@@ -314,7 +314,7 @@ def internship_registration(request):
             role=role,
             resume=resume
         )
-        
+        intern.save()
         messages.success(request, "Your application has been submitted successfully!")
         return redirect('internship_registration')
 
