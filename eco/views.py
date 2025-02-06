@@ -295,7 +295,7 @@ def internship_registration(request):
         year = request.POST.get('year')
         role = request.POST.get('role')
         resume = request.FILES.get('resume')
-
+ 
         if not (name and email and college and year and role and resume):
             messages.error(request, "All fields are required.")
             return redirect('internship_registration')
