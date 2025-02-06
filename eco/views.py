@@ -302,7 +302,7 @@ def internship_registration(request):
 
         
 
-        intern=InternshipApplications(
+        InternshipApplications.objects.create(
             name=name,
             email=email,
             college=college,
@@ -310,7 +310,6 @@ def internship_registration(request):
             role=role,
             resume=resume
         )
-        intern.save()
         return redirect('internship_registration')
 
     return render(request, 'internship_registration.html')
