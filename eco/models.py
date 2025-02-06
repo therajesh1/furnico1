@@ -75,9 +75,9 @@ from django.db import models
 
 class InternshipApplication(models.Model):
     YEAR_CHOICES = [
-        ('1', '1'),
-        ('2', '2'),
-        ('3', '3'),
+        (1, '1st Year'),
+        (2, '2nd Year'),
+        (3, '3rd Year'),
     ]
     
     ROLE_CHOICES = [
@@ -89,7 +89,9 @@ class InternshipApplication(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     college = models.CharField(max_length=255)
-    year = models.CharField(max_length=20, choices=YEAR_CHOICES)
+    year = models.IntegerField(choices=YEAR_CHOICES)  # Use IntegerField with choices
+
+    # year = models.CharField(max_length=20, choices=YEAR_CHOICES)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
     resume = models.FileField(upload_to='resumes/')
     # applied_at = models.DateTimeField(auto_now_add=True)
