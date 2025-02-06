@@ -70,6 +70,7 @@ class Customer(models.Model):
 
 
 # models.py
+from cloudinary.models import CloudinaryField
 
 from django.db import models
 
@@ -90,7 +91,9 @@ class InternshipApplications(models.Model):
     college = models.TextField()  # No max length constraint
     year = models.IntegerField(choices=YEAR_CHOICES)  # No length limit
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-    resume = models.FileField(upload_to='resumes/')
+    resume = CloudinaryField('resume')
+
+    # resume = models.FileField(upload_to='resumes/')
     # name = models.CharField(max_length=255)
     # email = models.EmailField(unique=True)
     # college = models.CharField(max_length=255)
