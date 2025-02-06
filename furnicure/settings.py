@@ -197,13 +197,14 @@ USE_TZ = True  # Ensures timezone-aware datetimes
 #         'PORT': os.getenv('DB_PORT'),
 #     }
 # }
-
+import os
 from dotenv import load_dotenv
 load_dotenv()  # Load environment variables from .env file
 
+# google_credentials = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
-# Add Google Drive settings
-GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = 'google_credentials/your_credentials_file.json'  # Replace with your file's actual path
+# # Add Google Drive settings
+# GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = 'google_credentials/your_credentials_file.json'  # Replace with your file's actual path
 # GOOGLE_DRIVE_STORAGE_FOLDER_ID = 'your-google-drive-folder-id'  # (Optional) If you want to store the files in a specific folder
 
 # Set up default file storage to Google Drive
