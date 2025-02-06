@@ -198,14 +198,13 @@
                     <input type="file" name="resume" accept=".pdf,.doc,.docx" required>
                     <div class="button-container">
                         <button type="submit" class="send-button">Submit</button>
-                        <button type="reset" class="reset-button">Reset</button>
+                        {% comment %} <button type="reset" class="reset-button">Reset</button> {% endcomment %}
                     </div>
                 </form>
-                <div class="success-message" id="success-message">Your registration was successful!</div>
             </div>
         </div>
     </div>
-    <script>
+    {% comment %} <script>
         document.getElementById('internship-form').addEventListener('submit', function() {
             // Show success message
             document.getElementById('success-message').style.display = 'block';
@@ -216,7 +215,7 @@
                 document.getElementById('success-message').style.display = 'none';
             }, 3000);
         });
-    </script>
+    </script> {% endcomment %}
     
 
     {% comment %} <script>
