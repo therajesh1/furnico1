@@ -86,7 +86,7 @@ class InternshipApplication(models.Model):
         ('Marketing', 'Marketing'),
     ]
     name = models.TextField()  # No max length constraint
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, max_length=254)  # Standard max length for email
     college = models.TextField()  # No max length constraint
     year = models.IntegerField(choices=YEAR_CHOICES)  # No length limit
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
