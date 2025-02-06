@@ -177,7 +177,7 @@
                 </dotlottie-player>
             </div>
             <div class="form">
-                <form id="internship-form" method="POST" action="{% url 'internship_registration' %}" enctype="multipart/form-data">
+                <form id="internship-form" method="POST"  >
                     {% csrf_token %}
                     <input type="text" name="name" placeholder="Full Name" required>
                     <input type="email" name="email" placeholder="Email" required>
