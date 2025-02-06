@@ -298,15 +298,11 @@ def internship_registration(request):
  
 
 
-        if not (name and email and college and year and role and resume):
-            messages.error(request, "All fields are required.")
-            return redirect('internship_registration')
+        
 
-        if InternshipApplications.objects.filter(email=email).exists():
-            messages.error(request, "You have already applied.")
-            return redirect('internship_registration')
+        
 
-        intern=InternshipApplications.objects.create(
+        intern=InternshipApplications(
             name=name,
             email=email,
             college=college,
@@ -315,7 +311,6 @@ def internship_registration(request):
             resume=resume
         )
         intern.save()
-        messages.success(request, "Your application has been submitted successfully!")
         return redirect('internship_registration')
 
     return render(request, 'internship_registration.html')
