@@ -285,7 +285,7 @@ from .models import Product
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import InternshipApplication
+from .models import InternshipApplications
 
 def internship_registration(request):
     if request.method == 'POST':
@@ -296,15 +296,17 @@ def internship_registration(request):
         role = request.POST.get('role')
         resume = request.FILES.get('resume')
  
+
+
         if not (name and email and college and year and role and resume):
             messages.error(request, "All fields are required.")
             return redirect('internship_registration')
 
-        if InternshipApplication.objects.filter(email=email).exists():
+        if InternshipApplications.objects.filter(email=email).exists():
             messages.error(request, "You have already applied.")
             return redirect('internship_registration')
 
-        InternshipApplication.objects.create(
+        InternshipApplications.objects.create(
             name=name,
             email=email,
             college=college,

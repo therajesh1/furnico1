@@ -73,7 +73,7 @@ class Customer(models.Model):
 
 from django.db import models
 
-class InternshipApplication(models.Model):
+class InternshipApplications(models.Model):
     YEAR_CHOICES = [
         (1, '1'),
         (2, '2'),
