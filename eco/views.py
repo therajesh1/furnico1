@@ -60,6 +60,41 @@ import random
 from django.shortcuts import render
 from .models import Product, Category
 
+# def home(request):
+#     # Get the selected city from query parameter or session
+#     selected_city = request.GET.get('city', request.session.get('selected_city', None))
+
+#     # Store the selected city in session for persistence
+#     if selected_city:
+#         request.session['selected_city'] = selected_city
+
+#     # Fetch all products that are not out of stock and belong to shops in the selected city
+#     if selected_city:
+#         all_products = list(Product.objects.filter(is_out_of_stock=False, shopkeeper__city=selected_city))
+#     else:
+#         all_products = list(Product.objects.filter(is_out_of_stock=False))
+
+#     # Check if there are any products available
+#     if len(all_products) > 0:
+#         # Randomly select up to 9 products
+#         products = random.sample(all_products, min(9, len(all_products)))
+#     else:
+#         products = []
+
+#     # Fetch all categories
+#     categories = Category.objects.all()
+
+#     # Render the template with the context
+#     return render(request, 'home.html', {
+#         'products': products, 
+#         'categories': categories,
+#         'selected_city': selected_city
+#     })
+
+import random
+from django.shortcuts import render
+from .models import Product, Category
+
 def home(request):
     # Get the selected city from query parameter or session
     selected_city = request.GET.get('city', request.session.get('selected_city', None))
@@ -68,18 +103,14 @@ def home(request):
     if selected_city:
         request.session['selected_city'] = selected_city
 
-    # Fetch all products that are not out of stock and belong to shops in the selected city
+    # Filter products based on stock availability and selected city
+    products_query = Product.objects.filter(is_out_of_stock=False)
+    
     if selected_city:
-        all_products = list(Product.objects.filter(is_out_of_stock=False, shopkeeper__city=selected_city))
-    else:
-        all_products = list(Product.objects.filter(is_out_of_stock=False))
+        products_query = products_query.filter(shopkeeper__city__iexact=selected_city)
 
-    # Check if there are any products available
-    if len(all_products) > 0:
-        # Randomly select up to 9 products
-        products = random.sample(all_products, min(9, len(all_products)))
-    else:
-        products = []
+    # Randomly select up to 9 products
+    products = random.sample(list(products_query), min(9, products_query.count())) if products_query.exists() else []
 
     # Fetch all categories
     categories = Category.objects.all()
@@ -90,7 +121,6 @@ def home(request):
         'categories': categories,
         'selected_city': selected_city
     })
-
 
 # ecommerce/views.py
 from django.contrib.auth.models import User
