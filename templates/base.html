@@ -157,6 +157,13 @@ footer {
 
 <!-- Add Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Add Popper.js (required for Bootstrap 5 dropdowns) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+<!-- Add Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
 <!-- Add Bootstrap JS and Popper.js for the dropdown and hamburger toggle functionality -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
@@ -206,14 +213,11 @@ footer {
         {% endif %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="cityDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <strong>Select City</strong> <i class="bi bi-geo-alt-fill"></i>
+            <strong>Select Area</strong> <i class="bi bi-geo-alt-fill"></i>
           </a>
           <ul class="dropdown-menu" aria-labelledby="cityDropdown">
-            <li><a class="dropdown-item" href="?city=Mumbai">Mumbai</a></li>
-            <li><a class="dropdown-item" href="?city=Bhandup">Bhandup</a></li>
-            <li><a class="dropdown-item" href="?city=Thane">Thane</a></li>
-            <li><a class="dropdown-item" href="?city=Kolkata">Kolkata</a></li>
-            <li><a class="dropdown-item" href="?city=Chennai">Chennai</a></li>
+            <li><a class="dropdown-item" href="?city=Mumbai">Mumbai-Western Lines</a></li>
+            <li><a class="dropdown-item" href="?city=Bhandup">Mumbai-Central</a></li>
           </ul>
         </li>
         {% comment %} <li class="nav-item">
