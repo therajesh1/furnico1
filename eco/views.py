@@ -107,7 +107,7 @@ def home(request):
     products_query = Product.objects.filter(is_out_of_stock=False)
     
     if selected_city:
-        products_query = products_query.filter(shopkeeper__cities__name__iexact=selected_city)
+        products_query = products_query.filter(shopkeeper__city__iexact=selected_city)
 
     # Randomly select up to 9 products
     products = random.sample(list(products_query), min(9, products_query.count())) if products_query.exists() else []
@@ -526,7 +526,7 @@ from django.views import View  # Import the View class
 from .models import Product  # Assuming you have a Product model
 from django.shortcuts import render
 from django.views import View
-from .models import Product, City
+from .models import Product
 
 class SofaView(View):
     def get(self, request):
@@ -540,7 +540,7 @@ class SofaView(View):
         # Fetch products that are from the 'Sofa' category and belong to shopkeepers in the selected city
         if selected_city:
             # Filter by category 'Sofa' and shopkeeper's cities
-            products = Product.objects.filter(category__name='Sofa', shopkeeper__cities__name=selected_city)
+            products = Product.objects.filter(category__name='Sofa', shopkeeper__city=selected_city)
         else:
             # If no city is selected, just filter by the 'Sofa' category
             products = Product.objects.filter(category__name='Sofa')
@@ -566,7 +566,7 @@ class ShoeView(View):
         # Fetch products that are from the 'Sofa' category and belong to shopkeepers in the selected city
         if selected_city:
             # Filter by category 'Sofa' and shopkeeper's cities
-            products = Product.objects.filter(category__name='Shoerack', shopkeeper__cities__name=selected_city)
+            products = Product.objects.filter(category__name='Shoerack', shopkeeper__city=selected_city)
         else:
             # If no city is selected, just filter by the 'Sofa' category
             products = Product.objects.filter(category__name='Shoerack')
@@ -589,7 +589,7 @@ class MandirView(View):
         # Store the selected city in session for persistence
         if selected_city:
             request.session['selected_city'] = selected_city
-            products = Product.objects.filter(category__name='Mandir', shopkeeper__cities__name=selected_city)
+            products = Product.objects.filter(category__name='Mandir', shopkeeper__city=selected_city)
         else:
             products = None  # No products if city is not selected
 
@@ -616,7 +616,7 @@ class TableView(View):
         # Fetch products that are from the 'Sofa' category and belong to shopkeepers in the selected city
         if selected_city:
             # Filter by category 'Sofa' and shopkeeper's cities
-            products = Product.objects.filter(category__name='Table', shopkeeper__cities__name=selected_city)
+            products = Product.objects.filter(category__name='Table', shopkeeper__city=selected_city)
         else:
             # If no city is selected, just filter by the 'Sofa' category
             products = Product.objects.filter(category__name='Table')
@@ -637,7 +637,7 @@ class ChairView(View):
         # Fetch products that are from the 'Sofa' category and belong to shopkeepers in the selected city
         if selected_city:
             # Filter by category 'Sofa' and shopkeeper's cities
-            products = Product.objects.filter(category__name='Chair', shopkeeper__cities__name=selected_city)
+            products = Product.objects.filter(category__name='Chair', shopkeeper__city=selected_city)
         else:
             # If no city is selected, just filter by the 'Sofa' category
             products = Product.objects.filter(category__name='Chair')
@@ -657,7 +657,7 @@ class CupboardView(View):
         # Fetch products that are from the 'Sofa' category and belong to shopkeepers in the selected city
         if selected_city:
             # Filter by category 'Sofa' and shopkeeper's cities
-            products = Product.objects.filter(category__name='Cupboard', shopkeeper__cities__name=selected_city)
+            products = Product.objects.filter(category__name='Cupboard', shopkeeper__city=selected_city)
         else:
             # If no city is selected, just filter by the 'Sofa' category
             products = Product.objects.filter(category__name='Cupboard')

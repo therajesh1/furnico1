@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Order, Product, Customer, Shopkeeper, Contact, InternshipApplications,City
+from .models import Category, Order, Product, Customer, Shopkeeper, Contact, InternshipApplications
 
 admin.site.register(Category)
 admin.site.register(Order)
@@ -7,7 +7,6 @@ admin.site.register(Product)
 admin.site.register(Customer)
 admin.site.register(Shopkeeper)
 admin.site.register(Contact)
-admin.site.register(City)
 
 # class InternshipApplicationAdmin(admin.ModelAdmin):
 #     list_display = ('name', 'email', 'college', 'year', 'role')  # Fixed field name
