@@ -196,10 +196,21 @@ footer {
           <a class="nav-link" href="{% url 'customer_orders' %}"><strong>My Orders</strong></a>
         </li>
         {% endif %}
-
-        <li class="nav-item">
-          <a class="nav-link" href="/contact"><strong>Contact</strong></a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="cityDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <strong>Select City</strong> <i class="bi bi-geo-alt-fill"></i>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="cityDropdown">
+            <li><a class="dropdown-item" href="?city=Mumbai">Mumbai</a></li>
+            <li><a class="dropdown-item" href="?city=Delhi">Bhandup</a></li>
+            <li><a class="dropdown-item" href="?city=Bangalore">Bangalore</a></li>
+            <li><a class="dropdown-item" href="?city=Kolkata">Kolkata</a></li>
+            <li><a class="dropdown-item" href="?city=Chennai">Chennai</a></li>
+          </ul>
         </li>
+        {% comment %} <li class="nav-item">
+          <a class="nav-link" href="/contact"><strong>Contact</strong></a>
+        </li> {% endcomment %}
         {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'logout' %}"><strong>Logout</strong></a>

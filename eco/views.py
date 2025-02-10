@@ -36,26 +36,60 @@ from django.shortcuts import render
 from .models import Product, Category
 import random
 
+# def home(request):
+#     # Fetch all products that are not out of stock
+#     all_products = list(Product.objects.filter(is_out_of_stock=False))
+
+#     # Check if there are any products available
+#     if len(all_products) > 0:
+#         # Randomly select 9 products
+#         products = random.sample(all_products, min(9, len(all_products)))  # Ensure no more than available
+#     else:
+#         products = []  # No products available
+
+#     # Fetch all categories
+#     categories = Category.objects.all()
+    
+#     # Render the template with the context
+#     return render(request, 'home.html', {
+#         'products': products, 
+#         'categories': categories
+#     })
+
+import random
+from django.shortcuts import render
+from .models import Product, Category
+
 def home(request):
-    # Fetch all products that are not out of stock
-    all_products = list(Product.objects.filter(is_out_of_stock=False))
+    # Get the selected city from query parameter or session
+    selected_city = request.GET.get('city', request.session.get('selected_city', None))
+
+    # Store the selected city in session for persistence
+    if selected_city:
+        request.session['selected_city'] = selected_city
+
+    # Fetch all products that are not out of stock and belong to shops in the selected city
+    if selected_city:
+        all_products = list(Product.objects.filter(is_out_of_stock=False, shopkeeper__city=selected_city))
+    else:
+        all_products = list(Product.objects.filter(is_out_of_stock=False))
 
     # Check if there are any products available
     if len(all_products) > 0:
-        # Randomly select 9 products
-        products = random.sample(all_products, min(9, len(all_products)))  # Ensure no more than available
+        # Randomly select up to 9 products
+        products = random.sample(all_products, min(9, len(all_products)))
     else:
-        products = []  # No products available
+        products = []
 
     # Fetch all categories
     categories = Category.objects.all()
-    
+
     # Render the template with the context
     return render(request, 'home.html', {
         'products': products, 
-        'categories': categories
+        'categories': categories,
+        'selected_city': selected_city
     })
-
 
 
 # ecommerce/views.py
@@ -475,12 +509,29 @@ class ShoeView(View):
 #     def get(self, request):
 #         products = Product.objects.filter(category__name='Bed')  # Filter products by category
 #         return render(request, 'bed.html', {'products': products})
-
+from django.views import View
+from django.shortcuts import render
+from .models import Product
 
 class MandirView(View):
     def get(self, request):
-        products = Product.objects.filter(category__name='Mandir')  # Filter products by category
-        return render(request, 'mandir.html', {'products': products})
+        # Get the selected city from query parameter or session
+        selected_city = request.GET.get('city', request.session.get('selected_city', None))
+
+        # Store the selected city in session for persistence
+        if selected_city:
+            request.session['selected_city'] = selected_city
+            products = Product.objects.filter(category__name='Mandir', shopkeeper__city=selected_city)
+        else:
+            products = None  # No products if city is not selected
+
+        return render(request, 'mandir.html', {'products': products, 'selected_city': selected_city})
+
+
+# class MandirView(View):
+#     def get(self, request):
+#         products = Product.objects.filter(category__name='Mandir')  # Filter products by category
+#         return render(request, 'mandir.html', {'products': products})
 # class TableView(View):
 #     def get(self, request):
 #         products = Product.objects.filter(category='Table')  # Filter products by category
