@@ -107,7 +107,7 @@ def home(request):
     products_query = Product.objects.filter(is_out_of_stock=False)
     
     if selected_city:
-        products_query = products_query.filter(shopkeeper__city__iexact=selected_city)
+        products_query = products_query.filter(shopkeeper__cities__name__iexact=selected_city)
 
     # Randomly select up to 9 products
     products = random.sample(list(products_query), min(9, products_query.count())) if products_query.exists() else []
@@ -524,17 +524,55 @@ def toggle_stock_status(request, product_id):
 from django.shortcuts import render
 from django.views import View  # Import the View class
 from .models import Product  # Assuming you have a Product model
+from django.shortcuts import render
+from django.views import View
+from .models import Product, City
 
 class SofaView(View):
     def get(self, request):
-        products = Product.objects.filter(category__name='Sofa')  # Filter products by category
-        return render(request, 'sofa.html', {'products': products})
+        # Get the selected city from query parameter or session
+        selected_city = request.GET.get('city', request.session.get('selected_city', None))
+
+        # Store the selected city in session for persistence
+        if selected_city:
+            request.session['selected_city'] = selected_city
+
+        # Fetch products that are from the 'Sofa' category and belong to shopkeepers in the selected city
+        if selected_city:
+            # Filter by category 'Sofa' and shopkeeper's cities
+            products = Product.objects.filter(category__name='Sofa', shopkeeper__cities__name=selected_city)
+        else:
+            # If no city is selected, just filter by the 'Sofa' category
+            products = Product.objects.filter(category__name='Sofa')
+
+        # Render the template with the filtered products
+        return render(request, 'sofa.html', {'products': products, 'selected_city': selected_city})
+
+# class SofaView(View):
+#     def get(self, request):
+#         products = Product.objects.filter(category__name='Sofa')  # Filter products by category
+#         return render(request, 'sofa.html', {'products': products})
 
 
 class ShoeView(View):
-    def get(self, request):
-        products = Product.objects.filter(category__name='shoerack')  # Filter products by category
-        return render(request, 'shoerack.html', {'products': products})
+     def get(self, request):
+        # Get the selected city from query parameter or session
+        selected_city = request.GET.get('city', request.session.get('selected_city', None))
+
+        # Store the selected city in session for persistence
+        if selected_city:
+            request.session['selected_city'] = selected_city
+
+        # Fetch products that are from the 'Sofa' category and belong to shopkeepers in the selected city
+        if selected_city:
+            # Filter by category 'Sofa' and shopkeeper's cities
+            products = Product.objects.filter(category__name='Shoerack', shopkeeper__cities__name=selected_city)
+        else:
+            # If no city is selected, just filter by the 'Sofa' category
+            products = Product.objects.filter(category__name='Shoerack')
+
+        # Render the template with the filtered products
+        return render(request, 'shoerack.html', {'products': products, 'selected_city': selected_city})
 # class BedView(View):
 #     def get(self, request):
 #         products = Product.objects.filter(category__name='Bed')  # Filter products by category
@@ -551,7 +589,7 @@ class MandirView(View):
         # Store the selected city in session for persistence
         if selected_city:
             request.session['selected_city'] = selected_city
-            products = Product.objects.filter(category__name='Mandir', shopkeeper__city=selected_city)
+            products = Product.objects.filter(category__name='Mandir', shopkeeper__cities__name=selected_city)
         else:
             products = None  # No products if city is not selected
 
@@ -568,19 +606,64 @@ class MandirView(View):
 #         return render(request, 'table.html', {'products': products})
 class TableView(View):
     def get(self, request):
-        products = Product.objects.filter(category__name='Table')  # Ensure 'Table' matches the Category name
-        return render(request, 'table.html', {'products': products})
+        # Get the selected city from query parameter or session
+        selected_city = request.GET.get('city', request.session.get('selected_city', None))
+
+        # Store the selected city in session for persistence
+        if selected_city:
+            request.session['selected_city'] = selected_city
+
+        # Fetch products that are from the 'Sofa' category and belong to shopkeepers in the selected city
+        if selected_city:
+            # Filter by category 'Sofa' and shopkeeper's cities
+            products = Product.objects.filter(category__name='Table', shopkeeper__cities__name=selected_city)
+        else:
+            # If no city is selected, just filter by the 'Sofa' category
+            products = Product.objects.filter(category__name='Table')
+
+        # Render the template with the filtered products
+        return render(request, 'table.html', {'products': products, 'selected_city': selected_city})
 
 
 class ChairView(View):
     def get(self, request):
-        products = Product.objects.filter(category__name='Chair')  # Filter products by category
-        return render(request, 'chair.html', {'products': products})
+        # Get the selected city from query parameter or session
+        selected_city = request.GET.get('city', request.session.get('selected_city', None))
+
+        # Store the selected city in session for persistence
+        if selected_city:
+            request.session['selected_city'] = selected_city
+
+        # Fetch products that are from the 'Sofa' category and belong to shopkeepers in the selected city
+        if selected_city:
+            # Filter by category 'Sofa' and shopkeeper's cities
+            products = Product.objects.filter(category__name='Chair', shopkeeper__cities__name=selected_city)
+        else:
+            # If no city is selected, just filter by the 'Sofa' category
+            products = Product.objects.filter(category__name='Chair')
+
+        # Render the template with the filtered products
+        return render(request, 'chair.html', {'products': products, 'selected_city': selected_city})
 
 class CupboardView(View):
     def get(self, request):
-        products = Product.objects.filter(category__name='Cupboard')  # Filter products by category
-        return render(request, 'cupboard.html', {'products': products})
+        # Get the selected city from query parameter or session
+        selected_city = request.GET.get('city', request.session.get('selected_city', None))
+
+        # Store the selected city in session for persistence
+        if selected_city:
+            request.session['selected_city'] = selected_city
+
+        # Fetch products that are from the 'Sofa' category and belong to shopkeepers in the selected city
+        if selected_city:
+            # Filter by category 'Sofa' and shopkeeper's cities
+            products = Product.objects.filter(category__name='Cupboard', shopkeeper__cities__name=selected_city)
+        else:
+            # If no city is selected, just filter by the 'Sofa' category
+            products = Product.objects.filter(category__name='Cupboard')
+
+        # Render the template with the filtered products
+        return render(request, 'cupboard.html', {'products': products, 'selected_city': selected_city})
 
 
 from django.shortcuts import render, redirect

@@ -40,23 +40,50 @@ from django.utils.text import slugify
 from django.db import models
 from django.contrib.auth.models import User
 
+# class Shopkeeper(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     shop_name = models.CharField(max_length=255)
+#     address = models.CharField(max_length=255)  # Address field
+#     city = models.CharField(max_length=100)  # City field
+#     phone_number = models.CharField(max_length=15)
+#     email = models.EmailField()  # Temporarily remove unique=True
+
+#     def __str__(self):
+#         return self.shop_name
+
+
+#     class Meta:
+#         unique_together = ('shop_name', 'city')  # This ensures that shop_name and city together are unique.
+    
+#     def custom_slug(self):
+#         return f"{self.shop_name}-{self.city}".lower().replace(" ", "-")
+from django.db import models
+from django.contrib.auth.models import User
+
+class City(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class Shopkeeper(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     shop_name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)  # Address field
-    city = models.CharField(max_length=100)  # City field
+    cities = models.ManyToManyField(City, related_name="shopkeepers")  # Multiple cities
     phone_number = models.CharField(max_length=15)
     email = models.EmailField()  # Temporarily remove unique=True
 
     def __str__(self):
         return self.shop_name
 
-
     class Meta:
-        unique_together = ('shop_name', 'city')  # This ensures that shop_name and city together are unique.
-    
+        unique_together = ('shop_name',)  # Remove city from unique_together
+
     def custom_slug(self):
-        return f"{self.shop_name}-{self.city}".lower().replace(" ", "-")
+        city_names = "-".join(city.name.lower().replace(" ", "-") for city in self.cities.all())
+        return f"{self.shop_name}-{city_names}"
+
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

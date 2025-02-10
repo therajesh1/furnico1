@@ -1,11 +1,22 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Tables
+    Table
 {% endblock title %}
 
 {% block body %}
 <br>
+
+<!-- City selection check -->
+{% if not selected_city %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        alert("Please select a city to view Table products.");
+        window.location.href = "/";  // Redirect to home or city selection page
+    });
+</script>
+{% endif %}
+
 <div class="container">
     <!-- Filter Button -->
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -19,23 +30,21 @@
     <div class="collapse" id="filterSection">
         <div class="filter-section mb-4">
             <h3 class="filter-title">Filters</h3>
-            <!-- Price Range Filter -->
             <div class="mb-4">
                 <h5>Filter by Price</h5>
                 <div class="d-flex align-items-center gap-3">
                     <div class="flex-grow-1">
                         <label for="priceRange" class="form-label">Select Max Price:</label>
-                        <input type="range" id="priceRange" min="0" max="100000" step="10" value="100000" class="form-range">
-                        <p>Max Price: <span id="priceValue">100000</span></p>
+                        <input type="range" id="priceRange" min="0" max="20000" step="10" value="1000" class="form-range">
+                        <p>Max Price: <span id="priceValue">20000</span></p>
                     </div>
                     <div>
                         <label for="priceInput" class="form-label">Enter Price:</label>
-                        <input type="number" id="priceInput" min="0" max="100000" class="form-control" placeholder="Enter price">
+                        <input type="number" id="priceInput" min="0" max="20000" class="form-control" placeholder="Enter price">
                     </div>
                 </div>
             </div>
 
-            <!-- Sorting Filter -->
             <div>
                 <h5>Sort by Price</h5>
                 <div class="d-flex gap-2">
@@ -56,7 +65,6 @@
                             <div class="card-image-container">
                                 {% if product.image4 %}
                                     {% if product.is_glb %}
-                                        <!-- Display 3D GLB model -->
                                         <model-viewer 
                                             src="{{ product.image4 }}" 
                                             alt="{{ product.name }}" 
@@ -65,25 +73,17 @@
                                             camera-controls>
                                         </model-viewer>
                                     {% else %}
-                                        <!-- Fallback to regular image -->
-                                        <img 
-                                            src="{{ product.image4 }}" 
-                                            class="card-img-top img-fluid" 
-                                            alt="{{ product.name }}">
+                                        <img src="{{ product.image4 }}" class="card-img-top img-fluid" alt="{{ product.name }}">
                                     {% endif %}
                                 {% else %}
-                                    <!-- Fallback if image4 is not available -->
-                                    <img 
-                                        src="{{ product.image.url }}" 
-                                        class="card-img-top img-fluid" 
-                                        alt="{{ product.name }}">
+                                    <img src="{{ product.image.url }}" class="card-img-top img-fluid" alt="{{ product.name }}">
                                 {% endif %}
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title" style="color: black;">{{ product.name }}</h5>
                                 <p class="card-text" style="color: black;">{{ product.description|truncatewords:15 }}</p>
                                 <p class="card-text" style="color: black;">
-                                    <strong>Price: {{ product.price }}</strong>
+                                    <strong>Price: ₹{{ product.price }}</strong>
                                 </p>
                                 <a href="{% url 'product_detail' product.id %}" class="btn btn-dark">
                                     View Product
@@ -100,56 +100,54 @@
 </div>
 
 <script>
-    const priceRange = document.getElementById('priceRange');
-    const priceInput = document.getElementById('priceInput');
-    const priceValue = document.getElementById('priceValue');
-    const productItems = document.querySelectorAll('.product-item');
+    document.addEventListener("DOMContentLoaded", function() {
+        const priceRange = document.getElementById('priceRange');
+        const priceInput = document.getElementById('priceInput');
+        const priceValue = document.getElementById('priceValue');
+        const productItems = document.querySelectorAll('.product-item');
 
-    const sortHighToLow = document.getElementById('sortHighToLow');
-    const sortLowToHigh = document.getElementById('sortLowToHigh');
+        const sortHighToLow = document.getElementById('sortHighToLow');
+        const sortLowToHigh = document.getElementById('sortLowToHigh');
 
-    // Update price value and filter on range input
-    priceRange.addEventListener('input', () => {
-        const maxPrice = priceRange.value;
-        priceValue.textContent = maxPrice;
-        filterProductsByPrice(maxPrice);
-    });
+        priceRange.addEventListener('input', () => {
+            const maxPrice = priceRange.value;
+            priceValue.textContent = maxPrice;
+            filterProductsByPrice(maxPrice);
+        });
 
-    // Update range and filter on manual price input
-    priceInput.addEventListener('input', () => {
-        const enteredPrice = priceInput.value;
-        if (enteredPrice) {
-            priceRange.value = enteredPrice;
-            priceValue.textContent = enteredPrice;
-            filterProductsByPrice(enteredPrice);
+        priceInput.addEventListener('input', () => {
+            const enteredPrice = priceInput.value;
+            if (enteredPrice) {
+                priceRange.value = enteredPrice;
+                priceValue.textContent = enteredPrice;
+                filterProductsByPrice(enteredPrice);
+            }
+        });
+
+        function filterProductsByPrice(maxPrice) {
+            productItems.forEach(item => {
+                const productPrice = parseFloat(item.getAttribute('data-price'));
+                item.style.display = productPrice <= maxPrice ? 'block' : 'none';
+            });
         }
+
+        function sortProducts(order) {
+            const sortedItems = Array.from(productItems).sort((a, b) => {
+                const priceA = parseFloat(a.getAttribute('data-price'));
+                const priceB = parseFloat(b.getAttribute('data-price'));
+                return order === 'highToLow' ? priceB - priceA : priceA - priceB;
+            });
+
+            const container = document.getElementById('productContainer');
+            container.innerHTML = '';
+            sortedItems.forEach(item => container.appendChild(item));
+        }
+
+        sortHighToLow.addEventListener('click', () => sortProducts('highToLow'));
+        sortLowToHigh.addEventListener('click', () => sortProducts('lowToHigh'));
+
+        filterProductsByPrice(priceRange.value);
     });
-
-    function filterProductsByPrice(maxPrice) {
-        productItems.forEach(item => {
-            const productPrice = parseFloat(item.getAttribute('data-price'));
-            item.style.display = productPrice <= maxPrice ? 'block' : 'none';
-        });
-    }
-
-    // Sorting functionality
-    function sortProducts(order) {
-        const sortedItems = Array.from(productItems).sort((a, b) => {
-            const priceA = parseFloat(a.getAttribute('data-price'));
-            const priceB = parseFloat(b.getAttribute('data-price'));
-            return order === 'highToLow' ? priceB - priceA : priceA - priceB;
-        });
-
-        const container = document.getElementById('productContainer');
-        container.innerHTML = '';
-        sortedItems.forEach(item => container.appendChild(item));
-    }
-
-    sortHighToLow.addEventListener('click', () => sortProducts('highToLow'));
-    sortLowToHigh.addEventListener('click', () => sortProducts('lowToHigh'));
-
-    // Initial filter
-    filterProductsByPrice(priceRange.value);
 </script>
 
 <style>
@@ -211,7 +209,7 @@
     .card-image-container {
         position: relative;
         width: 100%;
-        padding-top: 100%; /* Ensure square aspect ratio */
+        padding-top: 100%;
         overflow: hidden;
         background: #f8f8f8;
     }
@@ -223,14 +221,12 @@
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover; /* Ensure the entire image is visible */
+        object-fit: cover;
     }
 
     .card-body {
         padding: 1rem;
     }
 </style>
-
-
 
 {% endblock body %}
