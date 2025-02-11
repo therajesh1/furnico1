@@ -12,9 +12,176 @@
 
 
  
+<div class="hero-section d-flex align-items-center">
+    <div class="container-fluid">
+        <div class="row w-100">
+            <div class="col-lg-6 d-flex flex-column justify-content-center my-3 text-start ps-4">
+                <h1 class="mb-0 display-3 text-light fancy-text">Welcome to FurniCure</h1>
+                <p class="typing-animation fs-2 text-light">
+                    Buy <span id="typing"></span>
+                </p>
+                <p class="about-info mt-4 fs-5 text-light">
+                    Building a strong network between <strong>shops</strong> and <strong>customers</strong>. A place where both meet their <strong>needs</strong>.
+                </p>
+
+                <!-- Social Media Icons -->
+                <div class="social-icons mt-4">
+                    <a href="#" class="icon instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="icon facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="icon twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="icon pinterest"><i class="fab fa-pinterest"></i></a>
+                    <a href="#" class="icon linkedin"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                <div id="carouselImages" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000"> <!-- Set the slide interval to 2000ms -->
+                    <div class="carousel-inner mt-5"> <!-- Increased margin-top for spacing -->
+                        <div class="carousel-item active">
+                            <img src="/static/furniimage04.jpeg" alt="Image 1" class="rectangular-img">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/static/furniimage05.jpeg" alt="Image 2" class="rectangular-img">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/static/furniimage06.jpeg" alt="Image 3" class="rectangular-img">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/static/furniimage07.jpeg" alt="Image 4" class="rectangular-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;600;700&display=swap');
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
+
+    /* Hero Section */
+    .hero-section {
+        background: black;
+        padding: 60px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Subtle background animation */
+    .hero-section::before {
+        content: "";
+        position: absolute;
+        top: -100px;
+        left: -100px;
+        width: 500px;
+        height: 500px;
+        background: rgba(255, 255, 255, 0.05);
+        filter: blur(120px);
+        animation: moveBg 8s infinite alternate ease-in-out;
+    }
+
+    .hero-section::after {
+        content: "";
+        position: absolute;
+        bottom: -100px;
+        right: -100px;
+        width: 500px;
+        height: 500px;
+        background: rgba(23, 162, 184, 0.08);
+        filter: blur(100px);
+        animation: moveBg 10s infinite alternate ease-in-out;
+    }
+
+    @keyframes moveBg {
+        0% { transform: translateX(-30px) translateY(-30px); }
+        100% { transform: translateX(30px) translateY(30px); }
+    }
+
+    /* Professional Heading */
+    .fancy-text {
+        font-family: 'League Spartan', sans-serif;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: #ffffff;
+    }
+
+    /* Typing Effect */
+  
+    /* About Info */
+    {% comment %} .about-info {
+        font-size: 1.5rem;
+        font-weight: 400;
+        color: #ddd;
+        line-height: 1.6;
+    }
+
+    .about-info strong {
+        color: #17a2b8;
+        font-weight: 600;
+    } {% endcomment %}
+
+    /* Model Animation */
+    .model-container {
+        width: 100%;
+        height: 500px;
+        animation: zoomIn 1.5s ease-in-out;
+    }
+
+    @keyframes zoomIn {
+        0% { transform: scale(0.9); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Social Media Icons */
+    .social-icons {
+        display: flex;
+        gap: 15px;
+    }
+
+    .social-icons .icon {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 45px;
+        height: 45px;
+        background: #222;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .social-icons .icon:hover {
+        transform: scale(1.1);
+    }
+
+    .social-icons .instagram:hover {
+        background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    }
+
+    .social-icons .facebook:hover {
+        background: #1877f2;
+    }
+
+    .social-icons .twitter:hover {
+        background: #1da1f2;
+    }
+
+    .social-icons .pinterest:hover {
+        background: #e60023;
+    }
+
+    .social-icons .linkedin:hover {
+        background: #0077b5;
+    }
+</style>
+
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
 
-<div class="container-fluid vh-100 no-margin d-flex align-items-center"> <!-- Increased height to vh-100 -->
+{% comment %} <div class="container-fluid vh-100 no-margin d-flex align-items-center"> <!-- Increased height to vh-100 -->
     <div class="row w-100">
         <div class="col-lg-6 d-flex flex-column justify-content-center my-3 text-start" style="padding-left: 0;"> <!-- Added padding-left: 0 for extreme left -->
             <h1 class="mb-0 display-3">Welcome to FurniCure</h1> <!-- Increased font size -->
@@ -44,7 +211,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> {% endcomment %}
 
 <style>
     .no-margin {
@@ -63,7 +230,6 @@
         width: 100%; /* Make image responsive */
         height: 500px; /* Increased height for better visibility */
         object-fit: cover; /* Ensure the image covers the area */
-        border: 5px solid #17a2b8; /* Accent border color */
         transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added box-shadow for depth */
     }
 
