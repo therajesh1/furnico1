@@ -65,8 +65,13 @@
       <p class="text-muted">
         Sold by(Shop Name): <strong>{{ product.shopkeeper.shop_name }}</strong>
       </p>
-      <p class="text-dark">{{ product.description }}</p>
-      
+      {% comment %} <p class="text-dark">{{ product.description }}</p> {% endcomment %}
+      <h4 class="fw-bold text-dark">Description:</h4>
+      <ul class="text-dark text-start d-inline-block">
+        {% for line in product.description.split('\n') %}
+          <li>{{ line }}</li>
+        {% endfor %}
+      </ul>
       <h4 class="fw-bold text-dark">Price: {{ product.price }}</h4>
     </div>
 
