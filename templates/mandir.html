@@ -6,6 +6,63 @@
 
 {% block body %}
 <br>
+<br>
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="areaModal" tabindex="-1" aria-labelledby="areaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-light">  <!-- Black Theme -->
+        
+        <!-- Modal Header -->
+        <div class="modal-header border-secondary">
+          <h5 class="modal-title" id="areaModalLabel">Select Your Area</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <ul class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light bg-secondary p-2 rounded" href="#" id="cityDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <strong>Select Area</strong> <i class="bi bi-geo-alt-fill"></i>
+            </a>
+            <ul class="dropdown-menu bg-dark text-light" aria-labelledby="cityDropdown">
+              <li><a class="dropdown-item text-light area-option" href="?city=MumbaiWesternLines" data-city="MumbaiWesternLines">Mumbai-Western Lines</a></li>
+              <li><a class="dropdown-item text-light area-option" href="?city=MumbaiCentral" data-city="MumbaiCentral">Mumbai-Central</a></li>
+            </ul>
+          </ul>
+        </div>
+  
+        <!-- Modal Footer -->
+        <div class="modal-footer border-secondary">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+  <!-- Button to Trigger Modal (if needed) -->
+  <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#areaModal">
+    Open Area Selection
+  </button>
+  
+  <!-- JavaScript to Open Modal Automatically if No Area is Chosen -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const selectedCity = localStorage.getItem("selectedCity"); // Check if a city is stored
+      if (!selectedCity) {
+        const areaModal = new bootstrap.Modal(document.getElementById('areaModal'));
+        areaModal.show();
+      }
+  
+      // Save selected city when an option is clicked
+      document.querySelectorAll(".area-option").forEach(item => {
+        item.addEventListener("click", function (event) {
+          localStorage.setItem("selectedCity", this.dataset.city); // Save city in localStorage
+        });
+      });
+    });
+  </script>
+  
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Add Popper.js (required for Bootstrap 5 dropdowns) -->
