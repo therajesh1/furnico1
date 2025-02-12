@@ -694,22 +694,61 @@ from .models import Order
 from django.shortcuts import render, get_object_or_404
 from .models import Shopkeeper
 
+# def shop_products(request, shop_name, city):
+#     # Use shop_name and city to filter the Shopkeeper
+#     shop = get_object_or_404(Shopkeeper, shop_name=shop_name, city=city)
+#     # Fetch products related to the shop
+#     products = shop.product_set.all()  # product_set is the default related name for a ForeignKey
+#     category_slug = request.GET.get('category')  # Get category from query params (if provided)
+#     if category_slug:
+#         category = get_object_or_404(Category, slug=category_slug)
+#         products = products.filter(category=category)  # Filter products by category
+#     # Pass the shop and products to the context
+#     context = {
+#         "shop": shop,
+#         "products": products,
+#     }
+
+#     return render(request, "shop_products.html", context)
 def shop_products(request, shop_name, city):
-    # Use shop_name and city to filter the Shopkeeper
     shop = get_object_or_404(Shopkeeper, shop_name=shop_name, city=city)
-    # Fetch products related to the shop
-    products = shop.product_set.all()  # product_set is the default related name for a ForeignKey
-    category_slug = request.GET.get('category')  # Get category from query params (if provided)
+    products = shop.product_set.all()  
+    categories = Category.objects.all()  # Fetch all categories
+
+    category_slug = request.GET.get('category')
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
-        products = products.filter(category=category)  # Filter products by category
-    # Pass the shop and products to the context
+        products = products.filter(category=category, shopkeeper=shop)
+
     context = {
         "shop": shop,
         "products": products,
+        "categories": categories,  # Pass categories to the template
     }
+    return render(request, "categories.html", context)
 
-    return render(request, "shop_products.html", context)
+# def shop_products(request, shop_name, city):
+#     # Use shop_name and city to filter the Shopkeeper
+#     shop = get_object_or_404(Shopkeeper, shop_name=shop_name, city=city)
+    
+#     # Fetch products related to the specific shop
+#     products = shop.product_set.all()  
+
+#     # Get category from query params (if provided)
+#     category_slug = request.GET.get('category')
+#     if category_slug:
+#         category = get_object_or_404(Category, slug=category_slug)
+#         # Ensure filtering only within this shop's products
+#         products = products.filter(category=category, shopkeeper=shop)
+
+#     # Pass the shop and filtered products to the context
+#     context = {
+#         "shop": shop,
+#         "products": products,
+#     }
+
+#     return render(request, "shop_products.html", context)
+
 
 # from django.shortcuts import render, get_object_or_404
 # from .models import Shopkeeper, Product, Category
