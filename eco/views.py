@@ -725,7 +725,7 @@ def shop_products(request, shop_name, city):
         "products": products,
         "categories": categories,  # Pass categories to the template
     }
-    return render(request, "categories.html", context)
+    return render(request, "shop_products.html", context)
 
 # def shop_products(request, shop_name, city):
 #     # Use shop_name and city to filter the Shopkeeper
