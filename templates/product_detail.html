@@ -71,6 +71,19 @@
 
       <h4 class="fw-bold text-dark">Price: {{ product.price }}</h4>
     </div>
+<!-- WhatsApp Button -->
+<!-- WhatsApp Button -->
+{% with message="Hello, I'm interested in the *"|add:product.name|add:"* from *"|add:product.shopkeeper.shop_name|add:"*. Can you share more details?" %}
+  <div class="d-flex justify-content-center mt-3">
+    <a class="btn btn-success btn-lg d-flex align-items-center justify-content-center gap-2 px-4" 
+       href="https://wa.me/7021161418?text={{ message|urlencode }}" 
+       target="_blank">
+      <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+    </a>
+  </div>
+{% endwith %}
+
+
 
     <!-- Buy Now Button with Icon -->
     <div class="d-flex justify-content-center mt-3">
