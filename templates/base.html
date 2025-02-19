@@ -560,14 +560,7 @@ searchInput.addEventListener("input", () => {
           </div>
     
           <!-- Categories Section -->
-          <div class="col-md-3">
-            <h5 class="text-uppercase mb-3">Categories</h5>
-            <ul class="list-unstyled">
-              {% for category in categories %}
-                <li><a href="{% url 'category_products' category.slug %}" class="text-light text-decoration-none">{{ category.name }}</a></li>
-              {% endfor %}
-            </ul>
-          </div>
+         
     
           <!-- Social Media Section -->
           <div class="col-md-3">
