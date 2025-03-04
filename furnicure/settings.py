@@ -135,6 +135,7 @@ MEDIA_URL = 'https://res.cloudinary.com/djvsbqfwv/'
 #     }
 # }
 # import pymongo
+#postgresql
 DATABASES = {
      'default': {
          'ENGINE': 'django.db.backends.postgresql',
@@ -146,6 +147,7 @@ DATABASES = {
         
      }
 }
+# Add these at the top of your settings.py
 
 # pymongo.MongoClient().close = lambda: None
 
