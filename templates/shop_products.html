@@ -4,302 +4,262 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module" src="https://unpkg.com/@google/model-viewer"></script>
-
-    <title>Document</title>
-</head>
-<body>
-    
-<div class="container mb-4">
-    <!-- Shop Info Section -->
-    <div class="row">
-        <div class="col-md-8 order-md-1 mb-3">
-            <h2 style="font-family: 'Abril Fatface', cursive; font-size: 4rem;">{{ shop.shop_name }}</h2> <!-- Increased font size -->
-            <p class="lead">{{ shop.address }}</p>
-        </div>
-        <div class="col-md-4 order-md-2 mb-3">
-            <img src="/static/furniimage01.jpeg" alt="{{ shop.shop_name }}" class="img-fluid shop-image"> <!-- Increased image size -->
-        </div>
-    </div>
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <title>Shop Products</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
 
+        h2 {
+            font-family: 'Abril Fatface', cursive;
+        }
 
-   
-<div class="container">
-    <!-- Filter Button -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 style="color: black;">Products</h2>
-        <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#filterSection" aria-expanded="false" aria-controls="filterSection">
-            <i class="fas fa-filter"></i> Filter
-        </button>
-    </div>
+        .shop-image {
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-    <!-- Filters Section -->
-    <div class="collapse" id="filterSection">
-        <div class="filter-section mb-4">
-            <h3 class="filter-title">Filters</h3>
-            <!-- Price Range Filter -->
-            <div class="mb-4">
-                <h5>Filter by Price</h5>
-                <div class="d-flex align-items-center gap-3">
-                    <div class="flex-grow-1">
-                        <label for="priceRange" class="form-label">Select Max Price:</label>
-                        <input type="range" id="priceRange" min="0" max="100000" step="10" value="100000" class="form-range">
-                        <p>Max Price: <span id="priceValue">100000</span></p>
-                    </div>
-                    <div>
-                        <label for="priceInput" class="form-label">Enter Price:</label>
-                        <input type="number" id="priceInput" min="0" max="100000" class="form-control" placeholder="Enter price">
-                    </div>
-                </div>
+        .filter-section {
+            padding: 1.5rem;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .btn-dark {
+            background-color: #333;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-dark:hover {
+            background-color: #555;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 75%; /* Maintain aspect ratio */
+            overflow: hidden;
+            background: #f8f8f8;
+        }
+
+        .card-image-container img,
+        .card-image-container model-viewer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            border-radius: 8px;
+        }
+
+        .form-range {
+            appearance: none;
+            width: 100%;
+            background: linear-gradient(to right, #007bff, #00d4ff);
+            height: 5px;
+            border-radius: 5px;
+        }
+
+        .form-range::-webkit-slider-thumb {
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: #007bff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-md-8 order-md-1 mb-3">
+                <h2>{{ shop.shop_name }}</h2>
+                <p class="lead">{{ shop.address }}</p>
             </div>
-
-            <!-- Sorting Filter -->
-            <div>
-                <h5>Sort by Price</h5>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-dark sort-btn" id="sortHighToLow">High to Low</button>
-                    <button class="btn btn-dark sort-btn" id="sortLowToHigh">Low to High</button>
-                </div>
+            <div class="col-md-4 order-md-2 mb-3">
+                <img src="/static/furniimage01.jpeg" alt="{{ shop.shop_name }}" class="img-fluid shop-image">
             </div>
         </div>
-    </div>
-
-    <div class="products mb-4">
-        <h2 style="color: black;">Products</h2>
-        <div class="row" id="productContainer">
-            {% if products %}
-                {% for product in products %}
-                    <div class="col-md-4 mb-3 product-item" data-price="{{ product.price }}">
-                        <div class="card h-100">
-                            <div class="card-image-container">
-                                {% if product.image4 %}
-                                    {% if product.is_glb %}
-                                        <!-- Display 3D GLB model -->
-                                        <model-viewer 
-                                            src="{{ product.image4 }}" 
-                                            alt="{{ product.name }}" 
-                                            ar 
-                                            auto-rotate 
-                                            camera-controls>
-                                        </model-viewer>
-                                    {% else %}
-                                        <!-- Fallback to regular image -->
-                                        <img 
-                                            src="{{ product.image4 }}" 
-                                            class="card-img-top img-fluid" 
-                                            alt="{{ product.name }}">
-                                    {% endif %}
-                                {% else %}
-                                    <!-- Fallback if image4 is not available -->
-                                    <img 
-                                        src="{{ product.image.url }}" 
-                                        class="card-img-top img-fluid" 
-                                        alt="{{ product.name }}">
-                                {% endif %}
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Products</h2>
+                <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#filterSection" aria-expanded="false" aria-controls="filterSection">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
+            </div>
+            <div class="collapse" id="filterSection">
+                <div class="filter-section mb-4">
+                    <h3 class="filter-title">Filters</h3>
+                    <div class="mb-4">
+                        <h5>Filter by Price</h5>
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="flex-grow-1">
+                                <label for="priceRange" class="form-label">Select Max Price:</label>
+                                <input type="range" id="priceRange" min="0" max="100000" step="10" value="100000" class="form-range">
+                                <p>Max Price: <span id="priceValue">100000</span></p>
                             </div>
-                            <div class="card-body">
-                                <h5 class="card-title" style="color: black;">{{ product.name }}</h5>
-                                <p class="card-text" style="color: black;">{{ product.description|truncatewords:15 }}</p>
-                                <p class="card-text" style="color: black;">
-                                    <strong>Price: {{ product.price }}</strong>
-                                </p>
-                                <a href="{% url 'product_detail' product.id %}" class="btn btn-dark">
-                                    View Product
-                                </a>
+                            <div>
+                                <label for="priceInput" class="form-label">Enter Price:</label>
+                                <input type="number" id="priceInput" min="0" max="100000" class="form-control" placeholder="Enter price">
                             </div>
                         </div>
                     </div>
-                {% endfor %}
-            {% else %}
-                <p style="color: black;">No products available at the moment.</p>
-            {% endif %}
+                    <div>
+                        <h5>Sort by Price</h5>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-dark sort-btn" id="sortHighToLow">High to Low</button>
+                            <button class="btn btn-dark sort-btn" id="sortLowToHigh">Low to High</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="products mb-4">
+                <div class="row" id="productContainer">
+                    {% if products %}
+                        {% for product in products %}
+                            <div class="col-md-4 mb-3 product-item" data-price="{{ product.price }}">
+                                <div class="card h-100">
+                                    <div class="card-image-container">
+                                        {% if product.image4 %}
+                                            {% if product.is_glb %}
+                                                <model-viewer 
+                                                    src="{{ product.image4 }}" 
+                                                    alt="{{ product.name }}" 
+                                                    ar 
+                                                    auto-rotate 
+                                                    camera-controls>
+                                                </model-viewer>
+                                            {% else %}
+                                                <img 
+                                                    src="{{ product.image4 }}" 
+                                                    class="card-img-top img-fluid" 
+                                                    alt="{{ product.name }}">
+                                            {% endif %}
+                                        {% else %}
+                                            <img 
+                                                src="{{ product.image.url }}" 
+                                                class="card-img-top img-fluid" 
+                                                alt="{{ product.name }}">
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ product.name }}</h5>
+                                        <p class="card-text">{{ product.description|truncatewords:15 }}</p>
+                                        <p class="card-text">
+                                            <strong>Price: {{ product.price }}</strong>
+                                        </p>
+                                        <a href="{% url 'product_detail' product.id %}" class="btn btn-dark">
+                                            View Product
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No products available at the moment.</p>
+                    {% endif %}
+                </div>
+            </div>
         </div>
+        <footer class="bg-dark text-light py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <h5 class="text-uppercase mb-3">FurniCure</h5>
+                        <p>&copy; 2025 FurniCure. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <h5 class="text-uppercase mb-3">Quick Links</h5>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="/" class="text-light">Home</a>
+                            </li>
+                            {% if user.is_authenticated %}
+                                <li>
+                                    <a href="{% url 'logout' %}" class="text-light">Logout</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="/login" class="text-light">Login</a>
+                                </li>
+                                <li>
+                                    <a href="/signin" class="text-light">Sign Up</a>
+                                </li>
+                            {% endif %}
+                            <li>
+                                <a href="/contact" class="text-light">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <hr class="border-light" />
+                <div class="text-center">
+                    <small>Designed with ❤️ by Furnicure Team</small>
+                </div>
+            </div>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     </div>
-</div>
-
-<script>
-    const priceRange = document.getElementById('priceRange');
-    const priceInput = document.getElementById('priceInput');
-    const priceValue = document.getElementById('priceValue');
-    const productItems = document.querySelectorAll('.product-item');
-
-    const sortHighToLow = document.getElementById('sortHighToLow');
-    const sortLowToHigh = document.getElementById('sortLowToHigh');
-
-    // Update price value and filter on range input
-    priceRange.addEventListener('input', () => {
-        const maxPrice = priceRange.value;
-        priceValue.textContent = maxPrice;
-        filterProductsByPrice(maxPrice);
-    });
-
-    // Update range and filter on manual price input
-    priceInput.addEventListener('input', () => {
-        const enteredPrice = priceInput.value;
-        if (enteredPrice) {
-            priceRange.value = enteredPrice;
-            priceValue.textContent = enteredPrice;
-            filterProductsByPrice(enteredPrice);
-        }
-    });
-
-    function filterProductsByPrice(maxPrice) {
-        productItems.forEach(item => {
-            const productPrice = parseFloat(item.getAttribute('data-price'));
-            item.style.display = productPrice <= maxPrice ? 'block' : 'none';
-        });
-    }
-
-    // Sorting functionality
-    function sortProducts(order) {
-        const sortedItems = Array.from(productItems).sort((a, b) => {
-            const priceA = parseFloat(a.getAttribute('data-price'));
-            const priceB = parseFloat(b.getAttribute('data-price'));
-            return order === 'highToLow' ? priceB - priceA : priceA - priceB;
-        });
-
-        const container = document.getElementById('productContainer');
-        container.innerHTML = '';
-        sortedItems.forEach(item => container.appendChild(item));
-    }
-
-    sortHighToLow.addEventListener('click', () => sortProducts('highToLow'));
-    sortLowToHigh.addEventListener('click', () => sortProducts('lowToHigh'));
-
-    // Initial filter
-    filterProductsByPrice(priceRange.value);
-</script>
-
-<style>
-    .filter-section {
-        padding: 1.5rem;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 12px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        color: black;
-    }
-
-    .filter-title {
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-
-    .form-label {
-        font-size: 0.9rem;
-        font-weight: 500;
-    }
-
-    .form-range {
-        appearance: none;
-        width: 100%;
-        background: linear-gradient(to right, #007bff, #00d4ff);
-        height: 5px;
-        border-radius: 5px;
-    }
-
-    .form-range::-webkit-slider-thumb {
-        appearance: none;
-        width: 15px;
-        height: 15px;
-        background: #007bff;
-        border-radius: 50%;
-        cursor: pointer;
-    }
-
-    .form-control {
-        border-radius: 8px;
-        border: 1px solid #ccc;
-    }
-
-    .form-control:focus {
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        border-color: #007bff;
-    }
-
-    .card {
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        overflow: hidden;
-        text-align: center;
-        color: black;
-    }
-
-    .card-image-container {
-        position: relative;
-        width: 100%;
-        padding-top: 100%; /* Ensure square aspect ratio */
-        overflow: hidden;
-        background: #f8f8f8;
-    }
-
-    .card-image-container img,
-    .card-image-container model-viewer {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Ensure the entire image is visible */
-    }
-
-    .card-body {
-        padding: 1rem;
-    }
-</style>
-
-
-<footer class="bg-dark text-light py-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4 mb-4">
-          <h5 class="text-uppercase mb-3">FurniCure</h5>
-          <p>&copy; 2025 FurniCure. All rights reserved.</p>
-        </div>
-        <div class="col-md-4 mb-4">
-          <h5 class="text-uppercase mb-3">Quick Links</h5>
-          <ul class="list-unstyled">
-            <li>
-              <a href="/" class="text-light">Home</a>
-            </li>
-            {% if user.is_authenticated %}
-              <li>
-                <a href="{% url 'logout' %}" class="text-light">Logout</a>
-              </li>
-            {% else %}
-              <li>
-                <a href="/login" class="text-light">Login</a>
-              </li>
-              <li>
-                <a href="/signin" class="text-light">Sign Up</a>
-              </li>
-            {% endif %}
-            <li>
-              <a href="/contact" class="text-light">Contact</a>
-            </li>
-          </ul>
-        </div>
-        {% comment %} <div class="col-md-4 mb-4 text-center">
-          <h5 class="text-uppercase mb-3">Follow Us</h5>
-          <div class="d-flex justify-content-center">
-            <a href="https://www.instagram.com/study.mate._/" class="text-light mx-2" aria-label="Instagram"><i class="fab fa-instagram fa-2x"></i></a>
-            <a href="https://t.me/studymateoff" class="text-light mx-2" aria-label="Telegram"><i class="fab fa-telegram fa-2x"></i></a>
-            <a href="https://www.linkedin.com/posts/officialstudymate_love-you-3000-times-activity-7245671264034443266-XcwF?utm_source=share&utm_medium=member_android" class="text-light mx-2" aria-label="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
-            <a href="https://youtube.com/@studymate9595?si=vrA2eJpZJl_W7g4V" class="text-light mx-2" aria-label="YouTube"><i class="fab fa-youtube fa-2x"></i></a>
-          </div> {% endcomment %}
-        </div>
-      </div>
-      <hr class="border-light" />
-      <div class="text-center">
-        <small>Designed with ❤️ by Furnicure Team</small>
-      </div>
-    </div>
-  </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
