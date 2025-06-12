@@ -83,7 +83,11 @@
             <h1 class="product-title mb-3">{{ product.name }}</h1>
             <div class="shop-info mb-3">
               <span class="shop-label">Sold by</span>
-              <span class="shop-name">{{ product.shopkeeper.shop_name }}</span>
+              <a href="{% url 'shop_products' shop_name=product.shopkeeper.shop_name city=product.shopkeeper.city %}" class="shop-name">
+                {{ product.shopkeeper.shop_name }}
+            </a>
+            
+              {% comment %} <span class="shop-name">{{ product.shopkeeper.shop_name }}</span> {% endcomment %}
             </div>
             <div class="price-container">
               <h2 class="product-price">{{ product.price }}</h2>
