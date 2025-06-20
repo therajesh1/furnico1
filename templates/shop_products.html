@@ -92,15 +92,20 @@
             {% for product in products %}
                 <div class="col-md-4 mb-3 product-item" data-price="{{ product.price }}">
                     <div class="card h-100 d-flex flex-column">
-                        <div class="image-container bg-light">
+                        <div class="ratio ratio-1x1 bg-light">
                             {% if product.image4 %}
                                 {% if product.is_glb %}
-                                    <model-viewer src="{{ product.image4 }}" alt="{{ product.name }}" ar auto-rotate camera-controls style="width: 100%; height: 100%;"></model-viewer>
+                                    <model-viewer 
+                                        src="{{ product.image4 }}" 
+                                        alt="{{ product.name }}" 
+                                        ar auto-rotate camera-controls 
+                                        class="media-content">
+                                    </model-viewer>
                                 {% else %}
-                                    <img src="{{ product.image4 }}" class="img-fluid product-image" alt="{{ product.name }}">
+                                    <img src="{{ product.image4 }}" alt="{{ product.name }}" class="img-fluid media-content">
                                 {% endif %}
                             {% else %}
-                                <img src="{{ product.image.url }}" class="img-fluid product-image" alt="{{ product.name }}">
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid media-content">
                             {% endif %}
                         </div>
                         <div class="card-body d-flex flex-column justify-content-between">
@@ -118,7 +123,7 @@
             <p class="text-dark">No products available at the moment.</p>
         {% endif %}
     </div>
-
+    
     
 
     {% comment %} <div class="row" id="productContainer">
@@ -192,24 +197,30 @@
         height: 100%;
     }
     
-    .card-image-container {
+    /* Container for image or 3D model with 1:1 ratio */
+    .card-image-container,
+    .ratio.ratio-1x1 {
         position: relative;
         width: 100%;
-        padding-top: 100%; /* Square aspect ratio (1:1) */
+        padding-top: 100%; /* Ensures square aspect ratio */
         overflow: hidden;
         background: #f8f8f8;
     }
     
+    /* Ensure content fits inside without stretching */
     .card-image-container img,
-    .card-image-container model-viewer {
+    .card-image-container model-viewer,
+    .ratio.ratio-1x1 img,
+    .ratio.ratio-1x1 model-viewer {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: contain; /* Prevent image distortion, show full image */
+        object-fit: contain; /* Prevents distortion */
     }
     
+    /* Card body stretches to fill vertical space */
     .card-body {
         padding: 1rem;
         display: flex;
@@ -217,6 +228,7 @@
         justify-content: space-between;
         flex-grow: 1;
     }
+    
     
 </style>
 <!-- Scripts -->
