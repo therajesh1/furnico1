@@ -87,46 +87,11 @@
     </div>
 
 
-    <div class="row" id="productContainer">
-        {% if products %}
-            {% for product in products %}
-                <div class="col-md-4 mb-3 product-item" data-price="{{ product.price }}">
-                    <div class="card h-100 d-flex flex-column">
-                        <div class="ratio ratio-1x1 bg-light">
-                            {% if product.image4 %}
-                                {% if product.is_glb %}
-                                    <model-viewer 
-                                        src="{{ product.image4 }}" 
-                                        alt="{{ product.name }}" 
-                                        ar auto-rotate camera-controls 
-                                        class="media-content">
-                                    </model-viewer>
-                                {% else %}
-                                    <img src="{{ product.image4 }}" alt="{{ product.name }}" class="img-fluid media-content">
-                                {% endif %}
-                            {% else %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid media-content">
-                            {% endif %}
-                        </div>
-                        <div class="card-body d-flex flex-column justify-content-between">
-                            <div>
-                                <h5 class="card-title text-dark">{{ product.name }}</h5>
-                                <p class="card-text text-dark">{{ product.description|truncatewords:15 }}</p>
-                                <p class="card-text text-dark"><strong>Price: {{ product.price }}</strong></p>
-                            </div>
-                            <a href="{% url 'product_detail' product.id %}" class="btn btn-dark mt-2">View Product</a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p class="text-dark">No products available at the moment.</p>
-        {% endif %}
-    </div>
+
     
     
 
-    {% comment %} <div class="row" id="productContainer">
+<div class="row" id="productContainer">
         {% if products %}
             {% for product in products %}
                 <div class="col-md-4 mb-3 product-item" data-price="{{ product.price }}">
@@ -155,7 +120,7 @@
             <p class="text-dark">No products available at the moment.</p>
         {% endif %}
     </div>
-</div> {% endcomment %}
+</div> 
 
 <!-- Footer -->
 <footer class="bg-dark text-light py-4 mt-5">
@@ -186,32 +151,28 @@
     </div>
 </footer>
 <style>
+    
     .card {
         border: 1px solid #ccc;
         border-radius: 8px;
         overflow: hidden;
         text-align: center;
         color: black;
+        height: 100%;
         display: flex;
         flex-direction: column;
-        height: 100%;
     }
     
-    /* Container for image or 3D model with 1:1 ratio */
-    .card-image-container,
-    .ratio.ratio-1x1 {
+    .ratio {
         position: relative;
         width: 100%;
-        padding-top: 100%; /* Ensures square aspect ratio */
-        overflow: hidden;
+        padding-top: 100%; /* Square aspect ratio */
         background: #f8f8f8;
+        overflow: hidden;
     }
     
-    /* Ensure content fits inside without stretching */
-    .card-image-container img,
-    .card-image-container model-viewer,
-    .ratio.ratio-1x1 img,
-    .ratio.ratio-1x1 model-viewer {
+    .ratio img,
+    .ratio model-viewer {
         position: absolute;
         top: 0;
         left: 0;
@@ -220,15 +181,13 @@
         object-fit: contain; /* Prevents distortion */
     }
     
-    /* Card body stretches to fill vertical space */
     .card-body {
         padding: 1rem;
+        flex-grow: 1;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        flex-grow: 1;
     }
-    
     
 </style>
 <!-- Scripts -->
