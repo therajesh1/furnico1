@@ -27,8 +27,11 @@ urlpatterns = [
 ]
 
 # Serve media files in development (user-uploaded files)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Serve static files (CSS, JS, images) in development
-if settings.DEBUG:
+# # Serve static files (CSS, JS, images) in development
+# if settings.DEBUG:
+#     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG and settings.STATIC_URL:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

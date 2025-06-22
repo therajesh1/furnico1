@@ -110,6 +110,8 @@ import os
         
 #      }
 # }
+
+#MAIN AND WORKING DATABASE 
 DATABASES = {
      'default': {
          'ENGINE': 'django.db.backends.postgresql',
@@ -118,7 +120,6 @@ DATABASES = {
          'PASSWORD': 'DjMsDKYbfMFSaaJRjLxqNAMBSArDSYmP',
          'HOST': 'monorail.proxy.rlwy.net',
          'PORT': '16342'
-        
      }
 }
 # Add these at the top of your settings.py
