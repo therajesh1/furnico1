@@ -17,14 +17,14 @@
             <p><strong>Product:</strong> {{ order.product.name }}</p>
             <p><strong>Address:</strong> {{ order.address }}</p>
             <p><strong>Phone Number:</strong> {{ order.phone_number }}</p>
-            <p><strong>Email:</strong> {{ order.email }}</p>
+            {% comment %} <p><strong>Email:</strong> {{ order.email }}</p> {% endcomment %}
             <p><strong>Price:</strong> ₹{{ order.product.price }}</p>
-            {% if order.delivery_cost %}
+            {% comment %} {% if order.delivery_cost %}
               <p><strong>Delivery Cost:</strong> ₹{{ order.delivery_cost }}</p>
               <p><strong>Total Price:</strong> ₹{{ order.total_price }}</p>
             {% else %}
               <p><em>Delivery cost could not be calculated.</em></p>
-            {% endif %}
+            {% endif %} {% endcomment %}
             <hr>
         
           

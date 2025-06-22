@@ -91,51 +91,25 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # Optional: Set media URL if you want to access via a CDN
 MEDIA_URL = 'https://res.cloudinary.com/djvsbqfwv/'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'therajeshchheda@gmail.com'
-# EMAIL_HOST_PASSWORD = 'your-email-password'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+import os
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'fcure',
-#         'USER': 'root',
-#         'PASSWORD': '123abcd123',
-#         'HOST': '127.0.0.1',  # Or your database server's IP address
-#         'PORT': '3306',       # Default MySQL port
-#     }
-# }
-# from mongoengine import connect
 
-# connect('furnicure', host='mongodb://localhost/furnicure')
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': 'furnico',  # Your MongoDB database name
-#         'ENFORCE_SCHEMA': False,        # Disable strict schema enforcement
-#         'CLIENT': {
-#             'host': 'mongodb://localhost:27017',  # Replace with your MongoDB URL
-#             # 'username': 'your_username',         # Optional
-#             # 'password': 'your_password',         # Optional
-#             'authSource': 'admin',               # Default auth source
-#         }
-#     }
-# }
+
 # import pymongo
 #postgresql
+# DATABASES = {
+#      'default': {
+#          'ENGINE': 'django.db.backends.postgresql',
+#          'NAME': 'railway',
+#          'USER': 'postgres',
+#          'PASSWORD': 'DjMsDKYbfMFSaaJRjLxqNAMBSArDSYmP',
+#          'HOST': 'monorail.proxy.rlwy.net',
+#          'PORT': '16342'
+        
+#      }
+# }
 DATABASES = {
      'default': {
          'ENGINE': 'django.db.backends.postgresql',

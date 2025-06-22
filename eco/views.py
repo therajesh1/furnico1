@@ -798,16 +798,16 @@ def process_payment(request, order_id):
 from django.utils import timezone
 from datetime import timedelta  # Add this import
 
-# def customer_orders(request):
-#     orders = Order.objects.filter(customer=request.user.customer)
-#     # Adjust order_date by adding 5 hours 30 minutes (if necessary)
-#     for order in orders:
-#         order.order_date = order.order_date + timedelta(hours=5, minutes=30)
-#     return render(request, 'customer_orders.html', {'orders': orders})
-from datetime import timedelta
-from geopy.geocoders import Nominatim
-from geopy.distance import geodesic
-from .models import Order
+def customer_orders(request):
+    orders = Order.objects.filter(customer=request.user.customer)
+    # Adjust order_date by adding 5 hours 30 minutes (if necessary)
+    for order in orders:
+        order.order_date = order.order_date + timedelta(hours=5, minutes=30)
+    return render(request, 'customer_orders.html', {'orders': orders})
+# from datetime import timedelta
+# from geopy.geocoders import Nominatim
+# from geopy.distance import geodesic
+# from .models import Order
 
 # def customer_orders(request):
 #     orders = Order.objects.filter(customer=request.user.customer)
@@ -914,100 +914,100 @@ from .models import Order
 #             order.total_price += order.delivery_cost
 
 #     return render(request, 'customer_orders.html', {'orders': orders})
-import os
-import json
-import requests
-from datetime import timedelta
-from geopy.distance import geodesic
-from django.shortcuts import render
-from .models import Order
+# import os
+# import json
+# import requests
+# from datetime import timedelta
+# from geopy.distance import geodesic
+# from django.shortcuts import render
+# from .models import Order
 
-# Cache file location
-CACHE_FILE = "geocode_cache.json"
+# # Cache file location
+# CACHE_FILE = "geocode_cache.json"
 
-# Load cache safely
-if os.path.exists(CACHE_FILE):
-    try:
-        with open(CACHE_FILE, "r") as f:
-            geocode_cache = json.load(f)
-    except json.JSONDecodeError:
-        print("⚠️ geocode_cache.json is invalid or empty. Resetting.")
-        geocode_cache = {}
-else:
-    geocode_cache = {}
+# # Load cache safely
+# if os.path.exists(CACHE_FILE):
+#     try:
+#         with open(CACHE_FILE, "r") as f:
+#             geocode_cache = json.load(f)
+#     except json.JSONDecodeError:
+#         print("⚠️ geocode_cache.json is invalid or empty. Resetting.")
+#         geocode_cache = {}
+# else:
+#     geocode_cache = {}
 
-# Save cache helper
-def save_cache():
-    with open(CACHE_FILE, "w") as f:
-        json.dump(geocode_cache, f)
+# # Save cache helper
+# def save_cache():
+#     with open(CACHE_FILE, "w") as f:
+#         json.dump(geocode_cache, f)
 
-# Geocode with caching
-def get_coordinates(address):
-    if address in geocode_cache:
-        return geocode_cache[address]
+# # Geocode with caching
+# def get_coordinates(address):
+#     if address in geocode_cache:
+#         return geocode_cache[address]
 
-    API_KEY = "pk.b0c81939a6a5e5bc028387cdccb25590"  # LocationIQ
-    try:
-        response = requests.get(
-            "https://us1.locationiq.com/v1/search.php",
-            params={
-                "key": API_KEY,
-                "q": address,
-                "format": "json"
-            },
-            timeout=5
-        )
-        if response.status_code == 200:
-            data = response.json()[0]
-            coords = [float(data["lat"]), float(data["lon"])]
-            geocode_cache[address] = coords
-            save_cache()
-            return coords
-        else:
-            print(f"❌ LocationIQ error {response.status_code}: {response.text}")
-    except Exception as e:
-        print("🚨 Geocoding exception:", e)
+#     API_KEY = "pk.b0c81939a6a5e5bc028387cdccb25590"  # LocationIQ
+#     try:
+#         response = requests.get(
+#             "https://us1.locationiq.com/v1/search.php",
+#             params={
+#                 "key": API_KEY,
+#                 "q": address,
+#                 "format": "json"
+#             },
+#             timeout=5
+#         )
+#         if response.status_code == 200:
+#             data = response.json()[0]
+#             coords = [float(data["lat"]), float(data["lon"])]
+#             geocode_cache[address] = coords
+#             save_cache()
+#             return coords
+#         else:
+#             print(f"❌ LocationIQ error {response.status_code}: {response.text}")
+#     except Exception as e:
+#         print("🚨 Geocoding exception:", e)
 
-    return None
+#     return None
 
-# Main view
-def customer_orders(request):
-    orders = Order.objects.filter(customer=request.user.customer)
+# # Main view
+# def customer_orders(request):
+#     orders = Order.objects.filter(customer=request.user.customer)
 
-    for order in orders:
-        order.order_date = order.order_date + timedelta(hours=5, minutes=30)
+#     for order in orders:
+#         order.order_date = order.order_date + timedelta(hours=5, minutes=30)
 
-        customer_address = f"{order.customer.address}, {order.customer.city}"
-        shopkeeper = order.product.shopkeeper
-        shopkeeper_address = f"{shopkeeper.address}, {shopkeeper.city}"
+#         customer_address = f"{order.customer.address}, {order.customer.city}"
+#         shopkeeper = order.product.shopkeeper
+#         shopkeeper_address = f"{shopkeeper.address}, {shopkeeper.city}"
 
-        customer_coords = get_coordinates(customer_address)
-        shopkeeper_coords = get_coordinates(shopkeeper_address)
+#         customer_coords = get_coordinates(customer_address)
+#         shopkeeper_coords = get_coordinates(shopkeeper_address)
 
-        order.delivery_cost = None
-        order.total_price = order.product.price
+#         order.delivery_cost = None
+#         order.total_price = order.product.price
 
-        if customer_coords and shopkeeper_coords:
-            distance_km = geodesic(customer_coords, shopkeeper_coords).km
-            distance_km = round(distance_km, 3) 
-            # if distance_km <= 0.7:
-            #     order.delivery_cost = 500
-            # elif distance_km <= 3:
-            #     order.delivery_cost = 1000
-            # else:
-            #     order.delivery_cost = 1700
-            # Round to 3 decimal places
-            if distance_km < 0.7:
-                order.delivery_cost = 500
-            elif distance_km >= 0.7 and distance_km <= 3:
-                order.delivery_cost = 1000
-            elif distance_km > 3:
-                order.delivery_cost = 1700
+#         if customer_coords and shopkeeper_coords:
+#             distance_km = geodesic(customer_coords, shopkeeper_coords).km
+#             distance_km = round(distance_km, 3) 
+#             # if distance_km <= 0.7:
+#             #     order.delivery_cost = 500
+#             # elif distance_km <= 3:
+#             #     order.delivery_cost = 1000
+#             # else:
+#             #     order.delivery_cost = 1700
+#             # Round to 3 decimal places
+#             if distance_km < 0.7:
+#                 order.delivery_cost = 500
+#             elif distance_km >= 0.7 and distance_km <= 3:
+#                 order.delivery_cost = 1000
+#             elif distance_km > 3:
+#                 order.delivery_cost = 1700
 
 
-            order.total_price += order.delivery_cost
+#             order.total_price += order.delivery_cost
 
-    return render(request, 'customer_orders.html', {'orders': orders})
+#     return render(request, 'customer_orders.html', {'orders': orders})
 
 
 def shopkeeper_orders(request):
