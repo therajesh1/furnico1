@@ -989,18 +989,21 @@ def customer_orders(request):
 
         if customer_coords and shopkeeper_coords:
             distance_km = geodesic(customer_coords, shopkeeper_coords).km
+            distance_km = round(distance_km, 3) 
             # if distance_km <= 0.7:
             #     order.delivery_cost = 500
             # elif distance_km <= 3:
             #     order.delivery_cost = 1000
             # else:
             #     order.delivery_cost = 1700
+            # Round to 3 decimal places
             if distance_km < 0.7:
                 order.delivery_cost = 500
-            elif 0.7 <= distance_km <= 3:
+            elif distance_km >= 0.7 and distance_km <= 3:
                 order.delivery_cost = 1000
             elif distance_km > 3:
                 order.delivery_cost = 1700
+
 
             order.total_price += order.delivery_cost
 
