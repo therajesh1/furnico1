@@ -798,12 +798,56 @@ def process_payment(request, order_id):
 from django.utils import timezone
 from datetime import timedelta  # Add this import
 
+# def customer_orders(request):
+#     orders = Order.objects.filter(customer=request.user.customer)
+#     # Adjust order_date by adding 5 hours 30 minutes (if necessary)
+#     for order in orders:
+#         order.order_date = order.order_date + timedelta(hours=5, minutes=30)
+#     return render(request, 'customer_orders.html', {'orders': orders})
+from datetime import timedelta
+from geopy.geocoders import Nominatim
+from geopy.distance import geodesic
+from .models import Order
+
 def customer_orders(request):
     orders = Order.objects.filter(customer=request.user.customer)
-    # Adjust order_date by adding 5 hours 30 minutes (if necessary)
+
+    geolocator = Nominatim(user_agent="furnicure-app")
+
     for order in orders:
+        # Adjust date
         order.order_date = order.order_date + timedelta(hours=5, minutes=30)
+
+        # Prepare addresses
+        customer_address = f"{order.customer.address}, {order.customer.city}"
+        shopkeeper = order.product.shopkeeper
+        shopkeeper_address = f"{shopkeeper.address}, {shopkeeper.city}"
+
+        # Get coordinates
+        customer_location = geolocator.geocode(customer_address)
+        shopkeeper_location = geolocator.geocode(shopkeeper_address)
+
+        # Default values
+        order.delivery_cost = None
+        order.total_price = order.product.price
+
+        if customer_location and shopkeeper_location:
+            customer_coords = (customer_location.latitude, customer_location.longitude)
+            shopkeeper_coords = (shopkeeper_location.latitude, shopkeeper_location.longitude)
+
+            distance_km = geodesic(customer_coords, shopkeeper_coords).km
+
+            if distance_km <= 0.7:
+                order.delivery_cost = 500
+            elif distance_km <= 3:
+                order.delivery_cost = 1000
+            else:
+                order.delivery_cost = 1700
+
+            order.total_price += order.delivery_cost
+
     return render(request, 'customer_orders.html', {'orders': orders})
+
 
 def shopkeeper_orders(request):
     shopkeeper = request.user.shopkeeper

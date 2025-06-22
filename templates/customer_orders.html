@@ -13,7 +13,21 @@
             <h5 class="text-dark" style="font-family: 'Arial', sans-serif; font-weight: 600; font-size: 1.2rem; margin-bottom: 10px;">{{ order.product.name }}</h5>
             <p><strong class="text-primary">Order Date:</strong> <span class="text-muted">{{ order.order_date|date:"Y-m-d H:i:s" }}</span></p>
             <p><strong>Delivery will be done within:</strong> 3 Days</p>
-
+           
+            <p><strong>Product:</strong> {{ order.product.name }}</p>
+            <p><strong>Address:</strong> {{ order.address }}</p>
+            <p><strong>Phone Number:</strong> {{ order.phone_number }}</p>
+            <p><strong>Email:</strong> {{ order.email }}</p>
+            <p><strong>Price:</strong> ₹{{ order.product.price }}</p>
+            {% if order.delivery_cost %}
+              <p><strong>Delivery Cost:</strong> ₹{{ order.delivery_cost }}</p>
+              <p><strong>Total Price:</strong> ₹{{ order.total_price }}</p>
+            {% else %}
+              <p><em>Delivery cost could not be calculated.</em></p>
+            {% endif %}
+            <hr>
+        
+          
 
             <!-- Buttons Layout with spacing -->
             <div class="d-flex justify-content-between mt-3">
