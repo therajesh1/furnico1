@@ -86,6 +86,16 @@ CLOUDINARY_STORAGE = {
 
 }
 
+import cloudinary
+
+cloudinary.config(
+    cloud_name="djvsbqfwv",
+    api_key="715889147158576",
+    api_secret="P5uZ0P-Si_Wp1gbbcD423Cu2lWs",
+    secure=True  # same as SECURE_URL=True
+)
+
+
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Optional: Set media URL if you want to access via a CDN
