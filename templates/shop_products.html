@@ -6,7 +6,7 @@
     <title>{{ shop.shop_name }} - FurniCure</title>
 
     <!-- Google Fonts & Bootstrap -->
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" href="/static/flogo.jpg" />
@@ -16,817 +16,186 @@
 <body>
 
 <!-- Shop Hero Section with Features and CTA -->
-<section class="hero-section">
-    <div class="hero-gradient"></div>
-    <div class="container py-5">
-        <div class="row align-items-center g-5">
-            <!-- Shop Info -->
-            <div class="col-lg-6 text-center text-lg-start hero-content">
-                <div class="hero-badge mb-3">
-                    <i class="fas fa-star"></i>
-                    Premium Furniture Store
-                </div>
-                <h1 class="display-3 fw-bold hero-title" style="font-family: 'Abril Fatface', cursive;">{{ shop.shop_name }}</h1>
-                <p class="lead hero-address mb-4">
-                    <i class="fas fa-map-marker-alt me-2"></i>
-                    {{ shop.address }}
-                </p>
+<section class="container py-5">
+    <div class="row align-items-center g-5">
+        <!-- Shop Info -->
+        <div class="col-lg-6 text-center text-lg-start">
+            <h1 class="display-4 fw-bold" style="font-family: 'Abril Fatface', cursive;">{{ shop.shop_name }}</h1>
+            <p class="lead text-muted mb-4">{{ shop.address }}</p>
 
-                <div class="features-grid mb-5">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-chair"></i>
-                        </div>
-                        <span>Premium Furniture</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-cube"></i>
-                        </div>
-                        <span>3D & AR View</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-truck"></i>
-                        </div>
-                        <span>Fast Delivery</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-store"></i>
-                        </div>
-                        <span>Visit Local Store</span>
-                    </div>
-                </div>
+            <ul class="list-unstyled text-muted mb-4">
+                <li><i class="fas fa-chair me-2 text-primary"></i> Wide range of premium furniture</li>
+                <li><i class="fas fa-cube me-2 text-primary"></i> 3D & AR View Available</li>
+                <li><i class="fas fa-truck me-2 text-primary"></i> Fast and Safe Delivery</li>
+                <li><i class="fas fa-store me-2 text-primary"></i> Visit Local Store</li>
+            </ul>
 
-                <a href="https://www.google.com/maps/search/?api=1&query={{ shop.address|urlencode }}" class="btn btn-cta" target="_blank">
-                    <i class="fas fa-map-marker-alt me-2"></i> 
-                    Get Directions
-                    <i class="fas fa-arrow-right ms-2"></i>
-                </a>
-            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query={{ shop.address|urlencode }}" class="btn btn-primary btn-lg shadow-sm" target="_blank">
+                <i class="fas fa-map-marker-alt me-2"></i> Get Directions
+            </a>
+        </div>
 
-            <!-- Shop Image and Embedded Map -->
-            <div class="col-lg-6 hero-media">
-                <div class="media-container">
-                    <img src="/static/furniimage01.jpeg" alt="{{ shop.shop_name }}" class="hero-image">
-                    <div class="map-container">
-                        <iframe
-                            src="https://www.google.com/maps?q={{ shop.address|urlencode }}&output=embed"
-                            allowfullscreen
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                    </div>
-                </div>
+        <!-- Shop Image and Embedded Map -->
+        <div class="col-lg-6">
+            <img src="/static/furniimage01.jpeg" alt="{{ shop.shop_name }}" class="img-fluid rounded shadow mb-3">
+            <div class="ratio ratio-16x9">
+                <iframe
+                    src="https://www.google.com/maps?q={{ shop.address|urlencode }}&output=embed"
+                    allowfullscreen
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Product Section and Filters -->
-<div class="container products-section">
-    <div class="section-header">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="section-title">Our Products</h2>
-                <p class="section-subtitle">Discover our curated collection of premium furniture</p>
-            </div>
-            <button class="btn btn-filter" type="button" data-bs-toggle="collapse" data-bs-target="#filterSection">
-                <i class="fas fa-sliders-h"></i> 
-                <span>Filters</span>
-            </button>
-        </div>
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-dark">Products</h2>
+        <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#filterSection">
+            <i class="fas fa-filter"></i> Filter
+        </button>
     </div>
 
     <div class="collapse" id="filterSection">
-        <div class="filter-panel">
-            <div class="filter-content">
-                <h3 class="filter-title">
-                    <i class="fas fa-filter me-2"></i>
-                    Refine Your Search
-                </h3>
+        <div class="filter-section mb-4 p-3 bg-white rounded shadow-sm">
+            <h3 class="mb-3">Filters</h3>
 
-                <div class="filter-group">
-                    <h5 class="filter-label">Price Range</h5>
-                    <div class="price-controls">
-                        <div class="price-slider-container">
-                            <input type="range" id="priceRange" min="0" max="100000" value="100000" class="price-slider">
-                            <div class="price-display">
-                                Max: ₹<span id="priceValue">100000</span>
-                            </div>
-                        </div>
-                        <div class="price-input-container">
-                            <input type="number" id="priceInput" min="0" max="100000" class="price-input" placeholder="Enter max price">
-                        </div>
+            <div class="mb-4">
+                <h5>Filter by Price</h5>
+                <div class="d-flex gap-3">
+                    <div class="flex-grow-1">
+                        <input type="range" id="priceRange" min="0" max="100000" value="100000" class="form-range">
+                        <p>Max Price: <span id="priceValue">100000</span></p>
+                    </div>
+                    <div>
+                        <input type="number" id="priceInput" min="0" max="100000" class="form-control" placeholder="Enter price">
                     </div>
                 </div>
+            </div>
 
-                <div class="filter-group">
-                    <h5 class="filter-label">Sort by Price</h5>
-                    <div class="sort-buttons">
-                        <button class="btn btn-sort" id="sortHighToLow">
-                            <i class="fas fa-arrow-down me-2"></i>High to Low
-                        </button>
-                        <button class="btn btn-sort" id="sortLowToHigh">
-                            <i class="fas fa-arrow-up me-2"></i>Low to High
-                        </button>
-                    </div>
+            <div>
+                <h5>Sort by Price</h5>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-dark" id="sortHighToLow">High to Low</button>
+                    <button class="btn btn-dark" id="sortLowToHigh">Low to High</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="products-grid" id="productContainer">
+
+
+    
+    
+
+<div class="row" id="productContainer">
         {% if products %}
             {% for product in products %}
-                <div class="product-card" data-price="{{ product.price }}">
-                    <div class="product-image-container">
-                        {% if product.image4 %}
-                            {% if product.is_glb %}
-                                <model-viewer src="{{ product.image4 }}" alt="{{ product.name }}" ar auto-rotate camera-controls></model-viewer>
+                <div class="col-md-4 mb-3 product-item" data-price="{{ product.price }}">
+                    <div class="card h-100">
+                        <div class="ratio ratio-1x1 bg-light">
+                            {% if product.image4 %}
+                                {% if product.is_glb %}
+                                    <model-viewer src="{{ product.image4 }}" alt="{{ product.name }}" ar auto-rotate camera-controls></model-viewer>
+                                {% else %}
+                                    <img src="{{ product.image4 }}" class="img-fluid" alt="{{ product.name }}">
+                                {% endif %}
                             {% else %}
-                                <img src="{{ product.image4 }}" alt="{{ product.name }}">
+                                <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
                             {% endif %}
-                        {% else %}
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                        {% endif %}
-                        <div class="product-overlay">
-                            <a href="{% url 'product_detail' product.id %}" class="btn btn-view-product">
-                                <i class="fas fa-eye me-2"></i>View Details
-                            </a>
                         </div>
-                    </div>
-                    <div class="product-info">
-                        <h5 class="product-name">{{ product.name }}</h5>
-                        <p class="product-description">{{ product.description|truncatewords:15 }}</p>
-                        <div class="product-price">
-                            <span class="currency">₹</span>
-                            <span class="amount">{{ product.price }}</span>
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">{{ product.name }}</h5>
+                            <p class="card-text text-dark">{{ product.description|truncatewords:15 }}</p>
+                            <p class="card-text text-dark"><strong>Price: {{ product.price }}</strong></p>
+                            <a href="{% url 'product_detail' product.id %}" class="btn btn-dark">View Product</a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         {% else %}
-            <div class="no-products">
-                <i class="fas fa-chair fa-3x mb-3"></i>
-                <p>No products available at the moment.</p>
-            </div>
+            <p class="text-dark">No products available at the moment.</p>
         {% endif %}
     </div>
-</div>
+</div> 
 
 <!-- Footer -->
-<footer class="modern-footer">
-    <div class="footer-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="footer-brand">
-                        <h5>FurniCure</h5>
-                        <p>Crafting beautiful spaces with premium furniture since 2025.</p>
-                        <div class="social-links">
-                            <a href="#"><i class="fab fa-facebook"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h6 class="footer-heading">Quick Links</h6>
-                    <ul class="footer-links">
-                        <li><a href="/"><i class="fas fa-home me-2"></i>Home</a></li>
-                        {% if user.is_authenticated %}
-                            <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
-                        {% else %}
-                            <li><a href="/login"><i class="fas fa-sign-in-alt me-2"></i>Login</a></li>
-                            <li><a href="/signin"><i class="fas fa-user-plus me-2"></i>Sign Up</a></li>
-                        {% endif %}
-                        <li><a href="/contact"><i class="fas fa-envelope me-2"></i>Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h6 class="footer-heading">Contact Info</h6>
-                    <div class="contact-info">
-                        <p><i class="fas fa-phone me-2"></i>+91 123 456 7890</p>
-                        <p><i class="fas fa-envelope me-2"></i>info@furnicure.com</p>
-                        <p><i class="fas fa-clock me-2"></i>Mon - Sat: 9AM - 8PM</p>
-                    </div>
-                </div>
+<footer class="bg-dark text-light py-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <h5>FurniCure</h5>
+                <p>&copy; 2025 FurniCure. All rights reserved.</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-light">Home</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}" class="text-light">Logout</a></li>
+                    {% else %}
+                        <li><a href="/login" class="text-light">Login</a></li>
+                        <li><a href="/signin" class="text-light">Sign Up</a></li>
+                    {% endif %}
+                    <li><a href="/contact" class="text-light">Contact</a></li>
+                </ul>
             </div>
         </div>
-    </div>
-    <div class="footer-bottom">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p>&copy; 2025 FurniCure. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <small>Designed with <i class="fas fa-heart text-danger"></i> by FurniCure Team</small>
-                </div>
-            </div>
+        <hr class="border-light">
+        <div class="text-center">
+            <small>Designed with ❤ by FurniCure Team</small>
         </div>
     </div>
 </footer>
-
 <style>
-    :root {
-        --primary-color: #2c5530;
-        --primary-light: #3d7043;
-        --secondary-color: #d4af37;
-        --accent-color: #ff6b35;
-        --text-dark: #2d3436;
-        --text-light: #636e72;
-        --bg-light: #f8fafc;
-        --bg-white: #ffffff;
-        --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
-        --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-        --gradient-secondary: linear-gradient(135deg, var(--secondary-color) 0%, #f39c12 100%);
-    }
-
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Inter', sans-serif;
-        line-height: 1.6;
-        color: var(--text-dark);
-        background: var(--bg-light);
-    }
-
-    /* Hero Section */
-    .hero-section {
-        position: relative;
-        background: var(--gradient-primary);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-    }
-
-    .hero-gradient {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, rgba(44, 85, 48, 0.9) 0%, rgba(61, 112, 67, 0.8) 100%);
-    }
-
-    .hero-content {
-        position: relative;
-        z-index: 2;
-        animation: fadeInUp 1s ease-out;
-    }
-
-    .hero-badge {
-        display: inline-block;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        color: white;
-        padding: 8px 20px;
-        border-radius: 50px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        animation: pulse 2s infinite;
-    }
-
-    .hero-title {
-        color: white;
-        font-size: 3.5rem;
-        margin-bottom: 1rem;
-        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        animation: fadeInUp 1s ease-out 0.2s both;
-    }
-
-    .hero-address {
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 1.2rem;
-        font-weight: 400;
-        animation: fadeInUp 1s ease-out 0.4s both;
-    }
-
-    .features-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-        animation: fadeInUp 1s ease-out 0.6s both;
-    }
-
-    .feature-item {
-        display: flex;
-        align-items: center;
-        color: white;
-        font-weight: 500;
-        transition: transform 0.3s ease;
-    }
-
-    .feature-item:hover {
-        transform: translateX(10px);
-    }
-
-    .feature-icon {
-        width: 50px;
-        height: 50px;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 1rem;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-cta {
-        background: var(--gradient-secondary);
-        border: none;
-        color: white;
-        padding: 15px 35px;
-        font-size: 1.1rem;
-        font-weight: 600;
-        border-radius: 50px;
-        box-shadow: var(--shadow);
-        transition: all 0.3s ease;
-        animation: fadeInUp 1s ease-out 0.8s both;
-    }
-
-    .btn-cta:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-hover);
-        color: white;
-    }
-
-    /* Hero Media */
-    .hero-media {
-        position: relative;
-        z-index: 2;
-        animation: fadeInRight 1s ease-out 0.4s both;
-    }
-
-    .media-container {
-        position: relative;
-    }
-
-    .hero-image {
-        width: 100%;
-        height: 350px;
-        object-fit: cover;
-        border-radius: 20px;
-        box-shadow: var(--shadow);
-        margin-bottom: 2rem;
-    }
-
-    .map-container {
-        position: relative;
-        width: 100%;
-        height: 250px;
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: var(--shadow);
-    }
-
-    .map-container iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-    }
-
-    /* Products Section */
-    .products-section {
-        padding: 5rem 0;
-        position: relative;
-    }
-
-    .section-header {
-        margin-bottom: 3rem;
-    }
-
-    .section-title {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: var(--text-dark);
-        margin-bottom: 0.5rem;
-    }
-
-    .section-subtitle {
-        color: var(--text-light);
-        font-size: 1.1rem;
-        margin: 0;
-    }
-
-    .btn-filter {
-        background: var(--primary-color);
-        color: white;
-        border: none;
-        padding: 12px 25px;
-        border-radius: 12px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(44, 85, 48, 0.2);
-    }
-
-    .btn-filter:hover {
-        background: var(--primary-light);
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(44, 85, 48, 0.3);
-    }
-
-    /* Filter Panel */
-    .filter-panel {
-        background: white;
-        border-radius: 20px;
-        box-shadow: var(--shadow);
-        margin-bottom: 3rem;
-        overflow: hidden;
-    }
-
-    .filter-content {
-        padding: 2rem;
-    }
-
-    .filter-title {
-        color: var(--text-dark);
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-bottom: 2rem;
-        display: flex;
-        align-items: center;
-    }
-
-    .filter-group {
-        margin-bottom: 2rem;
-    }
-
-    .filter-label {
-        color: var(--text-dark);
-        font-weight: 600;
-        margin-bottom: 1rem;
-        font-size: 1.1rem;
-    }
-
-    .price-controls {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 2rem;
-        align-items: center;
-    }
-
-    .price-slider-container {
-        position: relative;
-    }
-
-    .price-slider {
-        width: 100%;
-        height: 8px;
-        border-radius: 5px;
-        background: #ddd;
-        outline: none;
-        -webkit-appearance: none;
-    }
-
-    .price-slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: var(--primary-color);
-        cursor: pointer;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    }
-
-    .price-display {
-        margin-top: 1rem;
-        font-weight: 600;
-        color: var(--primary-color);
-        font-size: 1.1rem;
-    }
-
-    .price-input {
-        padding: 10px 15px;
-        border: 2px solid #e0e6ed;
-        border-radius: 10px;
-        font-size: 1rem;
-        transition: border-color 0.3s ease;
-    }
-
-    .price-input:focus {
-        border-color: var(--primary-color);
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
-    }
-
-    .sort-buttons {
-        display: flex;
-        gap: 1rem;
-    }
-
-    .btn-sort {
-        background: white;
-        color: var(--text-dark);
-        border: 2px solid #e0e6ed;
-        padding: 10px 20px;
-        border-radius: 10px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-    }
-
-    .btn-sort:hover {
-        background: var(--primary-color);
-        color: white;
-        border-color: var(--primary-color);
-        transform: translateY(-2px);
-    }
-
-    /* Products Grid */
-    .products-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 2rem;
-    }
-
-    .product-card {
-        background: white;
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-        transition: all 0.3s ease;
-        position: relative;
-    }
-
-    .product-card:hover {
-        transform: translateY(-10px);
-        box-shadow: var(--shadow-hover);
-    }
-
-    .product-image-container {
-        position: relative;
-        height: 280px;
-        overflow: hidden;
-        background: #f8f9fa;
-    }
-
-    .product-image-container img,
-    .product-image-container model-viewer {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        transition: transform 0.3s ease;
-    }
-
-    .product-card:hover .product-image-container img,
-    .product-card:hover .product-image-container model-viewer {
-        transform: scale(1.05);
-    }
-
-    .product-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(44, 85, 48, 0.8);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .product-card:hover .product-overlay {
-        opacity: 1;
-    }
-
-    .btn-view-product {
-        background: white;
-        color: var(--primary-color);
-        border: none;
-        padding: 12px 24px;
-        border-radius: 10px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-
-    .btn-view-product:hover {
-        background: var(--secondary-color);
-        color: white;
-        transform: scale(1.05);
-    }
-
-    .product-info {
-        padding: 1.5rem;
-    }
-
-    .product-name {
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: var(--text-dark);
-        margin-bottom: 0.5rem;
-    }
-
-    .product-description {
-        color: var(--text-light);
-        margin-bottom: 1rem;
-        line-height: 1.5;
-    }
-
-    .product-price {
-        display: flex;
-        align-items: baseline;
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--primary-color);
-    }
-
-    .currency {
-        font-size: 1rem;
-        margin-right: 2px;
-    }
-
-    .no-products {
-        grid-column: 1 / -1;
-        text-align: center;
-        padding: 4rem 2rem;
-        color: var(--text-light);
-    }
-
-    /* Modern Footer */
-    .modern-footer {
-        background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
-        color: white;
-        margin-top: 5rem;
-    }
-
-    .footer-content {
-        padding: 3rem 0 2rem;
-    }
-
-    .footer-brand h5 {
-        font-size: 1.8rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        background: var(--gradient-secondary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .footer-brand p {
-        color: #ccc;
-        margin-bottom: 1.5rem;
-    }
-
-    .social-links a {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        border-radius: 10px;
-        margin-right: 10px;
-        transition: all 0.3s ease;
-        text-decoration: none;
-    }
-
-    .social-links a:hover {
-        background: var(--secondary-color);
-        transform: translateY(-3px);
-    }
-
-    .footer-heading {
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-        color: white;
-    }
-
-    .footer-links {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .footer-links li {
-        margin-bottom: 10px;
-    }
-
-    .footer-links a {
-        color: #ccc;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-    }
-
-    .footer-links a:hover {
-        color: var(--secondary-color);
-        transform: translateX(5px);
-    }
-
-    .contact-info p {
-        color: #ccc;
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-    }
-
-    .footer-bottom {
-        border-top: 1px solid #333;
-        padding: 1.5rem 0;
-        background: rgba(0, 0, 0, 0.3);
-    }
-
-    .footer-bottom p {
-        margin: 0;
-        color: #ccc;
-    }
-
-    /* Animations */
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes fadeInRight {
-        from {
-            opacity: 0;
-            transform: translateX(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes pulse {
-        0%, 100% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0.8;
-        }
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .hero-title {
-            font-size: 2.5rem;
-        }
-        
-        .features-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .price-controls {
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-        
-        .sort-buttons {
-            flex-direction: column;
-        }
-        
-        .products-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .hero-section {
-            min-height: auto;
-            padding: 3rem 0;
-        }
-        
-        .hero-title {
-            font-size: 2rem;
-        }
-        
-        .section-title {
-            font-size: 2rem;
-        }
-    }
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    color: black;
+    height: auto; /* Let content define height */
+    display: flex;
+    flex-direction: column;
+    max-height: 550px; /* Limit card height */
+}
+
+.ratio {
+    position: relative;
+    width: 100%;
+    padding-top: 75%; /* Reduced aspect ratio for shorter image area */
+    background: #f8f8f8;
+    overflow: hidden;
+}
+
+.ratio img,
+.ratio model-viewer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Prevents distortion */
+}
+
+.card-body {
+    padding: 0.75rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 </style>
-
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const priceRange = document.getElementById('priceRange');
     const priceInput = document.getElementById('priceInput');
     const priceValue = document.getElementById('priceValue');
-    const productItems = document.querySelectorAll('.product-card');
+    const productItems = document.querySelectorAll('.product-item');
 
     const sortHighToLow = document.getElementById('sortHighToLow');
     const sortLowToHigh = document.getElementById('sortLowToHigh');
@@ -868,23 +237,6 @@
     sortLowToHigh.addEventListener('click', () => sortProducts('lowToHigh'));
 
     filterProductsByPrice(priceRange.value);
-
-    // Add smooth scroll behavior
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    });
-
-    // Add loading animation for product images
-    document.querySelectorAll('.product-card img').forEach(img => {
-        img.addEventListener('load', function() {
-            this.style.opacity = '1';
-        });
-    });
 </script>
 </body>
 </html>
